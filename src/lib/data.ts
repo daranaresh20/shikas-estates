@@ -1,13 +1,13 @@
-// Mock data for the Auralis Estates real estate platform.
+// Mock data for the Shika's Estates real estate platform.
 
 export const COMPANY = {
-  name: "Auralis Estates",
+  name: "Shika's Estates",
   tagline: "Premium Residential Plots & House Plans",
   phone: "+91 98765 43210",
   phoneHref: "+919876543210",
   whatsapp: "919876543210",
-  email: "hello@auralisestates.com",
-  address: "12, Greenwood Avenue, Sector 18, Bengaluru 560102",
+  email: "hello@shikasestates.com",
+  address: "42, Jubilee Hills Road, Hyderabad 500033",
   hours: "Mon–Sat: 9 AM – 6 PM · Sunday: 10 AM – 4 PM",
 };
 
@@ -27,7 +27,7 @@ export const PLOTS: Plot[] = [
   {
     id: "plot_001",
     name: "Cedar Crest — Plot A",
-    location: "Greenwood Sector 12",
+    location: "Banjara Hills",
     size: 2400,
     price: 4800000,
     status: "Available",
@@ -38,7 +38,7 @@ export const PLOTS: Plot[] = [
   {
     id: "plot_002",
     name: "Magnolia Heights — Plot 7",
-    location: "Whitefield Ridge",
+    location: "Gachibowli",
     size: 3200,
     price: 7200000,
     status: "Available",
@@ -49,7 +49,7 @@ export const PLOTS: Plot[] = [
   {
     id: "plot_003",
     name: "Riverstone — Plot 12",
-    location: "Sarjapur Greens",
+    location: "Madhapur",
     size: 1800,
     price: 3600000,
     status: "Reserved",
@@ -60,7 +60,7 @@ export const PLOTS: Plot[] = [
   {
     id: "plot_004",
     name: "Aspen Reserve — Plot 21",
-    location: "Devanahalli",
+    location: "Jubilee Hills",
     size: 4000,
     price: 9000000,
     status: "Available",
@@ -71,7 +71,7 @@ export const PLOTS: Plot[] = [
   {
     id: "plot_005",
     name: "Willow Court — Plot 4",
-    location: "North Bengaluru",
+    location: "Secunderabad",
     size: 2100,
     price: 4200000,
     status: "Sold",
@@ -82,7 +82,7 @@ export const PLOTS: Plot[] = [
   {
     id: "plot_006",
     name: "Olive Grove — Plot 9",
-    location: "Hennur",
+    location: "Kukatpally",
     size: 2600,
     price: 5200000,
     status: "Available",
@@ -198,7 +198,7 @@ export const PROJECTS: Project[] = [
   {
     id: "p_001",
     name: "Greenwood Residency",
-    location: "Sector 18, Bengaluru",
+    location: "Jubilee Hills, Hyderabad",
     status: "Ongoing",
     progress: 62,
     completion: "Expected Mar 2027",
@@ -215,7 +215,7 @@ export const PROJECTS: Project[] = [
   {
     id: "p_002",
     name: "Aurelia Hill Villas",
-    location: "Devanahalli",
+    location: "Jubilee Hills",
     status: "Ongoing",
     progress: 38,
     completion: "Expected Q4 2027",
@@ -232,7 +232,7 @@ export const PROJECTS: Project[] = [
   {
     id: "p_003",
     name: "Linden Court",
-    location: "Whitefield",
+    location: "Hitech City",
     status: "Ongoing",
     progress: 85,
     completion: "Expected Aug 2026",
@@ -249,7 +249,7 @@ export const PROJECTS: Project[] = [
   {
     id: "p_004",
     name: "Magnolia Park",
-    location: "Hennur",
+    location: "Kukatpally",
     status: "Completed",
     progress: 100,
     completion: "Handover 2024",
@@ -261,7 +261,7 @@ export const PROJECTS: Project[] = [
   {
     id: "p_005",
     name: "Riverstone Enclave",
-    location: "Sarjapur",
+    location: "Kondapur",
     status: "Completed",
     progress: 100,
     completion: "Handover 2022",
@@ -273,7 +273,7 @@ export const PROJECTS: Project[] = [
   {
     id: "p_006",
     name: "Cedar Crest Phase I",
-    location: "Sector 12",
+    location: "Banjara Hills",
     status: "Completed",
     progress: 100,
     completion: "Handover 2021",
@@ -295,7 +295,7 @@ export const TESTIMONIALS = [
     name: "Vikram Shetty",
     title: "Investor, Greenwood Residency",
     rating: 5,
-    quote: "Auralis is the rare developer that ships on time without compromising the architectural intent. Best decision we've made.",
+    quote: "Shika's Estates is the rare developer that ships on time without compromising the architectural intent. Best decision we've made.",
   },
   {
     name: "Priya & Rohan",
