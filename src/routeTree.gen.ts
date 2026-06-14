@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PlotsRouteImport } from './routes/plots'
 import { Route as PlansRouteImport } from './routes/plans'
@@ -19,6 +20,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsOngoingRouteImport } from './routes/projects.ongoing'
 import { Route as ProjectsCompletedRouteImport } from './routes/projects.completed'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
   '/projects': typeof ProjectsRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/projects/completed': typeof ProjectsCompletedRoute
   '/projects/ongoing': typeof ProjectsOngoingRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
   '/projects': typeof ProjectsRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/projects/completed': typeof ProjectsCompletedRoute
   '/projects/ongoing': typeof ProjectsOngoingRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
   '/projects': typeof ProjectsRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/projects/completed': typeof ProjectsCompletedRoute
   '/projects/ongoing': typeof ProjectsOngoingRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/plans'
     | '/plots'
     | '/projects'
+    | '/sitemap.xml'
     | '/projects/completed'
     | '/projects/ongoing'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/plans'
     | '/plots'
     | '/projects'
+    | '/sitemap.xml'
     | '/projects/completed'
     | '/projects/ongoing'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/plans'
     | '/plots'
     | '/projects'
+    | '/sitemap.xml'
     | '/projects/completed'
     | '/projects/ongoing'
   fileRoutesById: FileRoutesById
@@ -143,10 +155,18 @@ export interface RootRouteChildren {
   PlansRoute: typeof PlansRoute
   PlotsRoute: typeof PlotsRoute
   ProjectsRoute: typeof ProjectsRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects': {
       id: '/projects'
       path: '/projects'
@@ -235,6 +255,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlansRoute: PlansRoute,
   PlotsRoute: PlotsRoute,
   ProjectsRoute: ProjectsRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
