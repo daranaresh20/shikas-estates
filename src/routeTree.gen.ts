@@ -14,6 +14,7 @@ import { Route as PlotsRouteImport } from './routes/plots'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProjectsOngoingRouteImport } from './routes/projects.ongoing'
 
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
@@ -40,20 +41,27 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectsOngoingRoute = ProjectsOngoingRouteImport.update({
+  id: '/ongoing',
+  path: '/ongoing',
+  getParentRoute: () => ProjectsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
+  '/projects/ongoing': typeof ProjectsOngoingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
+  '/projects/ongoing': typeof ProjectsOngoingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +69,28 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
+  '/projects/ongoing': typeof ProjectsOngoingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/plans' | '/plots' | '/projects'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/plans'
+    | '/plots'
+    | '/projects'
+    | '/projects/ongoing'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/plans' | '/plots' | '/projects'
-  id: '__root__' | '/' | '/about' | '/plans' | '/plots' | '/projects'
+  to: '/' | '/about' | '/plans' | '/plots' | '/projects' | '/projects/ongoing'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/plans'
+    | '/plots'
+    | '/projects'
+    | '/projects/ongoing'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,7 +98,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   PlansRoute: typeof PlansRoute
   PlotsRoute: typeof PlotsRoute
-  ProjectsRoute: typeof ProjectsRoute
+  ProjectsRoute: typeof ProjectsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -116,15 +138,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects/ongoing': {
+      id: '/projects/ongoing'
+      path: '/ongoing'
+      fullPath: '/projects/ongoing'
+      preLoaderRoute: typeof ProjectsOngoingRouteImport
+      parentRoute: typeof ProjectsRoute
+    }
   }
 }
+
+interface ProjectsRouteChildren {
+  ProjectsOngoingRoute: typeof ProjectsOngoingRoute
+}
+
+const ProjectsRouteChildren: ProjectsRouteChildren = {
+  ProjectsOngoingRoute: ProjectsOngoingRoute,
+}
+
+const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
+  ProjectsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   PlansRoute: PlansRoute,
   PlotsRoute: PlotsRoute,
-  ProjectsRoute: ProjectsRoute,
+  ProjectsRoute: ProjectsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
