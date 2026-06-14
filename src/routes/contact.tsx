@@ -7,10 +7,10 @@ import { Clock, Mail, MapPin, Phone } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Auralis Estates" },
-      { name: "description", content: "Speak with the Auralis team. Phone, WhatsApp, email and visits — we reply within one business day." },
-      { property: "og:title", content: "Contact — Auralis Estates" },
-      { property: "og:description", content: "Get in touch with the Auralis Estates team." },
+      { title: "Contact — Shika's Estates" },
+      { name: "description", content: "Speak with the Shika's Estates team. Phone, WhatsApp, email and visits — we reply within one business day." },
+      { property: "og:title", content: "Contact — Shika's Estates" },
+      { property: "og:description", content: "Get in touch with the Shika's Estates team." },
     ],
   }),
   component: Contact,

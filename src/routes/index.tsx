@@ -7,9 +7,9 @@ import { COMPANY, PLOTS, PLANS, GALLERY, TESTIMONIALS, formatINR } from "@/lib/d
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Auralis Estates — Premium Residential Plots & House Plans" },
-      { name: "description", content: "An invitation-only portfolio of limited-edition residential plots, house plans and signature projects from Auralis Estates." },
-      { property: "og:title", content: "Auralis Estates — Premium Residential Plots & House Plans" },
+      { title: "Shika's Estates — Premium Residential Plots & House Plans" },
+      { name: "description", content: "An invitation-only portfolio of limited-edition residential plots, house plans and signature projects from Shika's Estates." },
+      { property: "og:title", content: "Shika's Estates — Premium Residential Plots & House Plans" },
       { property: "og:description", content: "Limited-edition plots, signature house plans and award-winning projects." },
     ],
   }),
@@ -33,7 +33,7 @@ function Home() {
             <div className="lg:col-span-7 flex flex-col justify-between min-h-[78vh] lg:min-h-[82vh] fade-up">
               <div className="flex items-center gap-4 text-[var(--muted-sage)]">
                 <span className="gold-rule-left" />
-                <span className="eyebrow">Estd. 2009 · Bengaluru · India</span>
+                <span className="eyebrow">Estd. 2026 · Hyderabad · India</span>
               </div>
 
               <div className="mt-10 lg:mt-0">

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/about")({
       { title: `About — ${COMPANY.name}` },
       { name: "description", content: "Sixteen years of crafting limited-edition residences with restraint, intention and an obsession with craft." },
       { property: "og:title", content: `About — ${COMPANY.name}` },
-      { property: "og:description", content: "Our story, our team, and the architectural practice behind Auralis Estates." },
+      { property: "og:description", content: "Our story, our team, and the architectural practice behind Shika's Estates." },
     ],
   }),
   component: About,
@@ -30,7 +30,7 @@ function About() {
           <p className="text-[var(--gold)] text-xs uppercase tracking-widest">About {COMPANY.name}</p>
           <h1 className="font-display text-5xl md:text-6xl mt-3">A practice of restraint, craft and provenance.</h1>
           <p className="mt-6 text-lg text-[var(--cream-2)] max-w-3xl mx-auto leading-relaxed">
-            Founded in 2009, we have spent sixteen years building a small portfolio of plots and residences for a discerning clientele who measure success in detail, not square footage.
+            Founded in 2026, we are building a curated portfolio of plots and residences for a discerning clientele who measure success in detail, not square footage.
           </p>
         </div>
       </section>
@@ -46,12 +46,12 @@ function About() {
             <p className="text-[var(--gold)] text-xs uppercase tracking-widest">Our story</p>
             <h2 className="font-display text-3xl md:text-4xl mt-3">From a single drawing board to twenty-five communities.</h2>
             <div className="mt-6 space-y-4 text-[var(--cream-2)]/90 leading-relaxed">
-              <p>What started as a two-person studio above a bookshop in Indiranagar has quietly grown into one of South India's most respected boutique developers — without ever losing the original promise: every project, personally led.</p>
+              <p>What started as a two-person studio above a bookstore in Banjara Hills has quietly grown into one of Hyderabad's most respected boutique developers — without ever losing the original promise: every project, personally led.</p>
               <p>We choose land carefully. We build slowly. We refuse the projects we cannot do well. The result is a portfolio that we are still proud to walk through, years later.</p>
             </div>
             <div className="grid grid-cols-3 gap-6 mt-8">
               {[
-                { v: "2009", l: "Founded" },
+                { v: "2026", l: "Founded" },
                 { v: "25+",  l: "Projects" },
                 { v: "500+", l: "Owners" },
               ].map((s) => (

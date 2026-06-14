@@ -38,7 +38,7 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
     }
     setSubmitting(true);
     try {
-      const key = "auralis_inquiries";
+      const key = "shikas_inquiries";
       const prev = JSON.parse(localStorage.getItem(key) || "[]");
       prev.push({ ...form, at: new Date().toISOString() });
       localStorage.setItem(key, JSON.stringify(prev));
