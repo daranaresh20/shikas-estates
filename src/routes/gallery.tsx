@@ -32,7 +32,7 @@ function GalleryPage() {
         <div className="max-w-7xl mx-auto">
           <p className="text-[var(--gold)] text-xs uppercase tracking-widest">Gallery</p>
           <h1 className="font-display text-5xl mt-2">A visual archive.</h1>
-          <p className="mt-4 text-[var(--muted-sage)] max-w-2xl">Sixteen years of plots, residences and details — captured by the photographers we trust most.</p>
+          <p className="mt-4 text-[var(--muted-sage)] max-w-2xl">A curated collection of plots, residences and details — captured by the photographers we trust most.</p>
           <div className="mt-8 flex flex-wrap gap-2">
             {TAGS.map((t) => (
               <button key={t} onClick={() => { setTag(t); setIdx(null); }}
