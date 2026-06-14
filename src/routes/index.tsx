@@ -79,22 +79,23 @@ function Home() {
             <div className="lg:col-span-5 relative fade-in">
               <div className="relative h-[55vh] lg:h-[82vh] overflow-hidden rounded-sm">
                 <img src={HERO_IMG} alt="Featured residence" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--forest)]/60 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+                <div className="absolute inset-0 bg-gradient-to-b from-[var(--forest)]/60 via-transparent to-[var(--forest)]/30" />
+                <div className="absolute top-6 left-6 right-6 flex items-start justify-between">
                   <div>
-                    <div className="eyebrow text-[var(--cream)]/70">Featured · Vol. XVI</div>
-                    <div className="font-display text-2xl mt-1 text-[var(--cream)]">Magnolia Park · Hennur</div>
+                    <div className="eyebrow text-[var(--cream)]/80">Featured · Vol. XVI</div>
+                    <div className="font-display text-2xl mt-1 text-[var(--cream)]">Magnolia Park</div>
                   </div>
-                  <div className="hidden md:block w-12 h-12 rounded-full border border-[var(--cream)]/40 grid place-items-center text-[var(--cream)]">
+                  <div className="hidden md:flex w-11 h-11 rounded-full border border-[var(--cream)]/40 items-center justify-center text-[var(--cream)] backdrop-blur-sm">
                     <ArrowUpRight className="w-5 h-5" />
                   </div>
                 </div>
               </div>
 
-              <div className="hidden lg:block absolute -bottom-12 -left-12 w-44 h-56 overflow-hidden rounded-sm border border-[var(--gold)]/30 shadow-2xl">
+              <div className="hidden lg:block absolute -bottom-10 -left-16 w-40 h-52 overflow-hidden rounded-sm border border-[var(--gold)]/40 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)]">
                 <img src={HERO_SIDE} alt="" className="w-full h-full object-cover" />
               </div>
             </div>
+
           </div>
         </div>
       </section>
