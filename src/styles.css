@@ -1,13 +1,13 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -44,31 +44,25 @@
   --color-cream: var(--cream);
   --color-cream-2: var(--cream-2);
   --color-muted-sage: var(--muted-sage);
-
-  --shadow-luxe: 0 10px 40px -10px oklch(0.18 0.05 150 / 0.6);
-  --shadow-gold-glow: 0 0 0 1px oklch(0.78 0.10 70 / 0.5), 0 8px 30px -8px oklch(0.78 0.10 70 / 0.35);
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem;
 
-  /* Forest greens */
-  --forest:   #0f2818;
-  --forest-2: #1a3a2a;
-  --forest-3: #2d5a47;
+  --forest:   #0b1f12;
+  --forest-2: #142e1d;
+  --forest-3: #1f4530;
   --sage:     #3a6b56;
 
-  /* Accents */
-  --gold:      #d4a574;
-  --gold-rich: #c9a961;
-  --copper:    #b8674a;
+  --gold:      #c8a35c;
+  --gold-rich: #b08842;
+  --gold-soft: #e3c896;
+  --copper:    #a96545;
 
-  /* Text */
-  --cream:      #f5f1e8;
-  --cream-2:    #e8e4d9;
-  --muted-sage: #9ab5a0;
+  --cream:      #f4efe2;
+  --cream-2:    #e0d8c4;
+  --muted-sage: #8ca295;
 
-  /* Semantic */
   --background: var(--forest);
   --foreground: var(--cream);
   --card: var(--forest-2);
@@ -85,69 +79,123 @@
   --accent-foreground: var(--cream);
   --destructive: var(--copper);
   --destructive-foreground: var(--cream);
-  --border: rgba(212, 165, 116, 0.18);
-  --input: rgba(212, 165, 116, 0.25);
+  --border: rgba(200, 163, 92, 0.16);
+  --input: rgba(200, 163, 92, 0.22);
   --ring: var(--gold);
-}
-
-.dark {
-  --background: var(--forest);
-  --foreground: var(--cream);
 }
 
 @layer base {
   * {
     border-color: var(--color-border);
   }
-  html, body {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-weight: 300;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(58, 107, 86, 0.22), transparent 55%),
+      radial-gradient(ellipse 900px 500px at 110% 10%, rgba(200, 163, 92, 0.06), transparent 60%);
+    background-attachment: fixed;
   }
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
   }
   ::selection {
     background: var(--gold);
     color: var(--forest);
   }
+  /* Subtle grain overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='1'/></svg>");
+  }
 }
 
 @layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-mono    { font-family: var(--font-mono); }
+
   .text-gradient-gold {
-    background: linear-gradient(120deg, #e8c79b 0%, #d4a574 45%, #b8864a 100%);
+    background: linear-gradient(115deg, #f0d9a8 0%, #c8a35c 50%, #8b6a30 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
-  .bg-forest-gradient {
-    background:
-      radial-gradient(ellipse at top, rgba(58, 107, 86, 0.35), transparent 60%),
-      linear-gradient(180deg, #0f2818 0%, #142e1d 100%);
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
   }
+
   .luxe-card {
-    background: var(--forest-2);
-    border: 1px solid rgba(212, 165, 116, 0.18);
-    box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.6);
-    transition: all 0.35s ease;
+    background: linear-gradient(180deg, rgba(20, 46, 29, 0.85) 0%, rgba(11, 31, 18, 0.85) 100%);
+    border: 1px solid rgba(200, 163, 92, 0.14);
+    backdrop-filter: blur(6px);
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.4s, box-shadow 0.5s;
   }
   .luxe-card:hover {
-    background: linear-gradient(180deg, #1d4030 0%, #1a3a2a 100%);
-    border-color: rgba(212, 165, 116, 0.55);
-    box-shadow: 0 20px 50px -20px rgba(212, 165, 116, 0.25);
-    transform: translateY(-2px);
+    border-color: rgba(200, 163, 92, 0.45);
+    box-shadow:
+      0 30px 60px -30px rgba(0, 0, 0, 0.6),
+      0 0 0 1px rgba(200, 163, 92, 0.12) inset;
+    transform: translateY(-3px);
   }
-  .gold-divider {
+
+  .gold-rule {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.6), transparent);
+    background: linear-gradient(90deg, transparent, rgba(200, 163, 92, 0.55), transparent);
   }
-  .fade-up {
-    animation: fadeUp 0.7s ease both;
+  .gold-rule-left {
+    width: 56px;
+    height: 1px;
+    background: var(--gold);
   }
+
+  .fade-up { animation: fadeUp 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .fade-in { animation: fadeIn 1.2s ease both; }
+
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    animation: marquee 40s linear infinite;
+  }
+
+  .container-edge {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .container-edge {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
   }
 }
