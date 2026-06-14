@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Award, Building2, Compass, ShieldCheck, Sparkles, Star } from "lucide-react";
+import { ArrowUpRight, Award, Compass, Leaf, ShieldCheck, Star } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { COMPANY, PLOTS, PLANS, GALLERY, TESTIMONIALS, formatINR } from "@/lib/data";
@@ -8,15 +8,17 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Auralis Estates — Premium Residential Plots & House Plans" },
-      { name: "description", content: "Discover limited-edition plots, signature house plans and award-winning projects from Auralis Estates." },
+      { name: "description", content: "An invitation-only portfolio of limited-edition residential plots, house plans and signature projects from Auralis Estates." },
       { property: "og:title", content: "Auralis Estates — Premium Residential Plots & House Plans" },
-      { property: "og:description", content: "Discover limited-edition plots, signature house plans and award-winning projects." },
+      { property: "og:description", content: "Limited-edition plots, signature house plans and award-winning projects." },
     ],
   }),
   component: Home,
 });
 
-const HERO_IMG = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80";
+const HERO_IMG = "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=2400&q=85";
+const HERO_SIDE = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85";
+const STORY_IMG = "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=85";
 
 function Home() {
   const featuredPlots = PLOTS.slice(0, 3);
@@ -24,175 +26,259 @@ function Home() {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative min-h-[88vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={HERO_IMG} alt="Luxury residence" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--forest)] via-[var(--forest)]/85 to-[var(--forest)]/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--forest)] via-transparent to-transparent" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-5 lg:px-8 py-24 grid lg:grid-cols-2 gap-12 items-center w-full">
-          <div className="fade-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--gold)]/35 text-[var(--gold)] text-xs tracking-widest uppercase">
-              <Sparkles className="w-3.5 h-3.5" /> Estd. 2009 · 25+ projects
-            </div>
-            <h1 className="mt-6 font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05]">
-              Premium <span className="text-gradient-gold">residential plots</span> & bespoke house plans.
-            </h1>
-            <p className="mt-6 text-lg text-[var(--cream-2)] max-w-xl leading-relaxed">
-              A quiet portfolio of limited-edition addresses crafted for those who notice the small things — the grain of timber, the angle of light, the slow ease of arriving home.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild variant="gold" size="xl">
-                <Link to="/plots">Explore Plots <ArrowRight className="ml-1" /></Link>
-              </Button>
-              <Button asChild variant="gold-outline" size="xl">
-                <Link to="/plans">View House Plans</Link>
-              </Button>
-            </div>
-            <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
-              {[
-                { v: "500+", l: "Happy Owners" },
-                { v: "25+",  l: "Projects" },
-                { v: "16",   l: "Years" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <div className="font-display text-3xl text-[var(--gold)]">{s.v}</div>
-                  <div className="text-xs uppercase tracking-widest text-[var(--muted-sage)]">{s.l}</div>
+      {/* HERO — editorial split */}
+      <section className="relative pt-6 lg:pt-10">
+        <div className="max-w-[1480px] mx-auto container-edge">
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-stretch">
+            <div className="lg:col-span-7 flex flex-col justify-between min-h-[78vh] lg:min-h-[82vh] fade-up">
+              <div className="flex items-center gap-4 text-[var(--muted-sage)]">
+                <span className="gold-rule-left" />
+                <span className="eyebrow">Estd. 2009 · Bengaluru · India</span>
+              </div>
+
+              <div className="mt-10 lg:mt-0">
+                <h1 className="font-display text-[12vw] lg:text-[8.5vw] leading-[0.92] tracking-tight">
+                  Quiet&nbsp;land.
+                  <br />
+                  <span className="italic text-gradient-gold">Considered</span>
+                  <br />
+                  homes.
+                </h1>
+                <div className="mt-10 grid sm:grid-cols-[1fr_auto] gap-8 items-end max-w-3xl">
+                  <p className="text-lg text-[var(--cream-2)] leading-relaxed max-w-lg">
+                    An invitation-only portfolio of residential plots and house
+                    plans, crafted over sixteen years for those who measure home
+                    in detail, not square footage.
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    <Button asChild variant="gold" size="xl">
+                      <Link to="/plots">View the Release <ArrowUpRight className="ml-1" /></Link>
+                    </Button>
+                    <Button asChild variant="ghost" size="sm" className="text-[var(--cream)]/70 hover:text-[var(--gold)] justify-start px-0">
+                      <Link to="/about">Read our story →</Link>
+                    </Button>
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              <div className="mt-12 grid grid-cols-4 gap-6 border-t border-[var(--gold)]/15 pt-8">
+                {[
+                  { v: "16", l: "Years" },
+                  { v: "25", l: "Projects" },
+                  { v: "500", l: "Owners" },
+                  { v: "100%", l: "On Time" },
+                ].map((s) => (
+                  <div key={s.l}>
+                    <div className="font-display text-4xl text-[var(--cream)]">{s.v}</div>
+                    <div className="eyebrow mt-1 text-[var(--muted-sage)]">{s.l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 relative fade-in">
+              <div className="relative h-[55vh] lg:h-[82vh] overflow-hidden rounded-sm">
+                <img src={HERO_IMG} alt="Featured residence" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--forest)]/60 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+                  <div>
+                    <div className="eyebrow text-[var(--cream)]/70">Featured · Vol. XVI</div>
+                    <div className="font-display text-2xl mt-1 text-[var(--cream)]">Magnolia Park · Hennur</div>
+                  </div>
+                  <div className="hidden md:block w-12 h-12 rounded-full border border-[var(--cream)]/40 grid place-items-center text-[var(--cream)]">
+                    <ArrowUpRight className="w-5 h-5" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden lg:block absolute -bottom-12 -left-12 w-44 h-56 overflow-hidden rounded-sm border border-[var(--gold)]/30 shadow-2xl">
+                <img src={HERO_SIDE} alt="" className="w-full h-full object-cover" />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Plots */}
+      {/* MARQUEE */}
+      <section className="mt-24 lg:mt-40 border-y border-[var(--gold)]/15 py-6 overflow-hidden">
+        <div className="marquee-track flex whitespace-nowrap font-display text-3xl md:text-5xl italic text-[var(--cream)]/40">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <span key={i} className="flex items-center">
+              {["Restraint.", "Provenance.", "Craft.", "Stewardship.", "Patience.", "Permanence."].map((w) => (
+                <span key={w} className="flex items-center">
+                  <span className="px-10">{w}</span>
+                  <span className="text-[var(--gold)] text-base">◆</span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* FEATURED PLOTS */}
       <Section
-        eyebrow="Featured Plots"
-        title="A handpicked release for this season"
-        sub="Three plots from our latest masterplan — each released by invitation only."
-        cta={<Link to="/plots" className="text-[var(--gold)] hover:underline text-sm">View all plots →</Link>}
+        index="01"
+        eyebrow="Latest Release"
+        title="Three plots, by invitation."
+        sub="From our spring volume — each parcel personally surveyed, titled and ready to build on."
+        cta={{ label: "View all plots", to: "/plots" }}
       >
         <div className="grid md:grid-cols-3 gap-6">
-          {featuredPlots.map((p) => (
-            <article key={p.id} className="luxe-card rounded-xl overflow-hidden group">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              </div>
-              <div className="p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-display text-xl">{p.name}</h3>
-                    <p className="text-sm text-[var(--muted-sage)]">{p.location} · {p.size.toLocaleString()} sqft</p>
+          {featuredPlots.map((p, i) => (
+            <article key={p.id} className="group">
+              <Link to="/plots" className="block">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-sm">
+                  <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-[1400ms] ease-out" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--forest)]/80 via-[var(--forest)]/0 to-[var(--forest)]/0" />
+                  <span className="absolute top-4 left-4 eyebrow text-[var(--cream)]/80">{String(i + 1).padStart(2, "0")} / 03</span>
+                  <div className="absolute bottom-5 left-5 right-5">
+                    <div className="flex items-end justify-between gap-3">
+                      <div>
+                        <h3 className="font-display text-2xl text-[var(--cream)]">{p.name}</h3>
+                        <p className="text-xs text-[var(--cream)]/70 mt-1 font-mono uppercase tracking-widest">{p.location}</p>
+                      </div>
+                      <span className="text-[var(--gold)] font-display text-xl whitespace-nowrap">{formatINR(p.price)}</span>
+                    </div>
                   </div>
-                  <span className="shrink-0 text-xs font-semibold bg-[var(--gold)] text-[var(--forest)] px-2.5 py-1 rounded">
-                    {formatINR(p.price)}
-                  </span>
                 </div>
-                <div className="flex flex-wrap gap-1.5 mt-4">
-                  {p.amenities.slice(0, 3).map((a) => (
-                    <span key={a} className="text-[11px] uppercase tracking-wider text-[var(--cream-2)]/85 border border-[var(--gold)]/25 px-2 py-0.5 rounded">{a}</span>
-                  ))}
+                <div className="flex items-center justify-between gap-3 mt-4">
+                  <span className="text-sm text-[var(--cream-2)]/80">{p.size.toLocaleString()} sqft · {p.amenities[0]}</span>
+                  <span className="text-[var(--gold)] text-sm group-hover:translate-x-1 transition-transform">→</span>
                 </div>
-                <div className="mt-5 flex gap-2">
-                  <Button asChild variant="gold" size="sm" className="flex-1"><Link to="/contact">Enquire</Link></Button>
-                  <Button asChild variant="gold-outline" size="sm" className="flex-1"><Link to="/plots">Details</Link></Button>
-                </div>
-              </div>
+              </Link>
             </article>
           ))}
         </div>
       </Section>
 
-      {/* House plans */}
+      {/* HOUSE PLANS */}
       <Section
+        index="02"
         eyebrow="House Plans"
-        title="Live in one of four signature typologies"
+        title="Six typologies. Infinite variations."
         sub="From compact ateliers to four-bedroom heritage villas — every plan refined over a decade of practice."
-        cta={<Link to="/plans" className="text-[var(--gold)] hover:underline text-sm">Explore all plans →</Link>}
+        cta={{ label: "Explore all plans", to: "/plans" }}
       >
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {featuredPlans.map((p) => (
-            <article key={p.id} className="luxe-card rounded-xl overflow-hidden">
-              <div className="aspect-[5/4] overflow-hidden">
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+            <article key={p.id} className="luxe-card rounded-sm overflow-hidden">
+              <div className="aspect-[5/6] overflow-hidden">
+                <img src={p.image} alt={p.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1400ms]" />
               </div>
               <div className="p-5">
-                <div className="text-xs uppercase tracking-widest text-[var(--gold)]">{p.category}</div>
-                <h3 className="font-display text-lg mt-1">{p.name}</h3>
-                <p className="text-xs text-[var(--muted-sage)] mt-1">
-                  {p.bedrooms} BR · {p.bathrooms} BA · {p.area} sqft
+                <div className="eyebrow text-[var(--gold)]">{p.category}</div>
+                <h3 className="font-display text-2xl mt-2">{p.name}</h3>
+                <p className="text-xs text-[var(--muted-sage)] mt-1.5 font-mono tracking-wider">
+                  {p.bedrooms} BR · {p.bathrooms} BA · {p.area} SQFT
                 </p>
-                <div className="mt-3 text-sm text-[var(--cream-2)]">From <span className="text-[var(--gold)] font-semibold">{formatINR(p.price)}</span></div>
+                <div className="mt-4 pt-4 border-t border-[var(--gold)]/15 text-sm text-[var(--cream-2)]/80">
+                  From <span className="text-[var(--gold)] font-medium">{formatINR(p.price)}</span>
+                </div>
               </div>
             </article>
           ))}
         </div>
       </Section>
 
-      {/* Why us */}
-      <Section eyebrow="Why Auralis" title="A practice built around restraint">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {[
-            { icon: Compass, t: "Prime Locations", d: "Curated micro-markets vetted across infrastructure, schools and natural assets." },
-            { icon: Building2, t: "Considered Architecture", d: "In-house atelier of architects who refuse the generic." },
-            { icon: ShieldCheck, t: "Transparent Payments", d: "Clear, milestone-based plans with zero hidden charges." },
-            { icon: Award, t: "16 Years, On Time", d: "A delivery record measured in handed-over keys, not promises." },
-          ].map((f) => (
-            <div key={f.t} className="luxe-card rounded-xl p-6">
-              <div className="w-11 h-11 grid place-items-center rounded-md border border-[var(--gold)]/40 text-[var(--gold)] bg-[var(--forest)]">
-                <f.icon className="w-5 h-5" />
+      {/* STORY / WHY US */}
+      <section className="px-0 mt-32 lg:mt-48">
+        <div className="max-w-[1480px] mx-auto container-edge">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-6 lg:order-2">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-sm">
+                <img src={STORY_IMG} alt="Studio interior" className="w-full h-full object-cover" />
               </div>
-              <h3 className="font-display text-lg mt-4">{f.t}</h3>
-              <p className="mt-2 text-sm text-[var(--cream-2)]/85 leading-relaxed">{f.d}</p>
             </div>
-          ))}
-        </div>
-      </Section>
+            <div className="lg:col-span-6 lg:order-1">
+              <div className="flex items-center gap-4">
+                <span className="gold-rule-left" />
+                <span className="eyebrow">03 — On Practice</span>
+              </div>
+              <h2 className="font-display text-5xl md:text-6xl mt-6">
+                We build slowly,<br /><span className="italic text-gradient-gold">on purpose.</span>
+              </h2>
+              <p className="mt-6 text-lg text-[var(--cream-2)] leading-relaxed max-w-lg">
+                Sixteen years, twenty-five projects. We choose land carefully.
+                We refuse the work we cannot do well. The result is a portfolio
+                we are still proud to walk through, a decade later.
+              </p>
 
-      {/* Testimonials */}
-      <Section eyebrow="Owners" title="Stories from our residents">
-        <div className="grid md:grid-cols-3 gap-5">
-          {TESTIMONIALS.map((t) => (
-            <figure key={t.name} className="luxe-card rounded-xl p-6">
-              <div className="flex gap-1 text-[var(--gold)]">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
+              <div className="mt-10 grid sm:grid-cols-2 gap-x-8 gap-y-6">
+                {[
+                  { icon: Compass, t: "Prime micro-markets", d: "Curated for infrastructure, schools and natural assets." },
+                  { icon: ShieldCheck, t: "Transparent payments", d: "Milestone-based, zero hidden charges." },
+                  { icon: Leaf, t: "Stewardship", d: "We leave each site with more trees than we found." },
+                  { icon: Award, t: "Delivered on time", d: "A record measured in handed-over keys." },
+                ].map((f) => (
+                  <div key={f.t} className="flex gap-3">
+                    <f.icon className="w-5 h-5 text-[var(--gold)] mt-1 shrink-0" />
+                    <div>
+                      <div className="font-display text-lg">{f.t}</div>
+                      <div className="text-sm text-[var(--cream-2)]/75 leading-relaxed mt-0.5">{f.d}</div>
+                    </div>
+                  </div>
                 ))}
               </div>
-              <blockquote className="mt-4 text-[var(--cream-2)] leading-relaxed">"{t.quote}"</blockquote>
-              <figcaption className="mt-4 text-sm">
-                <div className="text-cream font-medium">{t.name}</div>
-                <div className="text-[var(--muted-sage)] text-xs">{t.title}</div>
+
+              <Button asChild variant="gold-outline" size="lg" className="mt-10">
+                <Link to="/about">About the atelier →</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <Section index="04" eyebrow="Owners" title="From the people who live here.">
+        <div className="grid md:grid-cols-3 gap-px bg-[var(--gold)]/15 border-y border-[var(--gold)]/15">
+          {TESTIMONIALS.map((t) => (
+            <figure key={t.name} className="bg-[var(--forest)] p-8 lg:p-10">
+              <div className="flex gap-0.5 text-[var(--gold)]">
+                {Array.from({ length: t.rating }).map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                ))}
+              </div>
+              <blockquote className="mt-6 font-display text-2xl leading-snug text-[var(--cream)]">
+                "{t.quote}"
+              </blockquote>
+              <figcaption className="mt-8 pt-6 border-t border-[var(--gold)]/15">
+                <div className="text-[var(--cream)] font-medium">{t.name}</div>
+                <div className="text-[var(--muted-sage)] text-xs mt-0.5 font-mono uppercase tracking-widest">{t.title}</div>
               </figcaption>
             </figure>
           ))}
         </div>
       </Section>
 
-      {/* Gallery */}
-      <Section eyebrow="Gallery" title="A glimpse of the work" cta={<Link to="/gallery" className="text-[var(--gold)] hover:underline text-sm">Visit full gallery →</Link>}>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {GALLERY.slice(0, 8).map((g, i) => (
-            <div key={i} className="aspect-square overflow-hidden rounded-lg border border-[var(--gold)]/15 group">
-              <img src={g.src} alt={g.tag} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+      {/* GALLERY STRIP */}
+      <Section index="05" eyebrow="Gallery" title="A glimpse of the work." cta={{ label: "Full gallery", to: "/gallery" }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+          {GALLERY.slice(0, 6).map((g, i) => (
+            <div key={i} className={`overflow-hidden rounded-sm border border-[var(--gold)]/10 ${i % 3 === 0 ? "row-span-2 aspect-[3/4] md:aspect-auto" : "aspect-square"}`}>
+              <img src={g.src} alt={g.tag} className="w-full h-full object-cover hover:scale-110 transition-transform duration-[1400ms]" />
             </div>
           ))}
         </div>
       </Section>
 
       {/* CTA */}
-      <section className="px-5 lg:px-8 mt-24">
-        <div className="max-w-7xl mx-auto rounded-2xl overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--sage)]/30 via-[var(--forest-2)] to-[var(--forest)]" />
-          <div className="absolute inset-0 border border-[var(--gold)]/30 rounded-2xl pointer-events-none" />
-          <div className="relative px-8 md:px-14 py-14 md:py-20 grid md:grid-cols-[1.4fr_1fr] gap-10 items-center">
+      <section className="container-edge mt-32 lg:mt-48 mb-8">
+        <div className="max-w-[1480px] mx-auto relative overflow-hidden rounded-sm border border-[var(--gold)]/30">
+          <div className="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2000&q=85" alt="" className="w-full h-full object-cover opacity-20" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--forest)] via-[var(--forest)]/95 to-[var(--forest-2)]" />
+          </div>
+          <div className="relative px-8 md:px-16 py-20 md:py-28 grid md:grid-cols-[1.4fr_1fr] gap-10 items-center">
             <div>
-              <p className="text-[var(--gold)] text-xs uppercase tracking-widest">Ready to begin?</p>
-              <h2 className="font-display text-4xl md:text-5xl mt-3">Schedule a private site visit.</h2>
-              <p className="mt-4 text-[var(--cream-2)] max-w-xl">Spend an unhurried morning with a member of our team. We'll walk you through the masterplan, the architecture and the land itself.</p>
+              <span className="eyebrow">Begin</span>
+              <h2 className="font-display text-5xl md:text-6xl mt-4 leading-[0.95]">
+                Spend a quiet morning<br /><span className="italic text-gradient-gold">on the land.</span>
+              </h2>
+              <p className="mt-6 text-[var(--cream-2)] max-w-lg">
+                A member of our team will walk you through the masterplan, the architecture and the parcel itself — unhurried, by appointment.
+              </p>
             </div>
-            <div className="flex flex-col sm:flex-row md:flex-col gap-3">
+            <div className="flex flex-col gap-3">
               <Button asChild variant="gold" size="xl"><Link to="/contact">Schedule a Visit</Link></Button>
               <Button asChild variant="gold-outline" size="xl"><a href={`tel:${COMPANY.phoneHref}`}>Call {COMPANY.phone}</a></Button>
             </div>
@@ -204,18 +290,28 @@ function Home() {
 }
 
 function Section({
-  eyebrow, title, sub, cta, children,
-}: { eyebrow: string; title: string; sub?: string; cta?: React.ReactNode; children: React.ReactNode }) {
+  index, eyebrow, title, sub, cta, children,
+}: {
+  index?: string; eyebrow: string; title: string; sub?: string;
+  cta?: { label: string; to: string }; children: React.ReactNode;
+}) {
   return (
-    <section className="px-5 lg:px-8 mt-24">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+    <section className="container-edge mt-28 lg:mt-44">
+      <div className="max-w-[1480px] mx-auto">
+        <div className="grid md:grid-cols-[auto_1fr_auto] gap-6 md:gap-10 items-end mb-12 lg:mb-16">
+          {index && (
+            <div className="eyebrow text-[var(--muted-sage)] md:pt-3">— {index}</div>
+          )}
           <div>
-            <p className="text-[var(--gold)] text-xs uppercase tracking-widest">{eyebrow}</p>
-            <h2 className="font-display text-3xl md:text-4xl mt-2 max-w-2xl">{title}</h2>
-            {sub && <p className="mt-3 text-[var(--muted-sage)] max-w-2xl">{sub}</p>}
+            <div className="eyebrow">{eyebrow}</div>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl mt-3 max-w-2xl leading-[1.02]">{title}</h2>
+            {sub && <p className="mt-4 text-[var(--cream-2)]/80 max-w-xl">{sub}</p>}
           </div>
-          {cta}
+          {cta && (
+            <Link to={cta.to} className="self-end text-[var(--gold)] hover:text-[var(--gold-soft)] text-sm font-mono uppercase tracking-widest whitespace-nowrap inline-flex items-center gap-2">
+              {cta.label} <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          )}
         </div>
         {children}
       </div>
