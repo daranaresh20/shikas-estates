@@ -15,6 +15,7 @@ import { Route as PlansRouteImport } from './routes/plans'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsOngoingRouteImport } from './routes/projects.ongoing'
+import { Route as ProjectsCompletedRouteImport } from './routes/projects.completed'
 
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
@@ -46,6 +47,11 @@ const ProjectsOngoingRoute = ProjectsOngoingRouteImport.update({
   path: '/ongoing',
   getParentRoute: () => ProjectsRoute,
 } as any)
+const ProjectsCompletedRoute = ProjectsCompletedRouteImport.update({
+  id: '/completed',
+  path: '/completed',
+  getParentRoute: () => ProjectsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
   '/projects': typeof ProjectsRouteWithChildren
+  '/projects/completed': typeof ProjectsCompletedRoute
   '/projects/ongoing': typeof ProjectsOngoingRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
   '/projects': typeof ProjectsRouteWithChildren
+  '/projects/completed': typeof ProjectsCompletedRoute
   '/projects/ongoing': typeof ProjectsOngoingRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
   '/projects': typeof ProjectsRouteWithChildren
+  '/projects/completed': typeof ProjectsCompletedRoute
   '/projects/ongoing': typeof ProjectsOngoingRoute
 }
 export interface FileRouteTypes {
@@ -80,9 +89,17 @@ export interface FileRouteTypes {
     | '/plans'
     | '/plots'
     | '/projects'
+    | '/projects/completed'
     | '/projects/ongoing'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/plans' | '/plots' | '/projects' | '/projects/ongoing'
+  to:
+    | '/'
+    | '/about'
+    | '/plans'
+    | '/plots'
+    | '/projects'
+    | '/projects/completed'
+    | '/projects/ongoing'
   id:
     | '__root__'
     | '/'
@@ -90,6 +107,7 @@ export interface FileRouteTypes {
     | '/plans'
     | '/plots'
     | '/projects'
+    | '/projects/completed'
     | '/projects/ongoing'
   fileRoutesById: FileRoutesById
 }
@@ -145,14 +163,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsOngoingRouteImport
       parentRoute: typeof ProjectsRoute
     }
+    '/projects/completed': {
+      id: '/projects/completed'
+      path: '/completed'
+      fullPath: '/projects/completed'
+      preLoaderRoute: typeof ProjectsCompletedRouteImport
+      parentRoute: typeof ProjectsRoute
+    }
   }
 }
 
 interface ProjectsRouteChildren {
+  ProjectsCompletedRoute: typeof ProjectsCompletedRoute
   ProjectsOngoingRoute: typeof ProjectsOngoingRoute
 }
 
 const ProjectsRouteChildren: ProjectsRouteChildren = {
+  ProjectsCompletedRoute: ProjectsCompletedRoute,
   ProjectsOngoingRoute: ProjectsOngoingRoute,
 }
 
