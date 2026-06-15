@@ -47,21 +47,21 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.6rem;
 
-  --forest:   #0b1f12;
-  --forest-2: #142e1d;
-  --forest-3: #1f4530;
-  --sage:     #3a6b56;
+  --forest:   #f5f9fc; /* Main page background (soft, premium sky-blue-tinted white) */
+  --forest-2: #ffffff; /* Card background (pure white for contrast) */
+  --forest-3: #e0f2fe; /* Hover or accent background (light sky-blue) */
+  --sage:     #0284c7; /* Primary sky blue highlight color */
 
-  --gold:      #c8a35c;
-  --gold-rich: #b08842;
-  --gold-soft: #e3c896;
-  --copper:    #a96545;
+  --gold:      #0369a1; /* Primary brand text color (deep, premium sapphire/navy blue) */
+  --gold-rich: #0c4a6e; /* Accent hover color (darker sapphire blue) */
+  --gold-soft: #bae6fd; /* Soft blue focus/ring */
+  --copper:    #ef4444; /* Destructive color */
 
-  --cream:      #f4efe2;
-  --cream-2:    #e0d8c4;
-  --muted-sage: #8ca295;
+  --cream:      #0f172a; /* Foreground text (dark slate/navy for maximum readability) */
+  --cream-2:    #334155; /* Secondary text */
+  --muted-sage: #64748b; /* Muted text */
 
   --background: var(--forest);
   --foreground: var(--cream);
@@ -70,18 +70,18 @@
   --popover: var(--forest-2);
   --popover-foreground: var(--cream);
   --primary: var(--gold);
-  --primary-foreground: var(--forest);
+  --primary-foreground: #ffffff;
   --secondary: var(--forest-3);
-  --secondary-foreground: var(--cream);
-  --muted: var(--forest-2);
+  --secondary-foreground: var(--gold);
+  --muted: var(--forest-3);
   --muted-foreground: var(--muted-sage);
   --accent: var(--sage);
-  --accent-foreground: var(--cream);
+  --accent-foreground: #ffffff;
   --destructive: var(--copper);
-  --destructive-foreground: var(--cream);
-  --border: rgba(200, 163, 92, 0.16);
-  --input: rgba(200, 163, 92, 0.22);
-  --ring: var(--gold);
+  --destructive-foreground: #ffffff;
+  --border: rgba(3, 105, 161, 0.12); /* Delicate sapphire border */
+  --input: rgba(3, 105, 161, 0.16);
+  --ring: var(--sage);
 }
 
 @layer base {
@@ -99,8 +99,8 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     background-image:
-      radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(58, 107, 86, 0.22), transparent 55%),
-      radial-gradient(ellipse 900px 500px at 110% 10%, rgba(200, 163, 92, 0.06), transparent 60%);
+      radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(14, 165, 233, 0.08), transparent 55%),
+      radial-gradient(ellipse 900px 500px at 110% 10%, rgba(3, 105, 161, 0.04), transparent 60%);
     background-attachment: fixed;
   }
   h1, h2, h3, h4 {
@@ -120,7 +120,7 @@
     inset: 0;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.04;
+    opacity: 0.02;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='1'/></svg>");
   }
@@ -131,7 +131,7 @@
   .font-mono    { font-family: var(--font-mono); }
 
   .text-gradient-gold {
-    background: linear-gradient(115deg, #f0d9a8 0%, #c8a35c 50%, #8b6a30 100%);
+    background: linear-gradient(115deg, #0284c7 0%, #0369a1 50%, #0f172a 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -146,16 +146,16 @@
   }
 
   .luxe-card {
-    background: linear-gradient(180deg, rgba(20, 46, 29, 0.85) 0%, rgba(11, 31, 18, 0.85) 100%);
-    border: 1px solid rgba(200, 163, 92, 0.14);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(244, 248, 251, 0.9) 100%);
+    border: 1px solid rgba(3, 105, 161, 0.08);
     backdrop-filter: blur(6px);
     transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.4s, box-shadow 0.5s;
   }
   .luxe-card:hover {
-    border-color: rgba(200, 163, 92, 0.45);
+    border-color: rgba(2, 132, 199, 0.25);
     box-shadow:
-      0 30px 60px -30px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(200, 163, 92, 0.12) inset;
+      0 20px 40px -20px rgba(15, 23, 42, 0.08),
+      0 0 0 1px rgba(2, 132, 199, 0.05) inset;
     transform: translateY(-3px);
   }
 
