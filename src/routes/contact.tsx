@@ -49,7 +49,7 @@ function Contact() {
               <iframe
                 title="Map"
                 className="w-full h-80 grayscale-[0.4]"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=78.40%2C17.40%2C78.45%2C17.45&amp;layer=mapnik"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=78.65%2C17.31%2C78.71%2C17.35&amp;layer=mapnik"
               />
             </div>
             <div className="luxe-card rounded-xl p-6 flex items-start gap-3">

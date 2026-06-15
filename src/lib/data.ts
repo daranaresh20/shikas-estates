@@ -7,7 +7,7 @@ export const COMPANY = {
   phoneHref: "+919177686822",
   whatsapp: "919177686822",
   email: "contactus@shikasestates.com",
-  address: "42, Jubilee Hills Road, Hyderabad 500033",
+  address: "Pasumamla, Telangana",
   hours: "Mon–Sat: 9 AM – 6 PM · Sunday: 10 AM – 4 PM",
 };
 
