@@ -7,7 +7,7 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: `About — ${COMPANY.name}` },
-      { name: "description", content: "Sixteen years of crafting limited-edition residences with restraint, intention and an obsession with craft." },
+      { name: "description", content: "Crafting limited-edition residences with restraint, intention and an obsession with craft." },
       { property: "og:title", content: `About — ${COMPANY.name}` },
       { property: "og:description", content: "Our story, our team, and the architectural practice behind Shika's Estates." },
     ],
@@ -44,22 +44,10 @@ function About() {
           />
           <div>
             <p className="text-[var(--gold)] text-xs uppercase tracking-widest">Our story</p>
-            <h2 className="font-display text-3xl md:text-4xl mt-3">From a single drawing board to twenty-five communities.</h2>
+            <h2 className="font-display text-3xl md:text-4xl mt-3">From a single drawing board to thoughtfully planned communities.</h2>
             <div className="mt-6 space-y-4 text-[var(--cream-2)]/90 leading-relaxed">
-              <p>What started as a two-person studio above a bookstore in Banjara Hills has quietly grown into one of Hyderabad's most respected boutique developers — without ever losing the original promise: every project, personally led.</p>
-              <p>We choose land carefully. We build slowly. We refuse the projects we cannot do well. The result is a portfolio that we are still proud to walk through, years later.</p>
-            </div>
-            <div className="grid grid-cols-3 gap-6 mt-8">
-              {[
-                { v: "2026", l: "Founded" },
-                { v: "25+",  l: "Projects" },
-                { v: "500+", l: "Owners" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <div className="font-display text-3xl text-[var(--gold)]">{s.v}</div>
-                  <div className="text-xs uppercase tracking-widest text-[var(--muted-sage)]">{s.l}</div>
-                </div>
-              ))}
+              <p>We are establishing one of Hyderabad's most respected boutique real estate developers — without ever losing our core promise: every project, personally designed and overseen.</p>
+              <p>We choose land carefully. We design slowly. We refuse the projects we cannot do well. The result is a portfolio that we will be proud to stand behind, years later.</p>
             </div>
           </div>
         </div>

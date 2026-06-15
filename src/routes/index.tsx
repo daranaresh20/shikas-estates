@@ -46,9 +46,8 @@ function Home() {
                 </h1>
                 <div className="mt-10 grid sm:grid-cols-[1fr_auto] gap-8 items-end max-w-3xl">
                   <p className="text-lg text-[var(--cream-2)] leading-relaxed max-w-lg">
-                    An invitation-only portfolio of residential plots and house
-                    plans, crafted over sixteen years for those who measure home
-                    in detail, not square footage.
+                    An invitation-only portfolio of premium residential plots and house
+                    plans, crafted for those who value home in detail, not square footage.
                   </p>
                   <div className="flex flex-col gap-3">
                     <Button asChild variant="gold" size="xl">
@@ -61,19 +60,6 @@ function Home() {
                 </div>
               </div>
 
-              <div className="mt-12 grid grid-cols-4 gap-6 border-t border-[var(--gold)]/15 pt-8">
-                {[
-                  { v: "16", l: "Years" },
-                  { v: "25", l: "Projects" },
-                  { v: "500", l: "Owners" },
-                  { v: "100%", l: "On Time" },
-                ].map((s) => (
-                  <div key={s.l}>
-                    <div className="font-display text-4xl text-[var(--cream)]">{s.v}</div>
-                    <div className="eyebrow mt-1 text-[var(--muted-sage)]">{s.l}</div>
-                  </div>
-                ))}
-              </div>
             </div>
 
             <div className="lg:col-span-5 relative fade-in">
@@ -199,9 +185,8 @@ function Home() {
                 We build slowly,<br /><span className="italic text-gradient-gold">on purpose.</span>
               </h2>
               <p className="mt-6 text-lg text-[var(--cream-2)] leading-relaxed max-w-lg">
-                Sixteen years, twenty-five projects. We choose land carefully.
-                We refuse the work we cannot do well. The result is a portfolio
-                we are still proud to walk through, a decade later.
+                We choose land carefully. We refuse the work we cannot do well.
+                The result is a portfolio we will be proud to walk through, a decade later.
               </p>
 
               <div className="mt-10 grid sm:grid-cols-2 gap-x-8 gap-y-6">
