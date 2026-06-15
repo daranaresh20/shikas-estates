@@ -3,10 +3,10 @@
 export const COMPANY = {
   name: "Shika's Estates",
   tagline: "Premium Residential Plots & House Plans",
-  phone: "+91 98765 43210",
-  phoneHref: "+919876543210",
-  whatsapp: "919876543210",
-  email: "hello@shikasestates.com",
+  phone: "+91 9177686822",
+  phoneHref: "+919177686822",
+  whatsapp: "919177686822",
+  email: "contactus@shikasestates.com",
   address: "42, Jubilee Hills Road, Hyderabad 500033",
   hours: "Mon–Sat: 9 AM – 6 PM · Sunday: 10 AM – 4 PM",
 };
