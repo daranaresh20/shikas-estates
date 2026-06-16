@@ -21,6 +21,7 @@ function AuthPage() {
   
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState<UserRole>("Customer");
   
   // Signup form state
@@ -30,15 +31,15 @@ function AuthPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!loginEmail) return toast.error("Please enter email");
+    if (!loginEmail) return toast.error("Please enter email/username");
     
     setIsLoading(true);
     try {
-      await login(loginEmail, selectedRole);
-      toast.success(`Welcome back! Logged in as ${selectedRole}`);
+      await login(loginEmail, loginPassword, selectedRole);
+      toast.success(`Welcome back! Logged in successfully.`);
       navigate({ to: "/" });
     } catch (err) {
-      toast.error("Failed to login");
+      toast.error("Failed to login. Please check email/username and password.");
     } finally {
       setIsLoading(false);
     }
@@ -92,15 +93,27 @@ function AuthPage() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-1">
-                      <Label htmlFor="email" className="text-xs font-mono uppercase tracking-wider text-[var(--gold)]">Email address</Label>
+                      <Label htmlFor="email" className="text-xs font-mono uppercase tracking-wider text-[var(--gold)]">Email or Username</Label>
                       <Input
                         id="email"
-                        type="email"
-                        placeholder="you@example.com"
+                        type="text"
+                        placeholder="you@example.com or shikaestatesadmin"
                         value={loginEmail}
                         onChange={(e) => setLoginEmail(e.target.value)}
                         className="bg-white/50 border-[var(--gold)]/20 focus-visible:ring-[var(--gold)]"
                         required
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <Label htmlFor="password" className="text-xs font-mono uppercase tracking-wider text-[var(--gold)]">Password</Label>
+                      <Input
+                        id="password"
+                        type="password"
+                        placeholder="••••••••"
+                        value={loginPassword}
+                        onChange={(e) => setLoginPassword(e.target.value)}
+                        className="bg-white/50 border-[var(--gold)]/20 focus-visible:ring-[var(--gold)]"
                       />
                     </div>
                     
