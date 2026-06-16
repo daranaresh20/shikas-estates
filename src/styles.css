@@ -49,19 +49,19 @@
 :root {
   --radius: 0.75rem;
 
-  --forest:   #fbfbfe; /* Alabaster with a hint of vibrant blue */
-  --forest-2: #ffffff; /* Crisp white for cards */
-  --forest-3: #eef2ff; /* Soft indigo-50 for clean contrast */
-  --sage:     #4f46e5; /* Vibrant indigo accent */
+  --forest:   #06050a; /* Cosmic midnight black base */
+  --forest-2: #12101e; /* Space-indigo frosted card backing */
+  --forest-3: #1c192f; /* Deep violet contrast */
+  --sage:     #818cf8; /* Radiant indigo-purple accent */
 
-  --gold:      #311b92; /* Deep, rich violet-royal */
-  --gold-rich: #4a148c; /* Deeper violet for hover states */
-  --gold-soft: #c7d2fe; /* Indigo ring/border */
-  --copper:    #ef4444; 
+  --gold:      #eef2ff; /* Crystal pearl text for primary headers */
+  --gold-rich: #c7d2fe; /* Light indigo hover for headings */
+  --gold-soft: #2e2a47; /* Sleek dark borders */
+  --copper:    #f43f5e; 
 
-  --cream:      #0f172a; 
-  --cream-2:    #1e293b; 
-  --muted-sage: #6366f1; /* Vibrant blue-indigo for secondary tags */
+  --cream:      #f3f4f6; /* Off-white for high-readability text */
+  --cream-2:    #d1d5db; /* Cool gray for secondary descriptions */
+  --muted-sage: #a78bfa; /* Glowing purple-violet for badges */
 
   --background: var(--forest);
   --foreground: var(--cream);
@@ -70,17 +70,17 @@
   --popover: var(--forest-2);
   --popover-foreground: var(--cream);
   --primary: var(--gold);
-  --primary-foreground: #ffffff;
+  --primary-foreground: #080710;
   --secondary: var(--forest-3);
   --secondary-foreground: var(--gold);
   --muted: var(--forest-3);
   --muted-foreground: var(--muted-sage);
   --accent: var(--sage);
-  --accent-foreground: #ffffff;
+  --accent-foreground: #080710;
   --destructive: var(--copper);
   --destructive-foreground: #ffffff;
-  --border: rgba(99, 102, 241, 0.12); /* Subtle indigo border */
-  --input: rgba(99, 102, 241, 0.15);
+  --border: rgba(129, 140, 248, 0.15); /* Elegant glowing border */
+  --input: rgba(129, 140, 248, 0.2);
   --ring: var(--sage);
 }
 
@@ -99,8 +99,8 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     background-image:
-      radial-gradient(circle at 5% 10%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 95% 90%, rgba(245, 158, 11, 0.04) 0%, transparent 50%);
+      radial-gradient(circle at 10% 20%, rgba(129, 140, 248, 0.15) 0%, transparent 60%),
+      radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 60%);
     background-attachment: fixed;
   }
   h1, h2, h3, h4 {
@@ -110,8 +110,8 @@
     line-height: 1.05;
   }
   ::selection {
-    background: var(--gold);
-    color: #ffffff;
+    background: var(--sage);
+    color: #080710;
   }
   /* Subtle grain overlay */
   body::before {
@@ -131,7 +131,7 @@
   .font-mono    { font-family: var(--font-mono); }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #f59e0b 100%);
+    background: linear-gradient(135deg, #818cf8 0%, #ec4899 50%, #fbbf24 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -142,20 +142,21 @@
     font-size: 11px;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--sage);
   }
 
   .luxe-card {
-    background: #ffffff;
-    border: 1px solid rgba(99, 102, 241, 0.08);
-    box-shadow: 0 12px 34px -10px rgba(99, 102, 241, 0.06);
+    background: rgba(18, 16, 30, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(129, 140, 248, 0.1);
+    box-shadow: 0 12px 34px -10px rgba(0, 0, 0, 0.5);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .luxe-card:hover {
-    border-color: rgba(99, 102, 241, 0.3);
+    border-color: rgba(129, 140, 248, 0.4);
     box-shadow:
-      0 24px 48px -15px rgba(99, 102, 241, 0.12),
-      0 0 0 1px rgba(99, 102, 241, 0.02) inset;
+      0 24px 48px -15px rgba(129, 140, 248, 0.2),
+      0 0 0 1px rgba(129, 140, 248, 0.05) inset;
     transform: translateY(-5px);
   }
 
