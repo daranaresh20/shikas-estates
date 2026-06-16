@@ -9,15 +9,18 @@ export interface AppUser {
   role: UserRole;
   fullName?: string;
   phone?: string;
+  username?: string;
+  password?: string;
 }
 
 interface AuthContextType {
   user: AppUser | null;
   role: UserRole;
   isLoading: boolean;
-  login: (email: string, password?: string) => Promise<void>;
-  signUp: (email: string, fullName: string, phone: string) => Promise<void>;
+  login: (emailOrUsername: string, password?: string) => Promise<void>;
+  signUp: (email: string, fullName: string, phone: string, username: string, password?: string) => Promise<void>;
   logout: () => Promise<void>;
+  checkUniqueness: (email: string, username: string, phone: string) => { emailExists: boolean; usernameExists: boolean; phoneExists: boolean };
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,7 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [role, setRole] = useState<UserRole>("Guest");
   const [isLoading, setIsLoading] = useState(true);
 
-  // Helper to get role based on email/username and password checks
+  // Helper to determine role
   const determineRole = (emailOrUsername: string, password?: string): UserRole => {
     const ident = emailOrUsername.toLowerCase().trim();
     if (
@@ -39,8 +42,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return "Customer";
   };
 
+  // Get all registered users from mock DB
+  const getRegisteredUsers = (): AppUser[] => {
+    const saved = localStorage.getItem("shikas_registered_users");
+    if (!saved) {
+      // Add default Admin user to database
+      const defaultAdmin: AppUser = {
+        id: "admin_user_id",
+        email: "admin@shikasestates.com",
+        username: "shikaestatesadmin",
+        password: "ShikasEstates9",
+        role: "SuperUser",
+        fullName: "Shika Admin",
+        phone: "+919177686822",
+      };
+      localStorage.setItem("shikas_registered_users", JSON.stringify([defaultAdmin]));
+      return [defaultAdmin];
+    }
+    try {
+      return JSON.parse(saved);
+    } catch {
+      return [];
+    }
+  };
+
+  const checkUniqueness = (email: string, username: string, phone: string) => {
+    const users = getRegisteredUsers();
+    return {
+      emailExists: users.some((u) => u.email.toLowerCase().trim() === email.toLowerCase().trim()),
+      usernameExists: users.some((u) => u.username?.toLowerCase().trim() === username.toLowerCase().trim()),
+      phoneExists: users.some((u) => u.phone?.trim() === phone.trim()),
+    };
+  };
+
   useEffect(() => {
-    // Check if we have mock auth stored in localStorage
     const savedMockUser = localStorage.getItem("shikas_mock_user");
     if (savedMockUser) {
       try {
@@ -64,7 +99,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         const email = session.user.email || "";
-        // Fallback check
         const userRole = email === "admin@shikasestates.com" || email === "shikaestatesadmin@shikasestates.com" ? "SuperUser" : "Customer";
         
         setUser({
@@ -116,14 +150,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       const userRole = determineRole(emailOrUsername, password);
-      
-      const email = emailOrUsername.includes("@") 
-        ? emailOrUsername 
-        : `${emailOrUsername}@shikasestates.com`;
+      const ident = emailOrUsername.toLowerCase().trim();
 
-      const mockUser: AppUser = {
+      // Check registered users for credentials match
+      const users = getRegisteredUsers();
+      const matchedUser = users.find(
+        (u) => 
+          (u.email.toLowerCase().trim() === ident || u.username?.toLowerCase().trim() === ident) && 
+          u.password === password
+      );
+
+      if (!matchedUser && userRole !== "SuperUser") {
+        throw new Error("Invalid username or password");
+      }
+
+      const activeUser = matchedUser || {
         id: "mock_user_" + Math.random().toString(36).substr(2, 9),
-        email,
+        email: emailOrUsername.includes("@") ? emailOrUsername : `${emailOrUsername}@shikasestates.com`,
         role: userRole,
         fullName: emailOrUsername.split("@")[0].toUpperCase(),
       };
@@ -131,18 +174,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (supabase && password) {
         try {
           const { error } = await supabase.auth.signInWithPassword({
-            email,
+            email: activeUser.email,
             password,
           });
           if (error) throw error;
         } catch (dbErr) {
-          console.warn("Supabase auth failed, running mock session bypass:", dbErr);
+          console.warn("Supabase login bypass:", dbErr);
         }
       }
 
-      localStorage.setItem("shikas_mock_user", JSON.stringify(mockUser));
-      setUser(mockUser);
-      setRole(userRole);
+      localStorage.setItem("shikas_mock_user", JSON.stringify(activeUser));
+      setUser(activeUser);
+      setRole(activeUser.role);
     } catch (error) {
       console.error("Login failed", error);
       throw error;
@@ -151,20 +194,59 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, fullName: string, phone: string) => {
+  const signUp = async (email: string, fullName: string, phone: string, username: string, password?: string) => {
     setIsLoading(true);
     try {
-      const userRole = determineRole(email);
-      const mockUser: AppUser = {
-        id: "mock_user_" + Math.random().toString(36).substr(2, 9),
+      // 1. Uniqueness check
+      const dup = checkUniqueness(email, username, phone);
+      if (dup.emailExists || dup.usernameExists || dup.phoneExists) {
+        const errors = [];
+        if (dup.emailExists) errors.push("email");
+        if (dup.usernameExists) errors.push("username");
+        if (dup.phoneExists) errors.push("phone number");
+        throw new Error(`The following details are already taken: ${errors.join(", ")}`);
+      }
+
+      // 2. Determine role
+      const userRole = determineRole(username, password);
+      
+      const newUser: AppUser = {
+        id: "user_" + Math.random().toString(36).substr(2, 9),
         email,
+        username,
+        password,
         role: userRole,
         fullName,
         phone,
       };
 
-      localStorage.setItem("shikas_mock_user", JSON.stringify(mockUser));
-      setUser(mockUser);
+      // 3. Save to registered database
+      const users = getRegisteredUsers();
+      users.push(newUser);
+      localStorage.setItem("shikas_registered_users", JSON.stringify(users));
+
+      // 4. Try Supabase signUp if active
+      if (supabase && password) {
+        try {
+          const { error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: {
+                fullName,
+                phone,
+                username,
+              }
+            }
+          });
+          if (error) throw error;
+        } catch (dbErr) {
+          console.warn("Supabase signup bypass:", dbErr);
+        }
+      }
+
+      localStorage.setItem("shikas_mock_user", JSON.stringify(newUser));
+      setUser(newUser);
       setRole(userRole);
     } catch (error) {
       console.error("SignUp failed", error);
@@ -199,6 +281,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         login,
         signUp,
         logout,
+        checkUniqueness,
       }}
     >
       {children}
