@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/lib/supabase";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -284,7 +285,11 @@ function AuthPage() {
             </Card>
           )}
           
-          <div className="text-center">
+          <div className="text-center space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-[10px] font-mono text-slate-600 border border-slate-200">
+              <span className={`w-1.5 h-1.5 rounded-full ${supabase ? "bg-emerald-500 animate-pulse" : "bg-amber-500"}`} />
+              Database: {supabase ? "Connected to Supabase" : "Simulation Mode (Offline)"}
+            </div>
             <Button variant="link" className="text-[var(--gold)] text-xs flex items-center gap-1 mx-auto" onClick={() => navigate({ to: "/" })}>
               <ArrowLeft className="w-3.5 h-3.5" /> Return to Website as Guest
             </Button>
