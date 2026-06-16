@@ -3,7 +3,8 @@ import { useMemo, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { InquiryForm } from "@/components/InquiryForm";
-import { PLOTS, formatINR, type Plot } from "@/lib/data";
+import { getPlots, ExtendedPlot } from "@/lib/inventoryService";
+import { formatINR } from "@/lib/data";
 import { Search, X } from "lucide-react";
 
 export const Route = createFileRoute("/plots")({
@@ -22,16 +23,18 @@ function PlotsPage() {
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<"All" | "Available" | "Reserved" | "Sold">("All");
   const [size, setSize] = useState<"All" | "<2000" | "2000-3000" | ">3000">("All");
-  const [selected, setSelected] = useState<Plot | null>(null);
+  const [selected, setSelected] = useState<ExtendedPlot | null>(null);
 
-  const filtered = useMemo(() => PLOTS.filter((p) => {
+  const plots = useMemo(() => getPlots(), []);
+
+  const filtered = useMemo(() => plots.filter((p) => {
     if (status !== "All" && p.status !== status) return false;
     if (size === "<2000" && p.size >= 2000) return false;
     if (size === "2000-3000" && (p.size < 2000 || p.size > 3000)) return false;
     if (size === ">3000" && p.size <= 3000) return false;
     if (q && !(p.name + " " + p.location).toLowerCase().includes(q.toLowerCase())) return false;
     return true;
-  }), [q, status, size]);
+  }), [plots, q, status, size]);
 
   return (
     <Layout>
@@ -124,6 +127,19 @@ function PlotsPage() {
                   {selected.amenities.map((a) => <li key={a}>• {a}</li>)}
                 </ul>
                 <p className="text-sm text-[var(--cream-2)]/85 mt-5">{selected.description}</p>
+
+                {selected.additionalImages && selected.additionalImages.length > 0 && (
+                  <div className="mt-6">
+                    <h4 className="font-display text-lg mb-3">Additional Visuals & Layouts</h4>
+                    <div className="grid grid-cols-3 gap-2">
+                      {selected.additionalImages.filter(img => img.trim() !== "").map((img, index) => (
+                        <div key={index} className="aspect-square rounded-md overflow-hidden border border-[var(--gold)]/20">
+                          <img src={img} alt={`Visual ${index + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-300 cursor-pointer" onClick={() => window.open(img, '_blank')} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               <InquiryForm defaultSubject="Plot Inquiry" title={`Enquire about ${selected.name}`} />
             </div>

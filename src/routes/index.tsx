@@ -4,6 +4,8 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { COMPANY, PLOTS, PLANS, GALLERY, TESTIMONIALS, formatINR } from "@/lib/data";
 
+import { getPlots, getPlans } from "@/lib/inventoryService";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -24,8 +26,8 @@ import { useAuth } from "@/hooks/useAuth";
 
 function Home() {
   const { role } = useAuth();
-  const featuredPlots = PLOTS.slice(0, 3);
-  const featuredPlans = PLANS.slice(0, 4);
+  const featuredPlots = getPlots().slice(0, 3);
+  const featuredPlans = getPlans().slice(0, 4);
 
   return (
     <Layout>

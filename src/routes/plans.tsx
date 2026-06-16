@@ -3,7 +3,8 @@ import { useMemo, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { InquiryForm } from "@/components/InquiryForm";
-import { PLANS, formatINR, type Plan } from "@/lib/data";
+import { getPlans, ExtendedPlan } from "@/lib/inventoryService";
+import { formatINR } from "@/lib/data";
 import { Bath, BedDouble, Car, Ruler, X } from "lucide-react";
 
 export const Route = createFileRoute("/plans")({
@@ -22,8 +23,11 @@ const CATS = ["All", "1BHK", "2BHK", "3BHK", "Luxury"] as const;
 
 function PlansPage() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
-  const [selected, setSelected] = useState<Plan | null>(null);
-  const filtered = useMemo(() => cat === "All" ? PLANS : PLANS.filter((p) => p.category === cat), [cat]);
+  const [selected, setSelected] = useState<ExtendedPlan | null>(null);
+  
+  const plans = useMemo(() => getPlans(), []);
+  
+  const filtered = useMemo(() => cat === "All" ? plans : plans.filter((p) => p.category === cat), [plans, cat]);
 
   return (
     <Layout>
@@ -108,6 +112,19 @@ function PlansPage() {
                 <ul className="mt-2 space-y-1 text-sm text-[var(--cream-2)]/85">
                   {selected.features.map((f) => <li key={f}>• {f}</li>)}
                 </ul>
+
+                {selected.additionalImages && selected.additionalImages.length > 0 && (
+                  <div className="mt-6">
+                    <h4 className="font-display text-lg mb-3">Floor Plans & Alternative Views</h4>
+                    <div className="grid grid-cols-3 gap-2">
+                      {selected.additionalImages.filter(img => img.trim() !== "").map((img, index) => (
+                        <div key={index} className="aspect-square rounded-md overflow-hidden border border-[var(--gold)]/20">
+                          <img src={img} alt={`Visual ${index + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-300 cursor-pointer" onClick={() => window.open(img, '_blank')} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               <InquiryForm defaultSubject="Customization Request" title="Request customisation" />
             </div>
