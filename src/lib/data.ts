@@ -1,12 +1,12 @@
-// Mock data for the Shika's Estates real estate platform.
+// Mock data for the Shika Estates real estate platform.
 
 export const COMPANY = {
-  name: "Shika's Estates",
+  name: "Shika Estates",
   tagline: "Premium Residential Plots & House Plans",
   phone: "+91 9177686822",
   phoneHref: "+919177686822",
   whatsapp: "919177686822",
-  email: "contactus@shikasestates.com",
+  email: "contactus@shikaestates.com",
   address: "Pasumamla, Telangana",
   hours: "Mon–Sat: 9 AM – 6 PM · Sunday: 10 AM – 4 PM",
 };
@@ -298,7 +298,7 @@ export const TESTIMONIALS = [
     name: "Vikram Shetty",
     title: "Investor, Greenwood Residency",
     rating: 5,
-    quote: "Shika's Estates is the rare developer that ships on time without compromising the architectural intent. Best decision we've made.",
+    quote: "Shika Estates is the rare developer that ships on time without compromising the architectural intent. Best decision we've made.",
   },
   {
     name: "Priya & Rohan",

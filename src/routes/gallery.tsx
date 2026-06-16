@@ -7,9 +7,9 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — Shika's Estates" },
+      { title: "Gallery — Shika Estates" },
       { name: "description", content: "A visual archive of projects, plots, interiors and construction across our portfolio." },
-      { property: "og:title", content: "Gallery — Shika's Estates" },
+      { property: "og:title", content: "Gallery — Shika Estates" },
       { property: "og:description", content: "An archive of our projects, plots and interiors." },
     ],
   }),

@@ -10,9 +10,9 @@ import { Search, X } from "lucide-react";
 export const Route = createFileRoute("/plots")({
   head: () => ({
     meta: [
-      { title: "Available Plots — Shika's Estates" },
+      { title: "Available Plots — Shika Estates" },
       { name: "description", content: "Browse limited-edition residential plots across Hyderabad with transparent pricing, sizes and availability." },
-      { property: "og:title", content: "Available Plots — Shika's Estates" },
+      { property: "og:title", content: "Available Plots — Shika Estates" },
       { property: "og:description", content: "Curated residential plots — corner, hilltop, riverside and more." },
     ],
   }),

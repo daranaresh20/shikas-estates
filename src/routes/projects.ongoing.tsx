@@ -6,9 +6,9 @@ import { MapPin } from "lucide-react";
 export const Route = createFileRoute("/projects/ongoing")({
   head: () => ({
     meta: [
-      { title: "Ongoing Projects — Shika's Estates" },
+      { title: "Ongoing Projects — Shika Estates" },
       { name: "description", content: "Active construction across our latest masterplans, with stage-wise progress and projected handover dates." },
-      { property: "og:title", content: "Ongoing Projects — Shika's Estates" },
+      { property: "og:title", content: "Ongoing Projects — Shika Estates" },
       { property: "og:description", content: "Active masterplans currently under construction." },
     ],
   }),

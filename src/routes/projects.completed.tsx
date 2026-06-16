@@ -6,9 +6,9 @@ import { Check, MapPin } from "lucide-react";
 export const Route = createFileRoute("/projects/completed")({
   head: () => ({
     meta: [
-      { title: "Completed Projects — Shika's Estates" },
+      { title: "Completed Projects — Shika Estates" },
       { name: "description", content: "Handed-over communities and residences across our portfolio." },
-      { property: "og:title", content: "Completed Projects — Shika's Estates" },
+      { property: "og:title", content: "Completed Projects — Shika Estates" },
       { property: "og:description", content: "Our delivered communities, on time and on intent." },
     ],
   }),

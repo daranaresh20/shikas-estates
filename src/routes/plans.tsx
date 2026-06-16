@@ -10,9 +10,9 @@ import { Bath, BedDouble, Car, Ruler, X } from "lucide-react";
 export const Route = createFileRoute("/plans")({
   head: () => ({
     meta: [
-      { title: "House Plans — Shika's Estates" },
+      { title: "House Plans — Shika Estates" },
       { name: "description", content: "Bespoke house plans from compact ateliers to four-bedroom heritage villas, fully customisable to your land." },
-      { property: "og:title", content: "House Plans — Shika's Estates" },
+      { property: "og:title", content: "House Plans — Shika Estates" },
       { property: "og:description", content: "Signature 1BHK, 2BHK, 3BHK and luxury house plans." },
     ],
   }),

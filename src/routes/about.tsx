@@ -9,7 +9,7 @@ export const Route = createFileRoute("/about")({
       { title: `About — ${COMPANY.name}` },
       { name: "description", content: "Crafting limited-edition residences with restraint, intention and an obsession with craft." },
       { property: "og:title", content: `About — ${COMPANY.name}` },
-      { property: "og:description", content: "Our story, our team, and the architectural practice behind Shika's Estates." },
+      { property: "og:description", content: "Our story, our team, and the architectural practice behind Shika Estates." },
     ],
   }),
   component: About,

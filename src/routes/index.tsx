@@ -9,9 +9,9 @@ import { getPlots, getPlans } from "@/lib/inventoryService";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Shika's Estates — Premium Residential Plots & House Plans" },
-      { name: "description", content: "An invitation-only portfolio of limited-edition residential plots, house plans and signature projects from Shika's Estates." },
-      { property: "og:title", content: "Shika's Estates — Premium Residential Plots & House Plans" },
+      { title: "Shika Estates — Premium Residential Plots & House Plans" },
+      { name: "description", content: "An invitation-only portfolio of limited-edition residential plots, house plans and signature projects from Shika Estates." },
+      { property: "og:title", content: "Shika Estates — Premium Residential Plots & House Plans" },
       { property: "og:description", content: "Limited-edition plots, signature house plans and award-winning projects." },
     ],
   }),
