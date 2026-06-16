@@ -45,19 +45,59 @@ function AdminPage() {
   const fetchInquiries = async () => {
     setLoading(true);
     try {
+      let mergedList: Inquiry[] = [];
+
+      // 1. Fetch from Supabase if active
       if (supabase) {
-        const { data, error } = await supabase
-          .from("inquiries")
-          .select("*")
-          .order("created_at", { ascending: false });
-        
-        if (error) throw error;
-        setInquiries(data || []);
-      } else {
-        // Fallback mock data
-        setInquiries([
+        try {
+          const { data, error } = await supabase
+            .from("inquiries")
+            .select("*")
+            .order("created_at", { ascending: false });
+          
+          if (!error && data) {
+            mergedList = data.map((item: any) => ({
+              id: item.id || String(Math.random()),
+              created_at: item.created_at || new Date().toISOString(),
+              name: item.name,
+              email: item.email,
+              phone: item.phone,
+              message: item.message,
+              type: item.type || "general",
+              property_name: item.property_name || item.subject || ""
+            }));
+          }
+        } catch (dbErr) {
+          console.warn("Failed to fetch from Supabase, relying on local:", dbErr);
+        }
+      }
+
+      // 2. Fetch from Local Storage submissions
+      try {
+        const localKey = "shikas_inquiries";
+        const localData = JSON.parse(localStorage.getItem(localKey) || "[]");
+        const formattedLocal: Inquiry[] = localData.map((item: any, index: number) => ({
+          id: `local_${index}_${item.at}`,
+          created_at: item.at || new Date().toISOString(),
+          name: item.name,
+          email: item.email,
+          phone: item.phone,
+          message: item.message,
+          type: item.subject?.toLowerCase().includes("plot") ? "plot" : "plan",
+          property_name: item.subject || "General Inquiry"
+        }));
+
+        // Merge and remove duplicates by name/message/time similarity if any
+        mergedList = [...mergedList, ...formattedLocal];
+      } catch (localErr) {
+        console.error("Failed to parse local inquiries", localErr);
+      }
+
+      // If both are empty, render mock data
+      if (mergedList.length === 0) {
+        mergedList = [
           {
-            id: "1",
+            id: "mock_1",
             created_at: new Date().toISOString(),
             name: "Rajesh Kumar",
             email: "rajesh@gmail.com",
@@ -67,7 +107,7 @@ function AdminPage() {
             property_name: "Cedar Crest — Plot A"
           },
           {
-            id: "2",
+            id: "mock_2",
             created_at: new Date(Date.now() - 86400000).toISOString(),
             name: "Anjali Rao",
             email: "anjali.rao@yahoo.com",
@@ -76,8 +116,12 @@ function AdminPage() {
             type: "plan",
             property_name: "Atelier I — Studio Villa"
           }
-        ]);
+        ];
       }
+
+      // Sort by date descending
+      mergedList.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      setInquiries(mergedList);
     } catch (err: any) {
       console.error(err);
       toast.error("Error loading inquiries");
