@@ -25,7 +25,7 @@ function PlansPage() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
   const [selected, setSelected] = useState<ExtendedPlan | null>(null);
   
-  const plans = useMemo(() => getPlans(), []);
+  const plans = getPlans();
   
   const filtered = useMemo(() => cat === "All" ? plans : plans.filter((p) => p.category === cat), [plans, cat]);
 

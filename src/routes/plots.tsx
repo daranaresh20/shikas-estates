@@ -25,7 +25,7 @@ function PlotsPage() {
   const [size, setSize] = useState<"All" | "<2000" | "2000-3000" | ">3000">("All");
   const [selected, setSelected] = useState<ExtendedPlot | null>(null);
 
-  const plots = useMemo(() => getPlots(), []);
+  const plots = getPlots();
 
   const filtered = useMemo(() => plots.filter((p) => {
     if (status !== "All" && p.status !== status) return false;
