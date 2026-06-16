@@ -21,6 +21,7 @@ export type Plot = {
   image: string;
   amenities: string[];
   description: string;
+  additionalImages?: string[];
 };
 
 export const PLOTS: Plot[] = [
@@ -34,6 +35,7 @@ export const PLOTS: Plot[] = [
     image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
     amenities: ["Corner Plot", "East Facing", "Near International School"],
     description: "Premier corner plot with unobstructed sunrise views and gated community access.",
+    additionalImages: ["/images/HousePlan_G2P_V03.png"]
   },
   {
     id: "plot_002",
@@ -103,6 +105,7 @@ export type Plan = {
   price: number;
   image: string;
   features: string[];
+  additionalImages?: string[];
 };
 
 export const PLANS: Plan[] = [
