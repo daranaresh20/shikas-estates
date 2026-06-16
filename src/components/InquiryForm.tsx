@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/data";
+import { supabase } from "@/lib/supabase";
 
 type Props = {
   defaultSubject?: string;
@@ -30,24 +31,46 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
     return Object.keys(e).length === 0;
   }
 
-  function onSubmit(ev: React.FormEvent) {
+  async function onSubmit(ev: React.FormEvent) {
     ev.preventDefault();
     if (!validate()) {
       toast.error("Please check the form", { description: "A few fields need attention." });
       return;
     }
     setSubmitting(true);
+    
+    let dbSuccess = false;
     try {
-      const key = "shikas_inquiries";
-      const prev = JSON.parse(localStorage.getItem(key) || "[]");
-      prev.push({ ...form, at: new Date().toISOString() });
-      localStorage.setItem(key, JSON.stringify(prev));
-    } catch {}
-    setTimeout(() => {
-      setSubmitting(false);
-      toast.success("Thank you!", { description: `We'll get back to you within 24 hours at ${form.email}.` });
-      setForm({ name: "", email: "", phone: "", subject: defaultSubject, message: "", newsletter: true });
-    }, 600);
+      if (supabase) {
+        const { error } = await supabase.from("inquiries").insert([
+          {
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            subject: form.subject,
+            message: form.message,
+            newsletter: form.newsletter,
+          },
+        ]);
+        if (error) throw error;
+        dbSuccess = true;
+      }
+    } catch (err) {
+      console.error("Supabase insert error, falling back to local storage:", err);
+    }
+
+    if (!dbSuccess) {
+      try {
+        const key = "shikas_inquiries";
+        const prev = JSON.parse(localStorage.getItem(key) || "[]");
+        prev.push({ ...form, at: new Date().toISOString() });
+        localStorage.setItem(key, JSON.stringify(prev));
+      } catch {}
+    }
+
+    setSubmitting(false);
+    toast.success("Thank you!", { description: `We'll get back to you within 24 hours at ${form.email}.` });
+    setForm({ name: "", email: "", phone: "", subject: defaultSubject, message: "", newsletter: true });
   }
 
   const inputCls =
