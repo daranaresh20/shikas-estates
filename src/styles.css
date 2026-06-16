@@ -49,19 +49,19 @@
 :root {
   --radius: 0.75rem;
 
-  --forest:   #f8fafc; /* Luxury alabaster white page background */
-  --forest-2: #ffffff; /* Crisp white for container cards */
-  --forest-3: #f1f5f9; /* Slate 100 for subtle borders and soft background contrasts */
-  --sage:     #2563eb; /* True royal blue accent for active points */
+  --forest:   #fbfbfe; /* Alabaster with a hint of vibrant blue */
+  --forest-2: #ffffff; /* Crisp white for cards */
+  --forest-3: #eef2ff; /* Soft indigo-50 for clean contrast */
+  --sage:     #4f46e5; /* Vibrant indigo accent */
 
-  --gold:      #0f172a; /* Midnight sapphire/dark slate for primary elements */
-  --gold-rich: #1e293b; /* Hover state for primary text/buttons */
-  --gold-soft: #e2e8f0; /* Soft slate borders */
-  --copper:    #ef4444; /* Destructive red */
+  --gold:      #311b92; /* Deep, rich violet-royal */
+  --gold-rich: #4a148c; /* Deeper violet for hover states */
+  --gold-soft: #c7d2fe; /* Indigo ring/border */
+  --copper:    #ef4444; 
 
-  --cream:      #1e293b; /* Slate 800 body text for high-end readability */
-  --cream-2:    #334155; /* Slate 700 secondary text */
-  --muted-sage: #64748b; /* Slate 500 metadata text */
+  --cream:      #0f172a; 
+  --cream-2:    #1e293b; 
+  --muted-sage: #6366f1; /* Vibrant blue-indigo for secondary tags */
 
   --background: var(--forest);
   --foreground: var(--cream);
@@ -79,8 +79,8 @@
   --accent-foreground: #ffffff;
   --destructive: var(--copper);
   --destructive-foreground: #ffffff;
-  --border: rgba(15, 23, 42, 0.08); /* Elegant hairline borders */
-  --input: rgba(15, 23, 42, 0.1);
+  --border: rgba(99, 102, 241, 0.12); /* Subtle indigo border */
+  --input: rgba(99, 102, 241, 0.15);
   --ring: var(--sage);
 }
 
@@ -99,8 +99,8 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     background-image:
-      radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 60%),
-      radial-gradient(circle at 90% 80%, rgba(180, 83, 9, 0.02) 0%, transparent 60%);
+      radial-gradient(circle at 5% 10%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 95% 90%, rgba(245, 158, 11, 0.04) 0%, transparent 50%);
     background-attachment: fixed;
   }
   h1, h2, h3, h4 {
@@ -131,7 +131,7 @@
   .font-mono    { font-family: var(--font-mono); }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg, #0f172a 0%, #0284c7 60%, #0ea5e9 100%);
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #f59e0b 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -147,16 +147,16 @@
 
   .luxe-card {
     background: #ffffff;
-    border: 1px solid rgba(14, 165, 233, 0.06);
-    box-shadow: 0 10px 30px -15px rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(99, 102, 241, 0.08);
+    box-shadow: 0 12px 34px -10px rgba(99, 102, 241, 0.06);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .luxe-card:hover {
-    border-color: rgba(14, 165, 233, 0.25);
+    border-color: rgba(99, 102, 241, 0.3);
     box-shadow:
-      0 20px 40px -20px rgba(15, 23, 42, 0.08),
-      0 0 0 1px rgba(14, 165, 233, 0.02) inset;
-    transform: translateY(-4px);
+      0 24px 48px -15px rgba(99, 102, 241, 0.12),
+      0 0 0 1px rgba(99, 102, 241, 0.02) inset;
+    transform: translateY(-5px);
   }
 
   .gold-rule {

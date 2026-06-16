@@ -15,12 +15,12 @@ const links = [
   { to: "/contact", label: "Contact" },
 ];
 
-import { useAuth, UserRole } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { role, user, logout, updateUserRole } = useAuth();
+  const { role, user, logout } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export function Navbar() {
           })}
           {role === "SuperUser" && (
             <li>
-              <Link to="/admin" className="text-blue-600 font-bold hover:text-blue-800">
+              <Link to="/admin" className="text-indigo-600 font-bold hover:text-indigo-800">
                 Admin Panel
               </Link>
             </li>
@@ -78,24 +78,6 @@ export function Navbar() {
         </ul>
 
         <div className="hidden lg:flex items-center gap-4">
-          {/* Quick role-switch control for user testing */}
-          <div className="flex items-center border border-[var(--gold)]/10 bg-slate-50/50 rounded-full px-2 py-1 text-[11px] font-mono gap-1">
-            <span className="text-[var(--muted-sage)] px-1">Role:</span>
-            {(["Guest", "Customer", "SuperUser"] as UserRole[]).map((r) => (
-              <button
-                key={r}
-                onClick={() => updateUserRole(r)}
-                className={`px-2 py-0.5 rounded-full transition-all ${
-                  role === r
-                    ? "bg-[var(--gold)] text-white"
-                    : "text-[var(--cream)]/60 hover:text-[var(--cream)]"
-                }`}
-              >
-                {r === "SuperUser" ? "Admin" : r}
-              </button>
-            ))}
-          </div>
-
           {role === "Guest" ? (
             <Button asChild variant="gold-outline" size="sm">
               <Link to="/auth">Sign In</Link>

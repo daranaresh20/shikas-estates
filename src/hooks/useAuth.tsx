@@ -15,10 +15,9 @@ interface AuthContextType {
   user: AppUser | null;
   role: UserRole;
   isLoading: boolean;
-  login: (email: string, password?: string, role?: UserRole) => Promise<void>;
+  login: (email: string, password?: string) => Promise<void>;
   signUp: (email: string, fullName: string, phone: string) => Promise<void>;
   logout: () => Promise<void>;
-  updateUserRole: (newRole: UserRole) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,9 +27,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [role, setRole] = useState<UserRole>("Guest");
   const [isLoading, setIsLoading] = useState(true);
 
-  // Helper to get role based on email or setting
-  const getRoleFromEmail = (email: string): UserRole => {
-    if (email.endsWith("@shikasestates.com") || email === "admin@shikasestates.com") {
+  // Helper to get role based on email/username and password checks
+  const determineRole = (emailOrUsername: string, password?: string): UserRole => {
+    const ident = emailOrUsername.toLowerCase().trim();
+    if (
+      (ident === "shikaestatesadmin" || ident === "admin@shikasestates.com" || ident === "shikaestatesadmin@shikasestates.com") &&
+      password === "ShikasEstates9"
+    ) {
       return "SuperUser";
     }
     return "Customer";
@@ -52,18 +55,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (!supabase) {
-      // No Supabase, default to Guest
       setUser(null);
       setRole("Guest");
       setIsLoading(false);
       return;
     }
 
-    // Handle Supabase Auth
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         const email = session.user.email || "";
-        const userRole = getRoleFromEmail(email);
+        // Fallback check
+        const userRole = email === "admin@shikasestates.com" || email === "shikaestatesadmin@shikasestates.com" ? "SuperUser" : "Customer";
         
         setUser({
           id: session.user.id,
@@ -84,7 +86,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       async (event, session) => {
         if (session?.user) {
           const email = session.user.email || "";
-          const userRole = getRoleFromEmail(email);
+          const userRole = email === "admin@shikasestates.com" || email === "shikaestatesadmin@shikasestates.com" ? "SuperUser" : "Customer";
           
           setUser({
             id: session.user.id,
@@ -95,7 +97,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           });
           setRole(userRole);
         } else {
-          // Keep mock user check in case auth state cleared but mock user exists
           const savedMock = localStorage.getItem("shikas_mock_user");
           if (!savedMock) {
             setUser(null);
@@ -111,32 +112,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  const login = async (email: string, password?: string, forceRole?: UserRole) => {
+  const login = async (emailOrUsername: string, password?: string) => {
     setIsLoading(true);
     try {
-      // Determine role
-      let userRole = forceRole || getRoleFromEmail(email);
-
-      // Explicit Admin Check
-      if (
-        (email.toLowerCase() === "shikaestatesadmin" || email.toLowerCase() === "admin@shikasestates.com") &&
-        password === "ShikasEstates9"
-      ) {
-        userRole = "SuperUser";
-      }
+      const userRole = determineRole(emailOrUsername, password);
       
+      const email = emailOrUsername.includes("@") 
+        ? emailOrUsername 
+        : `${emailOrUsername}@shikasestates.com`;
+
       const mockUser: AppUser = {
         id: "mock_user_" + Math.random().toString(36).substr(2, 9),
-        email: email.includes("@") ? email : `${email}@shikasestates.com`,
+        email,
         role: userRole,
-        fullName: email.split("@")[0].toUpperCase(),
+        fullName: emailOrUsername.split("@")[0].toUpperCase(),
       };
 
-      // Try actual Supabase login if configured
       if (supabase && password) {
         try {
-          const { data, error } = await supabase.auth.signInWithPassword({
-            email: email.includes("@") ? email : `${email}@shikasestates.com`,
+          const { error } = await supabase.auth.signInWithPassword({
+            email,
             password,
           });
           if (error) throw error;
@@ -159,7 +154,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, fullName: string, phone: string) => {
     setIsLoading(true);
     try {
-      const userRole = getRoleFromEmail(email);
+      const userRole = determineRole(email);
       const mockUser: AppUser = {
         id: "mock_user_" + Math.random().toString(36).substr(2, 9),
         email,
@@ -173,6 +168,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setRole(userRole);
     } catch (error) {
       console.error("SignUp failed", error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -194,20 +190,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const updateUserRole = (newRole: UserRole) => {
-    if (user) {
-      const updated = { ...user, role: newRole };
-      localStorage.setItem("shikas_mock_user", JSON.stringify(updated));
-      setUser(updated);
-      setRole(newRole);
-    } else if (newRole === "Guest") {
-      logout();
-    } else {
-      // Create guest transitioning to role
-      login("simulated_user@shikasestates.com", newRole);
-    }
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -217,7 +199,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         login,
         signUp,
         logout,
-        updateUserRole,
       }}
     >
       {children}

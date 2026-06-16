@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { useAuth, UserRole } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,7 +22,6 @@ function AuthPage() {
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [selectedRole, setSelectedRole] = useState<UserRole>("Customer");
   
   // Signup form state
   const [signupName, setSignupName] = useState("");
@@ -35,7 +34,7 @@ function AuthPage() {
     
     setIsLoading(true);
     try {
-      await login(loginEmail, loginPassword, selectedRole);
+      await login(loginEmail, loginPassword);
       toast.success(`Welcome back! Logged in successfully.`);
       navigate({ to: "/" });
     } catch (err) {
@@ -89,7 +88,7 @@ function AuthPage() {
                 <form onSubmit={handleLogin}>
                   <CardHeader>
                     <CardTitle className="text-xl font-display text-slate-800">Welcome Back</CardTitle>
-                    <CardDescription>Enter your credentials or choose a testing role</CardDescription>
+                    <CardDescription>Enter your credentials to access your account</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-1">
@@ -115,45 +114,6 @@ function AuthPage() {
                         onChange={(e) => setLoginPassword(e.target.value)}
                         className="bg-white/50 border-[var(--gold)]/20 focus-visible:ring-[var(--gold)]"
                       />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label className="text-xs font-mono uppercase tracking-wider text-[var(--gold)]">Select Access Role (Testing)</Label>
-                      <div className="grid grid-cols-2 gap-2">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedRole("Customer");
-                            if (!loginEmail) setLoginEmail("customer@shikasestates.com");
-                          }}
-                          className={`flex items-center justify-center gap-2 p-3 rounded-lg border text-sm font-medium transition-all ${
-                            selectedRole === "Customer"
-                              ? "bg-[var(--gold)] text-white border-[var(--gold)] shadow-sm"
-                              : "bg-white/40 text-[var(--cream)] border-slate-200 hover:bg-slate-50"
-                          }`}
-                        >
-                          <User className="w-4 h-4" />
-                          Customer
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedRole("SuperUser");
-                            setLoginEmail("admin@shikasestates.com");
-                          }}
-                          className={`flex items-center justify-center gap-2 p-3 rounded-lg border text-sm font-medium transition-all ${
-                            selectedRole === "SuperUser"
-                              ? "bg-[var(--gold)] text-white border-[var(--gold)] shadow-sm"
-                              : "bg-white/40 text-[var(--cream)] border-slate-200 hover:bg-slate-50"
-                          }`}
-                        >
-                          <Shield className="w-4 h-4" />
-                          Super Admin
-                        </button>
-                      </div>
-                      <p className="text-[10px] text-slate-500 italic text-center mt-1">
-                        Use admin@shikasestates.com for Super User
-                      </p>
                     </div>
                   </CardContent>
                   <CardFooter className="flex flex-col gap-3">
