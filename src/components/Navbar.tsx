@@ -78,15 +78,17 @@ export function Navbar() {
         </ul>
 
         <div className="hidden lg:flex items-center gap-4">
+          <Button asChild variant="gold-outline" size="sm">
+            <Link to="/contact">Enquire</Link>
+          </Button>
+
           {role === "Guest" ? (
-            <Button asChild variant="gold-outline" size="sm">
-              <Link to="/auth">Sign In</Link>
-            </Button>
+            <Link to="/auth" className="text-xs text-[var(--muted-sage)] hover:text-slate-800 transition-colors font-mono uppercase tracking-widest pl-2 border-l border-slate-200">
+              Admin Access
+            </Link>
           ) : (
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-[var(--muted-sage)] max-w-[100px] truncate">
-                {user?.fullName || user?.email}
-              </span>
+            <div className="flex items-center gap-3 pl-2 border-l border-slate-200">
+              <span className="text-xs font-mono text-[var(--muted-sage)] bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200/80">Admin</span>
               <Button onClick={() => logout()} variant="outline" size="sm" className="h-8 py-0">
                 Logout
               </Button>
@@ -120,10 +122,24 @@ export function Navbar() {
                 </li>
               );
             })}
-            <li className="pt-3">
+             <li className="pt-3 flex flex-col gap-2">
               <Button asChild variant="gold" className="w-full">
                 <Link to="/contact" onClick={() => setOpen(false)}>Enquire Now</Link>
               </Button>
+              {role === "Guest" ? (
+                <Link to="/auth" onClick={() => setOpen(false)} className="text-center py-2 text-xs font-mono uppercase tracking-widest text-[var(--muted-sage)] hover:text-slate-800">
+                  Admin Access
+                </Link>
+              ) : (
+                <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
+                  <Link to="/admin" onClick={() => setOpen(false)} className="text-center py-2 text-xs font-mono uppercase tracking-widest text-indigo-600 font-bold">
+                    Admin Dashboard
+                  </Link>
+                  <Button onClick={() => { logout(); setOpen(false); }} variant="outline" size="sm" className="w-full">
+                    Logout
+                  </Button>
+                </div>
+              )}
             </li>
           </ul>
         </div>

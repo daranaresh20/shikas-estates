@@ -275,26 +275,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Guest Premium Floating Banner */}
-      {role === "Guest" && (
-        <div className="fixed bottom-6 left-6 right-6 md:left-auto md:right-8 md:max-w-md bg-white/95 border border-[var(--gold)]/20 shadow-2xl rounded-lg p-5 z-50 animate-bounce-soft backdrop-blur-md">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-              <span className="text-[10px] font-mono uppercase tracking-widest text-blue-600 font-bold">Exclusive Access Portal</span>
-            </div>
-            <h4 className="font-display text-lg text-slate-800">Interested in Shika's Estates listings?</h4>
-            <p className="text-xs text-[var(--muted-sage)]">
-              Register a free customer account to see detailed pricing sheets, request customization blueprints, and view locked plans.
-            </p>
-            <div className="flex gap-2 pt-1">
-              <Button asChild size="sm" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-mono text-[11px] uppercase tracking-wider">
-                <Link to="/auth">Sign Up Now</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </Layout>
   );
 }
