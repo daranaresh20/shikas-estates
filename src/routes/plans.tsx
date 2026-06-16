@@ -24,10 +24,26 @@ const CATS = ["All", "1BHK", "2BHK", "3BHK", "Luxury"] as const;
 function PlansPage() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
   const [selected, setSelected] = useState<ExtendedPlan | null>(null);
+  const [activeImgIdx, setActiveImgIdx] = useState(0);
   
   const plans = getPlans();
   
   const filtered = useMemo(() => cat === "All" ? plans : plans.filter((p) => p.category === cat), [plans, cat]);
+
+  const imagesList = useMemo(() => {
+    if (!selected) return [];
+    return [selected.image, ...(selected.additionalImages || [])].filter(img => img && img.trim() !== "");
+  }, [selected]);
+
+  const nextImg = () => {
+    if (imagesList.length === 0) return;
+    setActiveImgIdx((prev) => (prev + 1) % imagesList.length);
+  };
+
+  const prevImg = () => {
+    if (imagesList.length === 0) return;
+    setActiveImgIdx((prev) => (prev - 1 + imagesList.length) % imagesList.length);
+  };
 
   return (
     <Layout>
@@ -80,7 +96,7 @@ function PlansPage() {
                 </div>
                 <div className="mt-5 flex items-center justify-between gap-3">
                   <div className="text-sm text-[var(--cream-2)]/80">From <span className="text-[var(--gold)] font-semibold">{formatINR(p.price)}</span></div>
-                  <Button variant="gold" size="sm" onClick={() => setSelected(p)}>View Plan</Button>
+                  <Button variant="gold" size="sm" onClick={() => { setActiveImgIdx(0); setSelected(p); }}>View Plan</Button>
                 </div>
               </div>
             </article>
@@ -88,63 +104,52 @@ function PlansPage() {
         </div>
       </section>
 
-      {selected && (() => {
-        const imagesList = [selected.image, ...(selected.additionalImages || [])].filter(img => img && img.trim() !== "");
-        const [activeImgIdx, setActiveImgIdx] = useState(0);
-
-        const nextImg = () => {
-          setActiveImgIdx((prev) => (prev + 1) % imagesList.length);
-        };
-
-        const prevImg = () => {
-          setActiveImgIdx((prev) => (prev - 1 + imagesList.length) % imagesList.length);
-        };
-
-        return (
-          <div className="fixed inset-0 z-50 bg-[var(--forest)]/85 backdrop-blur-sm grid place-items-center p-4 overflow-y-auto" onClick={() => setSelected(null)}>
-            <div className="max-w-4xl w-full bg-[var(--forest-2)] border border-[var(--gold)]/30 rounded-xl overflow-hidden my-8" onClick={(e) => e.stopPropagation()}>
-              <div className="relative h-96 bg-[var(--forest)]/40 flex items-center justify-center">
+      {selected && (
+        <div className="fixed inset-0 z-50 bg-[var(--forest)]/85 backdrop-blur-sm grid place-items-center p-4 overflow-y-auto" onClick={() => setSelected(null)}>
+          <div className="max-w-4xl w-full bg-[var(--forest-2)] border border-[var(--gold)]/30 rounded-xl overflow-hidden my-8" onClick={(e) => e.stopPropagation()}>
+            <div className="relative h-96 bg-[var(--forest)]/40 flex items-center justify-center">
+              {imagesList[activeImgIdx] && (
                 <img src={imagesList[activeImgIdx]} alt={selected.name} className="w-full h-full object-cover" />
-                <button onClick={() => setSelected(null)} className="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full bg-[var(--forest)]/80 text-cream hover:bg-[var(--gold)] hover:text-[var(--forest)] z-10">
-                  <X className="w-4 h-4" />
-                </button>
-                
-                {imagesList.length > 1 && (
-                  <>
-                    <button onClick={prevImg} className="absolute left-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
-                      &larr;
-                    </button>
-                    <button onClick={nextImg} className="absolute right-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
-                      &rarr;
-                    </button>
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 px-3 py-1 rounded-full text-xs font-mono text-[var(--cream)] select-none">
-                      {activeImgIdx + 1} / {imagesList.length}
-                    </div>
-                  </>
-                )}
-              </div>
-              <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8">
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-[var(--gold)]">{selected.category}</p>
-                  <h3 className="font-display text-3xl mt-1">{selected.name}</h3>
-                  <div className="mt-5 grid grid-cols-2 gap-2 text-sm">
-                    <Info label="Bedrooms" value={`${selected.bedrooms}`} />
-                    <Info label="Bathrooms" value={`${selected.bathrooms}`} />
-                    <Info label="Parking" value={`${selected.parking}`} />
-                    <Info label="Built-up Area" value={`${selected.area} sqft`} />
-                    <Info label="Starting Price" value={formatINR(selected.price)} />
+              )}
+              <button onClick={() => setSelected(null)} className="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full bg-[var(--forest)]/80 text-cream hover:bg-[var(--gold)] hover:text-[var(--forest)] z-10">
+                <X className="w-4 h-4" />
+              </button>
+              
+              {imagesList.length > 1 && (
+                <>
+                  <button onClick={prevImg} className="absolute left-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
+                    &larr;
+                  </button>
+                  <button onClick={nextImg} className="absolute right-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
+                    &rarr;
+                  </button>
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 px-3 py-1 rounded-full text-xs font-mono text-[var(--cream)] select-none">
+                    {activeImgIdx + 1} / {imagesList.length}
                   </div>
-                  <h4 className="font-display text-lg mt-6">Signature Features</h4>
-                  <ul className="mt-2 space-y-1 text-sm text-[var(--cream-2)]/85">
-                    {selected.features.map((f) => <li key={f}>• {f}</li>)}
-                  </ul>
+                </>
+              )}
+            </div>
+            <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8">
+              <div>
+                <p className="text-xs uppercase tracking-widest text-[var(--gold)]">{selected.category}</p>
+                <h3 className="font-display text-3xl mt-1">{selected.name}</h3>
+                <div className="mt-5 grid grid-cols-2 gap-2 text-sm">
+                  <Info label="Bedrooms" value={`${selected.bedrooms}`} />
+                  <Info label="Bathrooms" value={`${selected.bathrooms}`} />
+                  <Info label="Parking" value={`${selected.parking}`} />
+                  <Info label="Built-up Area" value={`${selected.area} sqft`} />
+                  <Info label="Starting Price" value={formatINR(selected.price)} />
                 </div>
-                <InquiryForm defaultSubject="Customization Request" title="Request customisation" />
+                <h4 className="font-display text-lg mt-6">Signature Features</h4>
+                <ul className="mt-2 space-y-1 text-sm text-[var(--cream-2)]/85">
+                  {selected.features.map((f) => <li key={f}>• {f}</li>)}
+                </ul>
               </div>
+              <InquiryForm defaultSubject="Customization Request" title="Request customisation" />
             </div>
           </div>
-        );
-      })()}
+        </div>
+      )}
     </Layout>
   );
 }

@@ -24,6 +24,7 @@ function PlotsPage() {
   const [status, setStatus] = useState<"All" | "Available" | "Reserved" | "Sold">("All");
   const [size, setSize] = useState<"All" | "<2000" | "2000-3000" | ">3000">("All");
   const [selected, setSelected] = useState<ExtendedPlot | null>(null);
+  const [activeImgIdx, setActiveImgIdx] = useState(0);
 
   const plots = getPlots();
 
@@ -35,6 +36,21 @@ function PlotsPage() {
     if (q && !(p.name + " " + p.location).toLowerCase().includes(q.toLowerCase())) return false;
     return true;
   }), [plots, q, status, size]);
+
+  const imagesList = useMemo(() => {
+    if (!selected) return [];
+    return [selected.image, ...(selected.additionalImages || [])].filter(img => img && img.trim() !== "");
+  }, [selected]);
+
+  const nextImg = () => {
+    if (imagesList.length === 0) return;
+    setActiveImgIdx((prev) => (prev + 1) % imagesList.length);
+  };
+
+  const prevImg = () => {
+    if (imagesList.length === 0) return;
+    setActiveImgIdx((prev) => (prev - 1 + imagesList.length) % imagesList.length);
+  };
 
   return (
     <Layout>
@@ -69,7 +85,7 @@ function PlotsPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((p) => (
                 <article key={p.id} className="luxe-card rounded-xl overflow-hidden group flex flex-col">
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     <span className={`absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-widest px-2 py-1 rounded ${
                       p.status === "Available" ? "bg-[var(--gold)] text-[var(--forest)]"
@@ -92,8 +108,8 @@ function PlotsPage() {
                       ))}
                     </div>
                     <div className="mt-5 flex gap-2">
-                      <Button variant="gold" size="sm" className="flex-1" onClick={() => setSelected(p)}>View Details</Button>
-                      <Button variant="gold-outline" size="sm" className="flex-1" onClick={() => setSelected(p)}>Enquire Now</Button>
+                      <Button variant="gold" size="sm" className="flex-1" onClick={() => { setActiveImgIdx(0); setSelected(p); }}>View Details</Button>
+                      <Button variant="gold-outline" size="sm" className="flex-1" onClick={() => { setActiveImgIdx(0); setSelected(p); }}>Enquire Now</Button>
                     </div>
                   </div>
                 </article>
@@ -103,63 +119,52 @@ function PlotsPage() {
         </div>
       </section>
 
-      {selected && (() => {
-        const imagesList = [selected.image, ...(selected.additionalImages || [])].filter(img => img && img.trim() !== "");
-        const [activeImgIdx, setActiveImgIdx] = useState(0);
-
-        const nextImg = () => {
-          setActiveImgIdx((prev) => (prev + 1) % imagesList.length);
-        };
-
-        const prevImg = () => {
-          setActiveImgIdx((prev) => (prev - 1 + imagesList.length) % imagesList.length);
-        };
-
-        return (
-          <div className="fixed inset-0 z-50 bg-[var(--forest)]/85 backdrop-blur-sm grid place-items-center p-4 overflow-y-auto" onClick={() => setSelected(null)}>
-            <div className="max-w-4xl w-full bg-[var(--forest-2)] border border-[var(--gold)]/30 rounded-xl overflow-hidden my-8" onClick={(e) => e.stopPropagation()}>
-              <div className="relative h-96 bg-[var(--forest)]/40 flex items-center justify-center">
+      {selected && (
+        <div className="fixed inset-0 z-50 bg-[var(--forest)]/85 backdrop-blur-sm grid place-items-center p-4 overflow-y-auto" onClick={() => setSelected(null)}>
+          <div className="max-w-4xl w-full bg-[var(--forest-2)] border border-[var(--gold)]/30 rounded-xl overflow-hidden my-8" onClick={(e) => e.stopPropagation()}>
+            <div className="relative h-96 bg-[var(--forest)]/40 flex items-center justify-center">
+              {imagesList[activeImgIdx] && (
                 <img src={imagesList[activeImgIdx]} alt={selected.name} className="w-full h-full object-cover" />
-                <button onClick={() => setSelected(null)} className="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full bg-[var(--forest)]/80 text-cream hover:bg-[var(--gold)] hover:text-[var(--forest)] z-10">
-                  <X className="w-4 h-4" />
-                </button>
-                
-                {imagesList.length > 1 && (
-                  <>
-                    <button onClick={prevImg} className="absolute left-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
-                      &larr;
-                    </button>
-                    <button onClick={nextImg} className="absolute right-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
-                      &rarr;
-                    </button>
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 px-3 py-1 rounded-full text-xs font-mono text-[var(--cream)] select-none">
-                      {activeImgIdx + 1} / {imagesList.length}
-                    </div>
-                  </>
-                )}
-              </div>
-              <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="font-display text-3xl">{selected.name}</h3>
-                  <p className="text-[var(--muted-sage)] mt-1">{selected.location}</p>
-                  <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-                    <Info label="Size" value={`${selected.size.toLocaleString()} sqft`} />
-                    <Info label="Price" value={formatINR(selected.price)} />
-                    <Info label="Status" value={selected.status} />
-                    <Info label="Orientation" value="East–West" />
+              )}
+              <button onClick={() => setSelected(null)} className="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full bg-[var(--forest)]/80 text-cream hover:bg-[var(--gold)] hover:text-[var(--forest)] z-10">
+                <X className="w-4 h-4" />
+              </button>
+              
+              {imagesList.length > 1 && (
+                <>
+                  <button onClick={prevImg} className="absolute left-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
+                    &larr;
+                  </button>
+                  <button onClick={nextImg} className="absolute right-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
+                    &rarr;
+                  </button>
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 px-3 py-1 rounded-full text-xs font-mono text-[var(--cream)] select-none">
+                    {activeImgIdx + 1} / {imagesList.length}
                   </div>
-                  <h4 className="font-display text-lg mt-6">Amenities</h4>
-                  <ul className="mt-2 grid grid-cols-2 gap-1.5 text-sm text-[var(--cream-2)]/85">
-                    {selected.amenities.map((a) => <li key={a}>• {a}</li>)}
-                  </ul>
-                  <p className="text-sm text-[var(--cream-2)]/85 mt-5">{selected.description}</p>
+                </>
+              )}
+            </div>
+            <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="font-display text-3xl">{selected.name}</h3>
+                <p className="text-[var(--muted-sage)] mt-1">{selected.location}</p>
+                <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+                  <Info label="Size" value={`${selected.size.toLocaleString()} sqft`} />
+                  <Info label="Price" value={formatINR(selected.price)} />
+                  <Info label="Status" value={selected.status} />
+                  <Info label="Orientation" value="East–West" />
                 </div>
-                <InquiryForm defaultSubject="Plot Inquiry" title={`Enquire about ${selected.name}`} />
+                <h4 className="font-display text-lg mt-6">Amenities</h4>
+                <ul className="mt-2 grid grid-cols-2 gap-1.5 text-sm text-[var(--cream-2)]/85">
+                  {selected.amenities.map((a) => <li key={a}>• {a}</li>)}
+                </ul>
+                <p className="text-sm text-[var(--cream-2)]/85 mt-5">{selected.description}</p>
               </div>
+              <InquiryForm defaultSubject="Plot Inquiry" title={`Enquire about ${selected.name}`} />
             </div>
           </div>
-        );
-      })()}
+        </div>
+      )}
     </Layout>
   );
 }
