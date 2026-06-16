@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/data";
 import { supabase } from "@/lib/supabase";
 
+import { useAuth } from "@/hooks/useAuth";
+
 type Props = {
   defaultSubject?: string;
   compact?: boolean;
@@ -11,13 +13,15 @@ type Props = {
 };
 
 export function InquiryForm({ defaultSubject = "General Inquiry", compact, title }: Props) {
+  const { user, role, signUp } = useAuth();
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
+    name: user?.fullName || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
     subject: defaultSubject,
     message: "",
     newsletter: true,
+    createAccount: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -39,6 +43,16 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
     }
     setSubmitting(true);
     
+    // Auto-create account if guest checks createAccount
+    if (role === "Guest" && form.createAccount) {
+      try {
+        await signUp(form.email, form.name, form.phone);
+        toast.success("Account created successfully!");
+      } catch (err) {
+        console.error("Auto signup failed", err);
+      }
+    }
+
     let dbSuccess = false;
     try {
       if (supabase) {
@@ -50,6 +64,7 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
             subject: form.subject,
             message: form.message,
             newsletter: form.newsletter,
+            type: form.subject.toLowerCase().includes("plot") ? "plot" : "plan",
           },
         ]);
         if (error) throw error;
@@ -70,7 +85,7 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
 
     setSubmitting(false);
     toast.success("Thank you!", { description: `We'll get back to you within 24 hours at ${form.email}.` });
-    setForm({ name: "", email: "", phone: "", subject: defaultSubject, message: "", newsletter: true });
+    setForm({ name: "", email: "", phone: "", subject: defaultSubject, message: "", newsletter: true, createAccount: false });
   }
 
   const inputCls =
@@ -116,7 +131,19 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
         onChange={(e) => setForm({ ...form, message: e.target.value })}
       />
 
-      <label className="flex items-center gap-2 mt-4 text-sm text-[var(--cream-2)]/80">
+      {role === "Guest" && (
+        <label className="flex items-center gap-2 mt-4 text-sm text-blue-600 font-medium cursor-pointer">
+          <input
+            type="checkbox"
+            className="accent-blue-600 w-4 h-4"
+            checked={form.createAccount}
+            onChange={(e) => setForm({ ...form, createAccount: e.target.checked })}
+          />
+          Create a free account to track inquiries and unlock VIP listings
+        </label>
+      )}
+
+      <label className="flex items-center gap-2 mt-2 text-sm text-[var(--cream-2)]/80">
         <input type="checkbox" className="accent-[var(--gold)]" checked={form.newsletter}
           onChange={(e) => setForm({ ...form, newsletter: e.target.checked })} />
         Send me occasional updates from {COMPANY.name}

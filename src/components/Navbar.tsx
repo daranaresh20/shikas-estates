@@ -15,9 +15,12 @@ const links = [
   { to: "/contact", label: "Contact" },
 ];
 
+import { useAuth, UserRole } from "@/hooks/useAuth";
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { role, user, logout, updateUserRole } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -31,7 +34,7 @@ export function Navbar() {
     <header
       className={`sticky top-0 z-40 transition-all duration-500 ${
         scrolled
-          ? "backdrop-blur-md bg-[var(--forest)]/90 border-b border-[var(--gold)]/15"
+          ? "backdrop-blur-md bg-white/80 border-b border-slate-100"
           : "bg-transparent border-b border-transparent"
       }`}
     >
@@ -65,12 +68,48 @@ export function Navbar() {
               </li>
             );
           })}
+          {role === "SuperUser" && (
+            <li>
+              <Link to="/admin" className="text-blue-600 font-bold hover:text-blue-800">
+                Admin Panel
+              </Link>
+            </li>
+          )}
         </ul>
 
-        <div className="hidden lg:block">
-          <Button asChild variant="gold-outline" size="sm">
-            <Link to="/contact">Enquire</Link>
-          </Button>
+        <div className="hidden lg:flex items-center gap-4">
+          {/* Quick role-switch control for user testing */}
+          <div className="flex items-center border border-[var(--gold)]/10 bg-slate-50/50 rounded-full px-2 py-1 text-[11px] font-mono gap-1">
+            <span className="text-[var(--muted-sage)] px-1">Role:</span>
+            {(["Guest", "Customer", "SuperUser"] as UserRole[]).map((r) => (
+              <button
+                key={r}
+                onClick={() => updateUserRole(r)}
+                className={`px-2 py-0.5 rounded-full transition-all ${
+                  role === r
+                    ? "bg-[var(--gold)] text-white"
+                    : "text-[var(--cream)]/60 hover:text-[var(--cream)]"
+                }`}
+              >
+                {r === "SuperUser" ? "Admin" : r}
+              </button>
+            ))}
+          </div>
+
+          {role === "Guest" ? (
+            <Button asChild variant="gold-outline" size="sm">
+              <Link to="/auth">Sign In</Link>
+            </Button>
+          ) : (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-[var(--muted-sage)] max-w-[100px] truncate">
+                {user?.fullName || user?.email}
+              </span>
+              <Button onClick={() => logout()} variant="outline" size="sm" className="h-8 py-0">
+                Logout
+              </Button>
+            </div>
+          )}
         </div>
 
         <button

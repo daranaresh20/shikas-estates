@@ -49,19 +49,19 @@
 :root {
   --radius: 0.75rem;
 
-  --forest:   #e0f2fe; /* Beautiful, rich sky blue background for the entire page */
-  --forest-2: #ffffff; /* Crisp white cards to contrast beautifully with the sky blue background */
-  --forest-3: #bae6fd; /* Mid-tone sky blue for subtle hover and border accents */
-  --sage:     #0284c7; /* Vibrant sky blue accent */
+  --forest:   #f8fafc; /* Luxury alabaster white page background */
+  --forest-2: #ffffff; /* Crisp white for container cards */
+  --forest-3: #f1f5f9; /* Slate 100 for subtle borders and soft background contrasts */
+  --sage:     #2563eb; /* True royal blue accent for active points */
 
-  --gold:      #075985; /* Elegant dark sapphire/sky text and main headings */
-  --gold-rich: #0369a1; /* Hover states */
-  --gold-soft: #bae6fd; /* Soft blue rings */
-  --copper:    #ef4444; /* Destructive color */
+  --gold:      #0f172a; /* Midnight sapphire/dark slate for primary elements */
+  --gold-rich: #1e293b; /* Hover state for primary text/buttons */
+  --gold-soft: #e2e8f0; /* Soft slate borders */
+  --copper:    #ef4444; /* Destructive red */
 
-  --cream:      #0f172a; /* Main text body - dark slate for maximum readability */
-  --cream-2:    #1e293b; /* Secondary text */
-  --muted-sage: #475569; /* Muted text and metadata */
+  --cream:      #1e293b; /* Slate 800 body text for high-end readability */
+  --cream-2:    #334155; /* Slate 700 secondary text */
+  --muted-sage: #64748b; /* Slate 500 metadata text */
 
   --background: var(--forest);
   --foreground: var(--cream);
@@ -79,8 +79,8 @@
   --accent-foreground: #ffffff;
   --destructive: var(--copper);
   --destructive-foreground: #ffffff;
-  --border: rgba(2, 132, 199, 0.15); /* Elegant sky-blue borders */
-  --input: rgba(2, 132, 199, 0.2);
+  --border: rgba(15, 23, 42, 0.08); /* Elegant hairline borders */
+  --input: rgba(15, 23, 42, 0.1);
   --ring: var(--sage);
 }
 
@@ -99,8 +99,8 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     background-image:
-      radial-gradient(circle at 10% 20%, rgba(2, 132, 199, 0.08) 0%, transparent 60%),
-      radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.06) 0%, transparent 60%);
+      radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 60%),
+      radial-gradient(circle at 90% 80%, rgba(180, 83, 9, 0.02) 0%, transparent 60%);
     background-attachment: fixed;
   }
   h1, h2, h3, h4 {
@@ -111,7 +111,7 @@
   }
   ::selection {
     background: var(--gold);
-    color: var(--forest);
+    color: #ffffff;
   }
   /* Subtle grain overlay */
   body::before {
