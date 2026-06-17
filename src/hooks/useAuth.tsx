@@ -83,21 +83,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
 
-      // 2. Mock bypass fallback
-      if (!authenticatedUser) {
-        const isOldMock = (ident === "shikasadmin" || ident === "admin@shikas.online") && password === "ShikaEstates9";
-        const isNewMock = (ident === "admin1@shikas.online") && password === "Shika@999";
-
-        if (isOldMock || isNewMock) {
-          authenticatedUser = {
-            id: "admin_user_id",
-            email: ident,
-            role: "SuperUser",
-            fullName: isNewMock ? "Shika Admin 1" : "Shika Admin",
-          };
-        }
-      }
-
       if (authenticatedUser) {
         localStorage.setItem("shikas_mock_user", JSON.stringify(authenticatedUser));
         setUser(authenticatedUser);
