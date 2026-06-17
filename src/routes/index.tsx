@@ -9,9 +9,9 @@ import { getPlots, getPlans } from "@/lib/inventoryService";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Shika Estates — Premium Residential Plots & House Plans" },
-      { name: "description", content: "An invitation-only portfolio of limited-edition residential plots, house plans and signature projects from Shika Estates." },
-      { property: "og:title", content: "Shika Estates — Premium Residential Plots & House Plans" },
+      { title: "Home — Premium Residential Plots & House Plans" },
+      { name: "description", content: "An invitation-only portfolio of limited-edition residential plots, house plans and signature projects from Home." },
+      { property: "og:title", content: "Home — Premium Residential Plots & House Plans" },
       { property: "og:description", content: "Limited-edition plots, signature house plans and award-winning projects." },
     ],
   }),
@@ -34,31 +34,31 @@ function Home() {
       {/* HERO — editorial split */}
       <section className="relative pt-6 lg:pt-10">
         <div className="max-w-[1480px] mx-auto container-edge">
-          <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-stretch">
-            <div className="lg:col-span-7 flex flex-col justify-between min-h-[78vh] lg:min-h-[82vh] fade-up">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+            <div className="lg:col-span-7 flex flex-col justify-between min-h-0 lg:min-h-[82vh] gap-8 py-4 lg:py-0 fade-up">
               <div className="flex items-center gap-4 text-[var(--muted-sage)]">
                 <span className="gold-rule-left" />
                 <span className="eyebrow">Estd. 2026 · Hyderabad · India</span>
               </div>
 
-              <div className="mt-10 lg:mt-0">
-                <h1 className="font-display text-[12vw] lg:text-[8.5vw] leading-[0.92] tracking-tight">
+              <div className="mt-6 lg:mt-0">
+                <h1 className="font-display text-5xl xs:text-6xl sm:text-7xl md:text-[10vw] lg:text-[8.5vw] leading-[0.95] tracking-tight">
                   Quiet&nbsp;land.
                   <br />
                   <span className="italic text-gradient-gold">Considered</span>
                   <br />
                   homes.
                 </h1>
-                <div className="mt-10 grid sm:grid-cols-[1fr_auto] gap-8 items-end max-w-3xl">
-                  <p className="text-lg text-[var(--cream-2)] leading-relaxed max-w-lg">
+                <div className="mt-8 flex flex-col sm:flex-row sm:items-end gap-6 max-w-3xl">
+                  <p className="text-base sm:text-lg text-[var(--cream-2)] leading-relaxed max-w-lg">
                     An invitation-only portfolio of premium residential plots and house
                     plans, crafted for those who value home in detail, not square footage.
                   </p>
-                  <div className="flex flex-col gap-3">
-                    <Button asChild variant="gold" size="xl">
-                      <Link to="/plots">View the Release <ArrowUpRight className="ml-1" /></Link>
+                  <div className="flex flex-col gap-3 shrink-0 w-full sm:w-auto">
+                    <Button asChild variant="gold" size="xl" className="w-full sm:w-auto justify-center">
+                      <Link to="/plots">View the Release <ArrowUpRight className="ml-1 w-4 h-4" /></Link>
                     </Button>
-                    <Button asChild variant="ghost" size="sm" className="text-[var(--cream)]/70 hover:text-[var(--gold)] justify-start px-0">
+                    <Button asChild variant="ghost" size="sm" className="text-[var(--cream)]/70 hover:text-[var(--gold)] justify-center sm:justify-start px-0">
                       <Link to="/about">Read our story →</Link>
                     </Button>
                   </div>
@@ -68,7 +68,7 @@ function Home() {
             </div>
 
             <div className="lg:col-span-5 relative fade-in">
-              <div className="relative h-[55vh] lg:h-[82vh] overflow-hidden rounded-sm">
+              <div className="relative h-[35vh] sm:h-[45vh] lg:h-[82vh] overflow-hidden rounded-sm">
                 <img src={HERO_IMG} alt="Featured residence" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-b from-[var(--forest)]/60 via-transparent to-[var(--forest)]/30" />
                 <div className="absolute top-6 left-6 right-6 flex items-start justify-between">
@@ -173,28 +173,28 @@ function Home() {
       </Section>
 
       {/* STORY / WHY US */}
-      <section className="px-0 mt-32 lg:mt-48">
+      <section className="px-0 mt-16 sm:mt-32 lg:mt-48">
         <div className="max-w-[1480px] mx-auto container-edge">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-6 lg:order-2">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-sm">
+              <div className="relative aspect-[4/3] sm:aspect-[4/5] overflow-hidden rounded-sm">
                 <img src={STORY_IMG} alt="Studio interior" className="w-full h-full object-cover" />
               </div>
             </div>
-            <div className="lg:col-span-6 lg:order-1">
+            <div className="lg:col-span-6 lg:order-1 mt-6 lg:mt-0">
               <div className="flex items-center gap-4">
                 <span className="gold-rule-left" />
                 <span className="eyebrow">03 — On Practice</span>
               </div>
-              <h2 className="font-display text-5xl md:text-6xl mt-6">
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl mt-4 leading-[1.05]">
                 We build slowly,<br /><span className="italic text-gradient-gold">on purpose.</span>
               </h2>
-              <p className="mt-6 text-lg text-[var(--cream-2)] leading-relaxed max-w-lg">
+              <p className="mt-4 text-base sm:text-lg text-[var(--cream-2)] leading-relaxed max-w-lg">
                 We choose land carefully. We refuse the work we cannot do well.
                 The result is a portfolio we will be proud to walk through, a decade later.
               </p>
 
-              <div className="mt-10 grid sm:grid-cols-2 gap-x-8 gap-y-6">
+              <div className="mt-8 grid sm:grid-cols-2 gap-x-8 gap-y-5">
                 {[
                   { icon: Compass, t: "Prime micro-markets", d: "Curated for infrastructure, schools and natural assets." },
                   { icon: ShieldCheck, t: "Transparent payments", d: "Milestone-based, zero hidden charges." },
@@ -211,7 +211,7 @@ function Home() {
                 ))}
               </div>
 
-              <Button asChild variant="gold-outline" size="lg" className="mt-10">
+              <Button asChild variant="gold-outline" size="lg" className="mt-8 w-full sm:w-auto justify-center">
                 <Link to="/about">About the atelier →</Link>
               </Button>
             </div>
@@ -253,25 +253,25 @@ function Home() {
       </Section>
 
       {/* CTA */}
-      <section className="container-edge mt-32 lg:mt-48 mb-8">
+      <section className="container-edge mt-16 sm:mt-32 lg:mt-48 mb-8">
         <div className="max-w-[1480px] mx-auto relative overflow-hidden rounded-sm border border-[var(--gold)]/30">
           <div className="absolute inset-0">
             <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2000&q=85" alt="" className="w-full h-full object-cover opacity-20" />
             <div className="absolute inset-0 bg-gradient-to-br from-[var(--forest)] via-[var(--forest)]/95 to-[var(--forest-2)]" />
           </div>
-          <div className="relative px-8 md:px-16 py-20 md:py-28 grid md:grid-cols-[1.4fr_1fr] gap-10 items-center">
+          <div className="relative px-6 py-14 md:px-16 md:py-28 grid md:grid-cols-[1.4fr_1fr] gap-8 md:gap-10 items-center">
             <div>
               <span className="eyebrow">Begin</span>
-              <h2 className="font-display text-5xl md:text-6xl mt-4 leading-[0.95]">
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl mt-4 leading-[1.02]">
                 Spend a quiet morning<br /><span className="italic text-gradient-gold">on the land.</span>
               </h2>
-              <p className="mt-6 text-[var(--cream-2)] max-w-lg">
+              <p className="mt-4 text-sm sm:text-base text-[var(--cream-2)] max-w-lg leading-relaxed">
                 A member of our team will walk you through the masterplan, the architecture and the parcel itself — unhurried, by appointment.
               </p>
             </div>
-            <div className="flex flex-col gap-3">
-              <Button asChild variant="gold" size="xl"><Link to="/contact">Schedule a Visit</Link></Button>
-              <Button asChild variant="gold-outline" size="xl"><a href={`tel:${COMPANY.phoneHref}`}>Call {COMPANY.phone}</a></Button>
+            <div className="flex flex-col gap-3 w-full">
+              <Button asChild variant="gold" size="xl" className="w-full justify-center"><Link to="/contact">Schedule a Visit</Link></Button>
+              <Button asChild variant="gold-outline" size="xl" className="w-full justify-center"><a href={`tel:${COMPANY.phoneHref}`}>Call {COMPANY.phone}</a></Button>
             </div>
           </div>
         </div>
@@ -288,19 +288,19 @@ function Section({
   cta?: { label: string; to: string }; children: React.ReactNode;
 }) {
   return (
-    <section className="container-edge mt-28 lg:mt-44">
+    <section className="container-edge mt-16 sm:mt-28 lg:mt-44">
       <div className="max-w-[1480px] mx-auto">
-        <div className="grid md:grid-cols-[auto_1fr_auto] gap-6 md:gap-10 items-end mb-12 lg:mb-16">
+        <div className="flex flex-col md:grid md:grid-cols-[auto_1fr_auto] gap-4 md:gap-10 items-start md:items-end mb-8 lg:mb-16">
           {index && (
             <div className="eyebrow text-[var(--muted-sage)] md:pt-3">— {index}</div>
           )}
           <div>
             <div className="eyebrow">{eyebrow}</div>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl mt-3 max-w-2xl leading-[1.02]">{title}</h2>
-            {sub && <p className="mt-4 text-[var(--cream-2)]/80 max-w-xl">{sub}</p>}
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-2 max-w-2xl leading-[1.05]">{title}</h2>
+            {sub && <p className="mt-3 text-sm sm:text-base text-[var(--cream-2)]/80 max-w-xl">{sub}</p>}
           </div>
           {cta && (
-            <Link to={cta.to} className="self-end text-[var(--gold)] hover:text-[var(--gold-soft)] text-sm font-mono uppercase tracking-widest whitespace-nowrap inline-flex items-center gap-2">
+            <Link to={cta.to} className="md:self-end mt-2 md:mt-0 text-[var(--gold)] hover:text-[var(--gold-soft)] text-sm font-mono uppercase tracking-widest whitespace-nowrap inline-flex items-center gap-2">
               {cta.label} <ArrowUpRight className="w-4 h-4" />
             </Link>
           )}

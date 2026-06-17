@@ -10,9 +10,9 @@ import { Search, X } from "lucide-react";
 export const Route = createFileRoute("/plots")({
   head: () => ({
     meta: [
-      { title: "Available Plots — Shika Estates" },
+      { title: "Available Plots — Home" },
       { name: "description", content: "Browse limited-edition residential plots across Hyderabad with transparent pricing, sizes and availability." },
-      { property: "og:title", content: "Available Plots — Shika Estates" },
+      { property: "og:title", content: "Available Plots — Home" },
       { property: "og:description", content: "Curated residential plots — corner, hilltop, riverside and more." },
     ],
   }),
@@ -54,62 +54,66 @@ function PlotsPage() {
 
   return (
     <Layout>
-      <section className="px-5 lg:px-8 pt-16 pb-8">
+      <section className="px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-8">
         <div className="max-w-7xl mx-auto">
           <p className="text-[var(--gold)] text-xs uppercase tracking-widest">Available Plots</p>
-          <h1 className="font-display text-5xl mt-2">Land worth waiting for.</h1>
-          <p className="mt-4 text-[var(--muted-sage)] max-w-2xl">A curated release across Hyderabad — every plot personally surveyed, titled and ready to build on.</p>
+          <h1 className="font-display text-4xl sm:text-5xl mt-2 leading-[1.05]">Land worth waiting for.</h1>
+          <p className="mt-3 text-sm sm:text-base text-[var(--muted-sage)] max-w-2xl leading-relaxed">A curated release across Hyderabad — every plot personally surveyed, titled and ready to build on.</p>
         </div>
       </section>
 
-      <section className="px-5 lg:px-8 sticky top-16 z-30 backdrop-blur-md bg-[var(--forest)]/90 border-y border-[var(--gold)]/15 py-3">
-        <div className="max-w-7xl mx-auto flex flex-wrap gap-3 items-center">
-          <div className="relative flex-1 min-w-[200px]">
+      <section className="px-4 sm:px-6 lg:px-8 sticky top-[80px] z-30 backdrop-blur-md bg-[var(--forest)]/90 border-y border-[var(--gold)]/15 py-3.5">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+          <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-sage)]" />
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or location"
               className="w-full bg-[var(--forest-2)] border border-[var(--gold)]/25 rounded-md pl-9 pr-3 py-2.5 text-sm focus:outline-none focus:border-[var(--gold)]" />
           </div>
-          <Select label="Status" value={status} onChange={(v) => setStatus(v as typeof status)} opts={["All", "Available", "Reserved", "Sold"]} />
-          <Select label="Size" value={size} onChange={(v) => setSize(v as typeof size)} opts={["All", "<2000", "2000-3000", ">3000"]} />
-          {(q || status !== "All" || size !== "All") && (
-            <Button size="sm" variant="ghost" onClick={() => { setQ(""); setStatus("All"); setSize("All"); }}>Reset</Button>
-          )}
+          <div className="flex flex-wrap gap-4 items-center justify-between sm:justify-start">
+            <Select label="Status" value={status} onChange={(v) => setStatus(v as typeof status)} opts={["All", "Available", "Reserved", "Sold"]} />
+            <Select label="Size" value={size} onChange={(v) => setSize(v as typeof size)} opts={["All", "<2000", "2000-3000", ">3000"]} />
+            {(q || status !== "All" || size !== "All") && (
+              <Button size="sm" variant="ghost" onClick={() => { setQ(""); setStatus("All"); setSize("All"); }} className="h-10 px-3">Reset</Button>
+            )}
+          </div>
         </div>
       </section>
 
-      <section className="px-5 lg:px-8 mt-8">
+      <section className="px-4 sm:px-6 lg:px-8 mt-8">
         <div className="max-w-7xl mx-auto">
           {filtered.length === 0 ? (
-            <p className="text-center text-[var(--muted-sage)] py-20">No plots match your filters.</p>
+            <p className="text-center text-[var(--muted-sage)] py-20 font-mono text-sm">No plots match your filters.</p>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((p) => (
                 <article key={p.id} className="luxe-card rounded-xl overflow-hidden group flex flex-col">
-                   <div className="relative aspect-[4/3] overflow-hidden">
+                   <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
                     <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                    <span className={`absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-widest px-2 py-1 rounded ${
+                    <span className={`absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-widest px-2 py-1 rounded border border-white/20 shadow-sm ${
                       p.status === "Available" ? "bg-[var(--gold)] text-[var(--forest)]"
-                        : p.status === "Reserved" ? "bg-[var(--copper)] text-cream"
+                        : p.status === "Reserved" ? "bg-[var(--copper)] text-white"
                         : "bg-[var(--forest-3)] text-[var(--muted-sage)]"
                     }`}>{p.status}</span>
                   </div>
-                  <div className="p-5 flex-1 flex flex-col">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="font-display text-xl">{p.name}</h3>
-                        <p className="text-sm text-[var(--muted-sage)]">{p.location} · {p.size.toLocaleString()} sqft</p>
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <h3 className="font-display text-xl leading-tight">{p.name}</h3>
+                          <p className="text-xs text-[var(--muted-sage)] mt-1 font-mono uppercase tracking-wider">{p.location} · {p.size.toLocaleString()} sqft</p>
+                        </div>
+                        <span className="shrink-0 text-xs font-semibold bg-[var(--gold)] text-[var(--forest)] px-2.5 py-1.5 rounded">{formatINR(p.price)}</span>
                       </div>
-                      <span className="shrink-0 text-xs font-semibold bg-[var(--gold)] text-[var(--forest)] px-2.5 py-1 rounded">{formatINR(p.price)}</span>
+                      <p className="text-sm text-[var(--cream-2)]/85 mt-3 line-clamp-3 leading-relaxed">{p.description}</p>
+                      <div className="flex flex-wrap gap-1.5 mt-4">
+                        {p.amenities.map((a) => (
+                          <span key={a} className="text-[10px] uppercase tracking-wider text-[var(--cream-2)]/85 border border-[var(--gold)]/25 px-2 py-0.5 rounded font-mono">{a}</span>
+                        ))}
+                      </div>
                     </div>
-                    <p className="text-sm text-[var(--cream-2)]/85 mt-3 flex-1">{p.description}</p>
-                    <div className="flex flex-wrap gap-1.5 mt-4">
-                      {p.amenities.map((a) => (
-                        <span key={a} className="text-[11px] uppercase tracking-wider text-[var(--cream-2)]/85 border border-[var(--gold)]/25 px-2 py-0.5 rounded">{a}</span>
-                      ))}
-                    </div>
-                    <div className="mt-5 flex gap-2">
-                      <Button variant="gold" size="sm" className="flex-1" onClick={() => { setActiveImgIdx(0); setSelected(p); }}>View Details</Button>
-                      <Button variant="gold-outline" size="sm" className="flex-1" onClick={() => { setActiveImgIdx(0); setSelected(p); }}>Enquire Now</Button>
+                    <div className="mt-6 flex gap-3">
+                      <Button variant="gold" size="sm" className="flex-1 h-10 justify-center" onClick={() => { setActiveImgIdx(0); setSelected(p); }}>View Details</Button>
+                      <Button variant="gold-outline" size="sm" className="flex-1 h-10 justify-center" onClick={() => { setActiveImgIdx(0); setSelected(p); }}>Enquire</Button>
                     </div>
                   </div>
                 </article>
@@ -121,33 +125,33 @@ function PlotsPage() {
 
       {selected && (
         <div className="fixed inset-0 z-50 bg-[var(--forest)]/85 backdrop-blur-sm grid place-items-center p-4 overflow-y-auto" onClick={() => setSelected(null)}>
-          <div className="max-w-4xl w-full bg-[var(--forest-2)] border border-[var(--gold)]/30 rounded-xl overflow-hidden my-8" onClick={(e) => e.stopPropagation()}>
-            <div className="relative h-96 bg-[var(--forest)]/40 flex items-center justify-center">
+          <div className="max-w-4xl w-full bg-[var(--forest-2)] border border-[var(--gold)]/30 rounded-xl overflow-hidden my-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="relative h-60 sm:h-96 bg-[var(--forest)]/40 flex items-center justify-center">
               {imagesList[activeImgIdx] && (
                 <img src={imagesList[activeImgIdx]} alt={selected.name} className="w-full h-full object-cover" />
               )}
-              <button onClick={() => setSelected(null)} className="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full bg-[var(--forest)]/80 text-cream hover:bg-[var(--gold)] hover:text-[var(--forest)] z-10">
+              <button onClick={() => setSelected(null)} className="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full bg-[var(--forest)]/80 text-cream hover:bg-[var(--gold)] hover:text-[var(--forest)] z-10 shadow-sm transition-colors border border-[var(--gold)]/10">
                 <X className="w-4 h-4" />
               </button>
               
               {imagesList.length > 1 && (
                 <>
-                  <button onClick={prevImg} className="absolute left-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
+                  <button onClick={prevImg} className="absolute left-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-white flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
                     &larr;
                   </button>
-                  <button onClick={nextImg} className="absolute right-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-cream flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
+                  <button onClick={nextImg} className="absolute right-4 w-10 h-10 rounded-full bg-black/55 hover:bg-[var(--gold)] hover:text-[var(--forest)] text-white flex items-center justify-center transition-colors font-mono select-none" style={{fontSize: '20px'}}>
                     &rarr;
                   </button>
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 px-3 py-1 rounded-full text-xs font-mono text-[var(--cream)] select-none">
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 px-3 py-1 rounded-full text-xs font-mono text-[var(--forest)] select-none">
                     {activeImgIdx + 1} / {imagesList.length}
                   </div>
                 </>
               )}
             </div>
-            <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8">
+            <div className="p-5 sm:p-6 md:p-8 grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="font-display text-3xl">{selected.name}</h3>
-                <p className="text-[var(--muted-sage)] mt-1">{selected.location}</p>
+                <h3 className="font-display text-3xl leading-none">{selected.name}</h3>
+                <p className="text-[var(--muted-sage)] mt-1 font-mono uppercase text-xs tracking-wider">{selected.location}</p>
                 <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
                   <Info label="Size" value={`${selected.size.toLocaleString()} sqft`} />
                   <Info label="Price" value={formatINR(selected.price)} />
@@ -156,9 +160,9 @@ function PlotsPage() {
                 </div>
                 <h4 className="font-display text-lg mt-6">Amenities</h4>
                 <ul className="mt-2 grid grid-cols-2 gap-1.5 text-sm text-[var(--cream-2)]/85">
-                  {selected.amenities.map((a) => <li key={a}>• {a}</li>)}
+                  {selected.amenities.map((a) => <li key={a} className="font-mono text-xs">• {a}</li>)}
                 </ul>
-                <p className="text-sm text-[var(--cream-2)]/85 mt-5">{selected.description}</p>
+                <p className="text-sm text-[var(--cream-2)]/85 mt-5 leading-relaxed">{selected.description}</p>
               </div>
               <InquiryForm defaultSubject="Plot Inquiry" title={`Enquire about ${selected.name}`} />
             </div>
@@ -171,10 +175,10 @@ function PlotsPage() {
 
 function Select({ label, value, onChange, opts }: { label: string; value: string; onChange: (v: string) => void; opts: string[] }) {
   return (
-    <label className="text-xs text-[var(--muted-sage)] flex items-center gap-2">
+    <label className="text-xs text-[var(--muted-sage)] flex items-center gap-2 font-mono uppercase tracking-wider">
       {label}:
       <select value={value} onChange={(e) => onChange(e.target.value)}
-        className="bg-[var(--forest-2)] border border-[var(--gold)]/25 rounded-md px-3 py-2 text-cream text-sm focus:outline-none focus:border-[var(--gold)]">
+        className="bg-[var(--forest-2)] border border-[var(--gold)]/25 rounded-md px-3 py-1.5 text-cream text-sm focus:outline-none focus:border-[var(--gold)] min-h-[36px]">
         {opts.map((o) => <option key={o}>{o}</option>)}
       </select>
     </label>
@@ -184,8 +188,8 @@ function Select({ label, value, onChange, opts }: { label: string; value: string
 function Info({ label, value }: { label: string; value: string }) {
   return (
     <div className="border border-[var(--gold)]/15 rounded-md p-3">
-      <div className="text-[10px] uppercase tracking-widest text-[var(--muted-sage)]">{label}</div>
-      <div className="text-cream mt-1">{value}</div>
+      <div className="text-[10px] uppercase tracking-widest text-[var(--muted-sage)] font-mono">{label}</div>
+      <div className="text-cream mt-1 font-medium">{value}</div>
     </div>
   );
 }

@@ -7,10 +7,10 @@ import { Clock, Mail, MapPin, Phone } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Shika Estates" },
-      { name: "description", content: "Speak with the Shika Estates team. Phone, WhatsApp, email and visits — we reply within one business day." },
-      { property: "og:title", content: "Contact — Shika Estates" },
-      { property: "og:description", content: "Get in touch with the Shika Estates team." },
+      { title: "Contact — Home" },
+      { name: "description", content: "Speak with the Home team. Phone, WhatsApp, email and visits — we reply within one business day." },
+      { property: "og:title", content: "Contact — Home" },
+      { property: "og:description", content: "Get in touch with the Home team." },
     ],
   }),
   component: Contact,
@@ -19,32 +19,32 @@ export const Route = createFileRoute("/contact")({
 function Contact() {
   return (
     <Layout>
-      <section className="px-5 lg:px-8 pt-16 pb-8">
+      <section className="px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-8">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-[var(--gold)] text-xs uppercase tracking-widest">Get in Touch</p>
-          <h1 className="font-display text-5xl md:text-6xl mt-3">We're easy to reach.</h1>
-          <p className="mt-4 text-[var(--muted-sage)] max-w-xl mx-auto">Phone, email, WhatsApp or a quiet morning on-site — we respond within one business day.</p>
+          <p className="text-[var(--gold)] text-xs uppercase tracking-widest font-mono">Get in Touch</p>
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl mt-3 leading-[1.05]">We're easy to reach.</h1>
+          <p className="mt-3 text-sm sm:text-base text-[var(--muted-sage)] max-w-xl mx-auto leading-relaxed">Phone, email, WhatsApp or a quiet morning on-site — we respond within one business day.</p>
         </div>
       </section>
 
-      <section className="px-5 lg:px-8 mt-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-5">
+      <section className="px-4 sm:px-6 lg:px-8 mt-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <Card icon={Phone} title="Call us" lines={[<a key="t" href={`tel:${COMPANY.phoneHref}`} className="hover:text-[var(--gold)]">{COMPANY.phone}</a>]} />
           <Card icon={Mail} title="Email" lines={[<a key="e" href={`mailto:${COMPANY.email}`} className="hover:text-[var(--gold)]">{COMPANY.email}</a>]} />
           <Card icon={MapPin} title="Visit" lines={[COMPANY.address]} />
         </div>
       </section>
 
-      <section className="px-5 lg:px-8 mt-12">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-[1fr_1fr] gap-8 items-start">
-          <div>
-            <h2 className="font-display text-3xl">Send a note</h2>
+      <section className="px-4 sm:px-6 lg:px-8 mt-12">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8 items-start">
+          <div className="w-full">
+            <h2 className="font-display text-3xl leading-none">Send a note</h2>
             <p className="text-[var(--muted-sage)] mt-2 text-sm">Tell us a little about what you're looking for. We'll match you with the right member of the team.</p>
             <div className="mt-6">
               <InquiryForm defaultSubject="General Inquiry" />
             </div>
           </div>
-          <div className="space-y-5">
+          <div className="space-y-5 w-full">
             <div className="luxe-card rounded-xl overflow-hidden">
               <iframe
                 title="Map"
@@ -53,10 +53,10 @@ function Contact() {
               />
             </div>
             <div className="luxe-card rounded-xl p-6 flex items-start gap-3">
-              <Clock className="w-5 h-5 text-[var(--gold)] mt-0.5" />
+              <Clock className="w-5 h-5 text-[var(--gold)] mt-0.5 shrink-0" />
               <div>
                 <div className="font-display text-lg">Business Hours</div>
-                <div className="text-sm text-[var(--cream-2)]/85 mt-1">{COMPANY.hours}</div>
+                <div className="text-sm text-[var(--cream-2)]/85 mt-1 leading-relaxed">{COMPANY.hours}</div>
               </div>
             </div>
           </div>

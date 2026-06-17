@@ -46,7 +46,7 @@ function AuthPage() {
         
         <div className="w-full max-w-sm space-y-6 relative z-10 animate-fade-up">
           <div className="text-center space-y-2">
-            <h1 className="font-display text-4xl text-[var(--gold)]">Shika Estates</h1>
+            <h1 className="font-display text-4xl text-[var(--gold)]">Home</h1>
             <p className="text-sm font-mono uppercase tracking-widest text-[var(--muted-sage)]">Administrative Access</p>
           </div>
 
