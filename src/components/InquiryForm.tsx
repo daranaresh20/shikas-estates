@@ -47,7 +47,9 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
             name: form.name,
             email: form.email,
             phone: form.phone,
-            message: `[Subject: ${form.subject}] ${form.message}`,
+            subject: form.subject,
+            message: form.message,
+            newsletter: form.newsletter,
           },
         ]);
         if (error) throw error;
