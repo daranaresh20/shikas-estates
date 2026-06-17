@@ -47,10 +47,7 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
             name: form.name,
             email: form.email,
             phone: form.phone,
-            subject: form.subject,
-            message: form.message,
-            newsletter: form.newsletter,
-            type: form.subject.toLowerCase().includes("plot") ? "plot" : "plan",
+            message: `[Subject: ${form.subject}] ${form.message}`,
           },
         ]);
         if (error) throw error;
