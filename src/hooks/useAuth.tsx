@@ -51,12 +51,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       // Strict Admin credentials check
       if (
-        (ident === "shikaestatesadmin" || ident === "admin@shikaestates.com") &&
+        (ident === "shikasadmin" || ident === "admin@shikas.online") &&
         password === "ShikaEstates9"
       ) {
         const adminUser: AppUser = {
           id: "admin_user_id",
-          email: "admin@shikaestates.com",
+          email: "admin@shikas.online",
           role: "SuperUser",
           fullName: "Shika Admin",
         };
@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (supabase && password) {
           try {
             await supabase.auth.signInWithPassword({
-              email: "admin@shikaestates.com",
+              email: "admin@shikas.online",
               password,
             });
           } catch (dbErr) {

@@ -65,7 +65,7 @@ function AuthPage() {
                   <Input
                     id="email"
                     type="text"
-                    placeholder="shikaestatesadmin"
+                    placeholder="shikasadmin"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
                     className="bg-white/50 border-[var(--gold)]/20 focus-visible:ring-[var(--gold)] text-sm"
