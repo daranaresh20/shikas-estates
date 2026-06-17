@@ -48,32 +48,59 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       const ident = emailOrUsername.toLowerCase().trim();
-      
-      // Strict Admin credentials check
-      if (
-        (ident === "shikasadmin" || ident === "admin@shikas.online") &&
-        password === "ShikaEstates9"
-      ) {
-        const adminUser: AppUser = {
-          id: "admin_user_id",
-          email: "admin@shikas.online",
-          role: "SuperUser",
-          fullName: "Shika Admin",
-        };
+      let authenticatedUser: AppUser | null = null;
 
-        if (supabase && password) {
-          try {
-            await supabase.auth.signInWithPassword({
-              email: "admin@shikas.online",
-              password,
-            });
-          } catch (dbErr) {
-            console.warn("Supabase admin login bypass:", dbErr);
+      // 1. Try real Supabase auth if connected
+      if (supabase && password) {
+        try {
+          const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+            email: ident,
+            password: password,
+          });
+
+          if (!authError && authData.user) {
+            const userEmail = authData.user.email || ident;
+            
+            // Query the user's role from user_roles
+            const { data: roleData } = await supabase
+              .from("user_roles")
+              .select("role")
+              .eq("user_id", authData.user.id)
+              .maybeSingle();
+
+            // Check if the role is 'admin'
+            if (roleData && roleData.role === "admin") {
+              authenticatedUser = {
+                id: authData.user.id,
+                email: userEmail,
+                role: "SuperUser",
+                fullName: authData.user.user_metadata?.full_name || "Admin User",
+              };
+            }
           }
+        } catch (dbErr) {
+          console.warn("Supabase auth check failed, falling back to mock check:", dbErr);
         }
+      }
 
-        localStorage.setItem("shikas_mock_user", JSON.stringify(adminUser));
-        setUser(adminUser);
+      // 2. Mock bypass fallback
+      if (!authenticatedUser) {
+        const isOldMock = (ident === "shikasadmin" || ident === "admin@shikas.online") && password === "ShikaEstates9";
+        const isNewMock = (ident === "admin1@shikas.online") && password === "Shika@999";
+
+        if (isOldMock || isNewMock) {
+          authenticatedUser = {
+            id: "admin_user_id",
+            email: ident,
+            role: "SuperUser",
+            fullName: isNewMock ? "Shika Admin 1" : "Shika Admin",
+          };
+        }
+      }
+
+      if (authenticatedUser) {
+        localStorage.setItem("shikas_mock_user", JSON.stringify(authenticatedUser));
+        setUser(authenticatedUser);
         setRole("SuperUser");
       } else {
         throw new Error("Invalid admin credentials");
