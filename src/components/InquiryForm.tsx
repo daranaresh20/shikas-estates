@@ -31,13 +31,13 @@ export function InquiryForm({ defaultSubject, compact, title }: Props) {
   function validate() {
     const e: Record<string, string> = {};
     if (!form.name.trim()) {
-      e.name = language === "en" ? "Name is required" : "పేరు తప్పనిసరి";
+      e.name = language === "en" ? "Name is required" : language === "te" ? "పేరు తప్పనిసరి" : "नाम आवश्यक है";
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      e.email = language === "en" ? "Valid email required" : "సరైన ఈమెయిల్ అవసరం";
+      e.email = language === "en" ? "Valid email required" : language === "te" ? "సరైన ఈమెయిల్ అవసరం" : "सही ईमेल आवश्यक है";
     }
     if (!/^\d{10}$/.test(form.phone.replace(/\D/g, ""))) {
-      e.phone = language === "en" ? "10-digit phone required" : "10 అంకెల ఫోన్ నంబర్";
+      e.phone = language === "en" ? "10-digit phone required" : language === "te" ? "10 అంకెల ఫోన్ నంబర్" : "10 अंकों का फोन नंबर";
     }
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -47,9 +47,17 @@ export function InquiryForm({ defaultSubject, compact, title }: Props) {
     ev.preventDefault();
     if (!validate()) {
       toast.error(
-        language === "en" ? "Please check the form" : "దయచేసి ఫారమ్‌ను తనిఖీ చేయండి", 
+        language === "en" 
+          ? "Please check the form" 
+          : language === "te" 
+            ? "దయచేసి ఫారమ్‌ను తనిఖీ చేయండి" 
+            : "कृपया फॉर्म की जांच करें", 
         { 
-          description: language === "en" ? "A few fields need attention." : "కొన్ని ఫీల్డ్స్ సరిదిద్దవలసి ఉంది." 
+          description: language === "en" 
+            ? "A few fields need attention." 
+            : language === "te" 
+              ? "కొన్ని ఫీల్డ్స్ సరిదిద్దవలసి ఉంది." 
+              : "कुछ फ़ील्ड्स में सुधार की आवश्यकता है।" 
         }
       );
       return;

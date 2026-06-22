@@ -12,9 +12,9 @@ export function Footer() {
         <div>
           <div className="font-display text-2xl text-cream mb-3">{COMPANY.name}</div>
           <p className="text-sm text-[var(--muted-sage)] leading-relaxed">
-            {language === "en" 
-              ? "Crafting timeless residences and limited-edition plots for those who value provenance, craft and quiet luxury."
-              : "మూలం, హస్తకళ మరియు ప్రశాంతమైన జీవనానికి ప్రాధాన్యత ఇచ్చే వారి కోసం కాలాతీత గృహాలను, ప్లాట్లను రూపొందిస్తున్నాము."}
+            {language === "en" && "Crafting timeless residences and limited-edition plots for those who value provenance, craft and quiet luxury."}
+            {language === "te" && "మూలం, హస్తకళ మరియు ప్రశాంతమైన జీవనానికి ప్రాధాన్యత ఇచ్చే వారి కోసం కాలాతీత గృహాలను, ప్లాట్లను రూపొందిస్తున్నాము."}
+            {language === "hi" && "मूल, शिल्प कौशल और शांत विलासिता को महत्व देने वालों के लिए कालातीत आवासों और सीमित संस्करण भूखंडों का निर्माण।"}
           </p>
           <div className="flex gap-3 mt-5">
             {[Instagram, Facebook, Linkedin].map((Icon, i) => (
@@ -38,7 +38,11 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-cream font-semibold mb-4 text-sm uppercase tracking-widest">{language === "en" ? "Contact" : "సంప్రదించండి"}</h4>
+          <h4 className="text-cream font-semibold mb-4 text-sm uppercase tracking-widest">
+            {language === "en" && "Contact"}
+            {language === "te" && "సంప్రదించండి"}
+            {language === "hi" && "संपर्क करें"}
+          </h4>
           <ul className="space-y-3.5 text-sm text-[var(--cream-2)]/85">
             <li className="flex gap-2">
               <Phone className="w-4 h-4 mt-0.5 text-[var(--gold)] shrink-0" /> 
@@ -61,17 +65,23 @@ export function Footer() {
           <ul className="space-y-2.5 text-sm text-[var(--cream-2)]/85">
             <li>
               <a href="#" className="hover:text-[var(--gold)] block py-0.5">
-                {language === "en" ? "Privacy Policy" : "గోప్యతా విధానం"}
+                {language === "en" && "Privacy Policy"}
+                {language === "te" && "గోప్యతా విధానం"}
+                {language === "hi" && "गोपनीयता नीति"}
               </a>
             </li>
             <li>
               <a href="#" className="hover:text-[var(--gold)] block py-0.5">
-                {language === "en" ? "Terms & Conditions" : "నిబంధనలు & షరతులు"}
+                {language === "en" && "Terms & Conditions"}
+                {language === "te" && "నిబంధనలు & షరతులు"}
+                {language === "hi" && "नियम एवं शर्तें"}
               </a>
             </li>
             <li>
               <a href="#" className="hover:text-[var(--gold)] block py-0.5">
-                {language === "en" ? "RERA Disclosures" : "RERA వెల్లడింపులు"}
+                {language === "en" && "RERA Disclosures"}
+                {language === "te" && "RERA వెల్లడింపులు"}
+                {language === "hi" && "RERA प्रकटीकरण"}
               </a>
             </li>
           </ul>
@@ -81,7 +91,9 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-xs text-[var(--muted-sage)] flex flex-col md:flex-row justify-between gap-3 text-center md:text-left">
         <span>© {new Date().getFullYear()} {COMPANY.name}. {t("footerRights")}</span>
         <span className="italic">
-          {language === "en" ? "Designed with restraint. Built with intent." : "అద్భుతమైన డిజైన్‌తో కూడినది. నిబద్ధతతో నిర్మించబడినది."}
+          {language === "en" && "Designed with restraint. Built with intent."}
+          {language === "te" && "అద్భుతమైన డిజైన్‌తో కూడినది. నిబద్ధతతో నిర్మించబడినది."}
+          {language === "hi" && "संयम के साथ डिज़ाइन किया गया। इरादे के साथ बनाया गया।"}
         </span>
       </div>
     </footer>

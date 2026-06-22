@@ -130,7 +130,7 @@ function Home() {
                 </div>
                 <div className="flex items-center justify-between gap-3 mt-4">
                   <span className="text-sm text-[var(--cream-2)]/80">
-                    {p.size.toLocaleString()} {t("sqft")} · {language === "en" ? p.amenities[0] : "కార్నర్ ప్లాట్"}
+                    {p.size.toLocaleString()} {t("sqft")} · {language === "en" ? p.amenities[0] : language === "te" ? "కార్నర్ ప్లాట్" : "कोने का प्लॉट"}
                   </span>
                   <span className="text-[var(--gold)] text-sm group-hover:translate-x-1 transition-transform">→</span>
                 </div>
@@ -208,7 +208,11 @@ function Home() {
               </div>
 
               <Button asChild variant="gold-outline" size="lg" className="mt-8 w-full sm:w-auto justify-center cursor-pointer">
-                <Link to="/about">{language === "en" ? "About the atelier →" : "మా గురించి మరింత తెలుసుకోండి →"}</Link>
+                <Link to="/about">
+                  {language === "en" && "About the atelier →"}
+                  {language === "te" && "మా గురించి మరింత తెలుసుకోండి →"}
+                  {language === "hi" && "अटेलियर के बारे में →"}
+                </Link>
               </Button>
             </div>
           </div>
@@ -218,34 +222,40 @@ function Home() {
       {/* TESTIMONIALS */}
       <Section 
         index="04" 
-        eyebrow={language === "en" ? "Owners" : "యజమానులు"} 
-        title={language === "en" ? "From the people who live here." : "మా కస్టమర్ల అనుభవాలు."}
+        eyebrow={language === "en" ? "Owners" : language === "te" ? "యజమానులు" : "मालिक"} 
+        title={language === "en" ? "From the people who live here." : language === "te" ? "మా కస్టమర్ల అనుభవాలు." : "यहाँ रहने वाले लोगों से।"}
       >
         <div className="grid md:grid-cols-3 gap-px bg-[var(--gold)]/15 border-y border-[var(--gold)]/15">
           {[
             {
               name: "Ananya Rao",
-              title: language === "en" ? "Resident, Magnolia Park" : "నివాసి, మాగ్నోలియా పార్క్",
+              title: language === "en" ? "Resident, Magnolia Park" : language === "te" ? "నివాసి, మాగ్నోలియా పార్క్" : "निवासी, मैगनोलिया पार्क",
               rating: 5,
               quote: language === "en" 
                 ? "The attention to detail is extraordinary — from the gold-leaf signage to the timber finishings, every choice feels considered."
-                : "నిర్మాణంలో తీసుకున్న శ్రద్ధ అసాధారణమైనది — ప్రతి చిన్న విషయానికి వారు ఇచ్చిన విలువ ప్రతిధ్వనిస్తుంది."
+                : language === "te"
+                  ? "నిర్మాణంలో తీసుకున్న శ్రద్ధ అసాధారణమైనది — ప్రతి చిన్న విషయానికి వారు ఇచ్చిన విలువ ప్రతిధ్వనిస్తుంది."
+                  : "बारीकियों पर ध्यान असाधारण है — सोने की नक्काशी वाले साइनेज से लेकर लकड़ी की फिनिशिंग तक, हर विकल्प सोचा-समझा लगता है।"
             },
             {
               name: "Vikram Shetty",
-              title: language === "en" ? "Investor, Greenwood Residency" : "పెట్టుబడిదారుడు, గ్రీన్‌వుడ్ రెసిడెన్సీ",
+              title: language === "en" ? "Investor, Greenwood Residency" : language === "te" ? "పెట్టుబడిదారుడు, గ్రీన్‌వుడ్ రెసిడెన్సీ" : "निवेशक, ग्रीनवुड रेजीडेंसी",
               rating: 5,
               quote: language === "en"
                 ? "Home is the rare developer that ships on time without compromising the architectural intent. Best decision we've made."
-                : "నిర్మాణ రూపకల్పనను రాజీ పడకుండా సమయానికి పూర్తి చేసే అరుదైన సంస్థ ఇది. మేము తీసుకున్న సరైన నిర్ణయం."
+                : language === "te"
+                  ? "నిర్మాణ రూపకల్పనను రాజీ పడకుండా సమయానికి పూర్తి చేసే అరుదైన సంస్థ ఇది. మేము తీసుకున్న సరైన నిర్ణయం."
+                  : "यह एक दुर्लभ डेवलपर है जो स्थापत्य कला से समझौता किए बिना समय पर काम पूरा करता है। हमारा सबसे अच्छा फैसला।"
             },
             {
               name: "Priya & Rohan",
-              title: language === "en" ? "Owners, Aurelia Hill Villas" : "యజమానులు, ఆరేలియా హిల్ విల్లాస్",
+              title: language === "en" ? "Owners, Aurelia Hill Villas" : language === "te" ? "యజమానులు, ఆరేలియా హిల్ విల్లాస్" : "मालिक, ऑरेलिया हिल विला",
               rating: 5,
               quote: language === "en"
                 ? "We were treated like custodians of a future home, not buyers. The team made the entire process feel effortless."
-                : "మమ్మల్ని కేవలం కస్టమర్లుగా కాకుండా కుటుంబ సభ్యులుగా చూసుకున్నారు. మొత్తం ప్రయాణం చాలా సులభంగా సాగింది."
+                : language === "te"
+                  ? "మమ్మల్ని కేవలం కస్టమర్లుగా కాకుండా కుటుంబ సభ్యులుగా చూసుకున్నారు. మొత్తం ప్రయాణం చాలా సులభంగా సాగింది."
+                  : "हमारे साथ खरीदारों की तरह नहीं, बल्कि एक भावी घर के रखवालों की तरह व्यवहार किया गया। पूरी प्रक्रिया बहुत आसान रही।"
             }
           ].map((t) => (
             <figure key={t.name} className="bg-[var(--forest)] p-8 lg:p-10">
@@ -270,8 +280,8 @@ function Home() {
       <Section 
         index="05" 
         eyebrow={t("navGallery")} 
-        title={language === "en" ? "A glimpse of the work." : "మా నిర్మాణాల ఒక చిన్న చూపు."}
-        cta={{ label: language === "en" ? "Full gallery" : "పూర్తి గ్యాలరీ", to: "/gallery" }}
+        title={language === "en" ? "A glimpse of the work." : language === "te" ? "మా నిర్మాణాల ఒక చిన్న చూపు." : "काम की एक झलक।"}
+        cta={{ label: language === "en" ? "Full gallery" : language === "te" ? "పూర్తి గ్యాలరీ" : "पूरी गैलरी", to: "/gallery" }}
       >
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
           {GALLERY.slice(0, 6).map((g, i) => (
@@ -291,18 +301,20 @@ function Home() {
           </div>
           <div className="relative px-6 py-14 md:px-16 md:py-28 grid md:grid-cols-[1.4fr_1fr] gap-8 md:gap-10 items-center">
             <div>
-              <span className="eyebrow">{language === "en" ? "Begin" : "ప్రారంభించండి"}</span>
+              <span className="eyebrow">
+                {language === "en" && "Begin"}
+                {language === "te" && "ప్రారంభించండి"}
+                {language === "hi" && "शुरू करें"}
+              </span>
               <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl mt-4 leading-[1.02]">
-                {language === "en" ? (
-                  <>Spend a quiet morning<br /><span className="italic text-gradient-gold">on the land.</span></>
-                ) : (
-                  <>మా ప్లాట్లలో ఒక ప్రశాంతమైన ఉదయం<br /><span className="italic text-gradient-gold">గడపండి.</span></>
-                )}
+                {language === "en" && <>Spend a quiet morning<br /><span className="italic text-gradient-gold">on the land.</span></>}
+                {language === "te" && <>మా ప్లాట్లలో ఒక ప్రశాంతమైన ఉదయం<br /><span className="italic text-gradient-gold">గడపండి.</span></>}
+                {language === "hi" && <>भूमि पर एक शांत सुबह<br /><span className="italic text-gradient-gold">बिताएं।</span></>}
               </h2>
               <p className="mt-4 text-sm sm:text-base text-[var(--cream-2)] max-w-lg leading-relaxed">
-                {language === "en" 
-                  ? "A member of our team will walk you through the masterplan, the architecture and the parcel itself — unhurried, by appointment."
-                  : "మా బృంద సభ్యులు మీతో పాటు వచ్చి మా ప్లాన్, ఆర్కిటెక్చర్ మరియు మొత్తం లేఅవుట్‌ను వివరంగా చూపిస్తారు — అపాయింట్‌మెంట్ ద్వారా మాత్రమే."}
+                {language === "en" && "A member of our team will walk you through the masterplan, the architecture and the parcel itself — unhurried, by appointment."}
+                {language === "te" && "మా బృంద సభ్యులు మీతో పాటు వచ్చి మా ప్లాన్, ఆర్కిటెక్చర్ మరియు మొత్తం లేఅవుట్‌ను వివరంగా చూపిస్తారు — అపాయింట్‌మెంట్ ద్వారా మాత్రమే."}
+                {language === "hi" && "हमारी टीम का एक सदस्य आपको मास्टरप्लान, वास्तुकला और स्वयं भूखंड की विस्तृत सैर कराएगा — बिना किसी जल्दबाजी के, केवल अपॉइंटमेंट द्वारा।"}
               </p>
             </div>
             <div className="flex flex-col gap-3 w-full">

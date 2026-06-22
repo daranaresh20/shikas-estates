@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-export type Language = "en" | "te";
+export type Language = "en" | "te" | "hi";
 
 export const translations = {
   en: {
@@ -151,7 +151,7 @@ export const translations = {
     secPlansEyebrow: "ఇంటి ప్లాన్లు",
     secPlansTitle: "ఆరు రకాల డిజైన్లు. అపరిమిత వైవిధ్యాలు.",
     secPlansSub: "చిన్న స్టూడియోల నుండి నాలుగు పడకల విల్లాల వరకు — ప్రతి ప్లాన్ దశాబ్ద కాలపు అనుభవంతో తీర్చిదిద్దబడింది.",
-    secPlansCta: "అన్ని ప్లాన్లను అన్వేషించండి",
+    secPlansCta: "అన్ని ప్లాన్లను అన్वेషించండి",
 
     secStoryEyebrow: "03 — మా పని విధానం",
     secStoryTitleLine1: "మేము నెమ్మదిగా నిర్మిస్తాము,",
@@ -208,6 +208,109 @@ export const translations = {
     ba: "బాత్ రూమ్",
     from: "ధర",
     plot: "ప్లాట్"
+  },
+  hi: {
+    // Navigation
+    navHome: "होम",
+    navAtelier: "अटेलियर",
+    navPlots: "प्लॉट्स",
+    navPlans: "प्लान्स",
+    navOngoing: "जारी प्रोजेक्ट्स",
+    navArchive: "पूरे हुए प्रोजेक्ट्स",
+    navGallery: "गैलरी",
+    navContact: "संपर्क करें",
+    navAdminPanel: "एडमिन पैनल",
+    navEnquire: "पूछताछ",
+    navEnquireNow: "अभी पूछताछ करें",
+    navLogout: "लॉगआउट",
+    navAdminAccess: "एडमिन लॉगिन",
+    navAdminDashboard: "एडमिन डैशबोर्ड",
+    navEstd: "स्थापना. 2026 · हैदराबाद · भारत",
+    navEstdShort: "स्थापना. 2026 · हैदराबाद, भारत",
+
+    // Hero
+    heroTitlePart1: "शांत ",
+    heroTitlePart2: "ज़मीन।",
+    heroTitlePart3: "बेहतर",
+    heroTitlePart4: " घर।",
+    heroSubtitle: "प्रीमियम आवासीय भूखंडों और घर की योजनाओं का एक आमंत्रण-मात्र पोर्टफोलियो, जो क्षेत्रफल से अधिक गुणवत्ता को महत्व देने वालों के लिए बनाया गया है।",
+    heroCtaRelease: "प्लॉट्स देखें",
+    heroCtaStory: "हमारी कहानी पढ़ें →",
+
+    // Marquee Words
+    marqueeRestraint: "संयम।",
+    marqueeProvenance: "उत्पत्ति।",
+    marqueeCraft: "शिल्पकला।",
+    marqueeStewardship: "जिम्मेदारी।",
+    marqueePatience: "धैर्य।",
+    marqueePermanence: "स्थायित्व।",
+
+    // Landing Page Sections
+    secPlotsEyebrow: "नवीनतम रिलीज",
+    secPlotsTitle: "केवल आमंत्रण पर तीन विशिष्ट भूखंड।",
+    secPlotsSub: "हमारे वसंत संस्करण से — प्रत्येक भूखंड का व्यक्तिगत रूप से सर्वेक्षण किया गया है, स्पष्ट स्वामित्व के साथ तुरंत घर बनाने के लिए तैयार।",
+    secPlotsCta: "सभी प्लॉट्स देखें",
+
+    secPlansEyebrow: "घर के नक्शे",
+    secPlansTitle: "छह श्रेणियां। असीमित विविधताएं।",
+    secPlansSub: "छोटे अटोलेयर्स से लेकर चार कमरों वाले हेरिटेज विला तक — हर एक नक्शा एक दशक के अनुभव के साथ परिष्कृत किया गया है।",
+    secPlansCta: "सभी नक्शे देखें",
+
+    secStoryEyebrow: "03 — हमारी कार्यप्रणाली",
+    secStoryTitleLine1: "हम समझदारी से और",
+    secStoryTitleLine2: "धीरे बनाते हैं।",
+    secStorySub: "हम ज़मीन का चयन बहुत सावधानी से करते हैं। हम वह काम नहीं लेते जिसे हम सर्वोत्तम ढंग से न कर सकें। परिणाम एक ऐसा पोर्टफोलियो है जिस पर हम एक दशक बाद भी गर्व कर सकेंगे।",
+
+    // Features
+    featPrimeTitle: "प्रमुख क्षेत्र",
+    featPrimeDesc: "बुनियादी ढांचे, स्कूलों और प्राकृतिक सुंदरता के आधार पर चुने गए स्थान।",
+    featPaymentsTitle: "पारदर्शी भुगतान",
+    featPaymentsDesc: "काम की प्रगति के अनुसार भुगतान, कोई छिपे हुए शुल्क नहीं।",
+    featStewardshipTitle: "पर्यावरण की रक्षा",
+    featStewardshipDesc: "हम प्रत्येक स्थान पर पहले से अधिक पेड़ लगाकर सौंपते हैं।",
+    featDeliveredTitle: "समय पर डिलीवरी",
+    featDeliveredDesc: "ससमय चाबियां सौंपने का बेहतरीन रिकॉर्ड।",
+
+    // Footer
+    footerAddress: "पसुमामला, अब्दुल्लापुरमेट मंडल, रंगारेड्डी जिला, तेलंगाना 501505",
+    footerPhone: "फ़ोन",
+    footerEmail: "ईमेल",
+    footerHours: "कार्य समय",
+    footerHoursVal: "सोम-शनि: सुबह 9 - शाम 6 · रविवार: सुबह 10 - दोपहर 4",
+    footerNavigation: "नेविगेशन",
+    footerLegal: "कानूनी",
+    footerRights: "सर्वाधिकार सुरक्षित।",
+
+    // Inquiry Form
+    formTitleGeneral: "सामान्य पूछताछ",
+    formTitleProperty: "इस प्रॉपर्टी के बारे में पूछें",
+    formName: "पूरा नाम",
+    formNamePlaceholder: "जैसे, श्रीनिवास राव",
+    formEmail: "ईमेल पता",
+    formEmailPlaceholder: "जैसे, srinivas@example.com",
+    formPhone: "फ़ोन नंबर",
+    formPhonePlaceholder: "जैसे, +91 98765 43210",
+    formSubject: "विषय",
+    formSubjectSelect: "विषय चुनें...",
+    formSubjectPlots: "प्लॉट्स और नई रिलीज",
+    formSubjectPlans: "घर के नक्शे",
+    formSubjectOngoing: "वर्तमान प्रोजेक्ट्स",
+    formSubjectCompleted: "पूरे हुए प्रोजेक्ट्स",
+    formSubjectOther: "अन्य पूछताछ",
+    formMessage: "सन्देश / आपकी आवश्यकताएं",
+    formMessagePlaceholder: "हमें अपनी आवश्यकताओं या पसंदीदा प्लॉट आकार के बारे में बताएं...",
+    formNewsletter: "आने वाले नए प्लॉट्स की सूचना सबसे पहले पाने के लिए हमारी सूची में शामिल हों।",
+    formSubmit: "पूछताछ भेजें",
+    formSubmitting: "भेजा जा रहा है...",
+    formSuccessTitle: "धन्यवाद!",
+    formSuccessDesc: "हमें आपका संदेश मिल गया है। हम जल्द ही आपसे संपर्क करेंगे।",
+
+    // Common
+    sqft: "वर्ग फीट",
+    br: "बेडरुम",
+    ba: "बाथरूम",
+    from: "कीमत",
+    plot: "प्लॉट"
   }
 };
 
@@ -226,7 +329,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   useEffect(() => {
     const savedLang = localStorage.getItem("shikas_lang") as Language;
-    if (savedLang === "en" || savedLang === "te") {
+    if (savedLang === "en" || savedLang === "te" || savedLang === "hi") {
       setLanguageState(savedLang);
     }
   }, []);

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/data";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useLanguage, type Language } from "@/hooks/useLanguage";
 import { useAuth } from "@/hooks/useAuth";
 
 const links = [
@@ -31,9 +31,11 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const toggleLanguage = () => {
-    setLanguage(language === "en" ? "te" : "en");
-  };
+  const languageOptions: { code: Language; label: string }[] = [
+    { code: "en", label: "EN" },
+    { code: "te", label: "తెలుగు" },
+    { code: "hi", label: "हिंदी" },
+  ];
 
   return (
     <header
@@ -83,17 +85,22 @@ export function Navbar() {
         </ul>
 
         <div className="hidden lg:flex items-center gap-4">
-          {/* Beautiful Language Toggle with custom HSL-tailored colors */}
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--gold)]/30 hover:border-[var(--gold)] bg-transparent text-xs font-mono tracking-wider text-[var(--cream)] hover:bg-[var(--gold)] hover:text-[var(--forest)] transition-all duration-300 active:scale-95 cursor-pointer shadow-sm group"
-            title="Switch Language / భాషను మార్చండి"
-          >
-            <Globe className="w-3.5 h-3.5 text-[var(--gold)] group-hover:text-inherit transition-colors" />
-            <span className={language === "en" ? "font-bold text-[var(--gold)] group-hover:text-inherit" : "opacity-70"}>EN</span>
-            <span className="text-[var(--gold)]/30">/</span>
-            <span className={language === "te" ? "font-bold text-[var(--gold)] group-hover:text-inherit" : "opacity-70"}>తెలుగు</span>
-          </button>
+          {/* Beautiful 3-Language Toggle Pill Group */}
+          <div className="flex items-center gap-1 bg-[var(--forest-2)]/30 p-1 rounded-full border border-[var(--gold)]/20 shadow-sm">
+            {languageOptions.map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => setLanguage(lang.code)}
+                className={`px-3 py-1 rounded-full text-xs font-mono tracking-wide transition-all duration-300 cursor-pointer ${
+                  language === lang.code
+                    ? "bg-[var(--gold)] text-[var(--forest)] font-bold shadow-sm"
+                    : "text-[var(--cream)]/65 hover:text-[var(--cream)] hover:bg-[var(--cream)]/5"
+                }`}
+              >
+                {lang.label}
+              </button>
+            ))}
+          </div>
 
           <Button asChild variant="gold-outline" size="sm">
             <Link to="/contact">{t("navEnquire")}</Link>
@@ -114,13 +121,17 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-3 lg:hidden">
-          {/* Small Language Toggle for Mobile screen beside menu button */}
+          {/* Cycle Language Button for Mobile screens (EN -> TE -> HI) */}
           <button
-            onClick={toggleLanguage}
+            onClick={() => {
+              const nextLang: Record<Language, Language> = { en: "te", te: "hi", hi: "en" };
+              setLanguage(nextLang[language] || "en");
+            }}
             className="flex items-center gap-1 px-2.5 py-1 rounded-full border border-[var(--gold)]/30 text-[10px] font-mono tracking-wider text-[var(--cream)] hover:bg-[var(--gold)] hover:text-[var(--forest)] transition-all duration-300 cursor-pointer active:scale-95"
+            title="Cycle Language / भाषा चुनें"
           >
-            <Globe className="w-3 h-3 text-[var(--gold)]" />
-            <span>{language === "en" ? "తెలుగు" : "EN"}</span>
+            <Globe className="w-3.5 h-3.5 text-[var(--gold)]" />
+            <span className="uppercase">{language}</span>
           </button>
 
           <button
@@ -188,21 +199,20 @@ export function Navbar() {
             {/* Inline Language Selector in Mobile drawer */}
             <div className="flex items-center justify-between px-2 py-1.5 rounded-lg bg-[var(--forest-2)]/40 border border-[var(--gold)]/15">
               <span className="text-xs font-mono text-[var(--cream-2)] flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5 text-[var(--gold)]" /> Language / భాష
+                <Globe className="w-3.5 h-3.5 text-[var(--gold)]" /> Language / भाषा
               </span>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setLanguage("en")}
-                  className={`px-2 py-0.5 text-xs font-mono rounded ${language === "en" ? "bg-[var(--gold)] text-[var(--forest)] font-bold" : "text-[var(--cream)]/60"}`}
-                >
-                  EN
-                </button>
-                <button
-                  onClick={() => setLanguage("te")}
-                  className={`px-2 py-0.5 text-xs font-mono rounded ${language === "te" ? "bg-[var(--gold)] text-[var(--forest)] font-bold" : "text-[var(--cream)]/60"}`}
-                >
-                  తెలుగు
-                </button>
+              <div className="flex gap-1.5">
+                {languageOptions.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => setLanguage(lang.code)}
+                    className={`px-2 py-0.5 text-xs font-mono rounded ${
+                      language === lang.code ? "bg-[var(--gold)] text-[var(--forest)] font-bold" : "text-[var(--cream)]/60"
+                    }`}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
               </div>
             </div>
 
