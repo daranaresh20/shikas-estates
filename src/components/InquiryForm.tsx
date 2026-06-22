@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/data";
 import { supabase } from "@/lib/supabase";
+import { useLanguage } from "@/hooks/useLanguage";
 
 type Props = {
   defaultSubject?: string;
@@ -10,12 +11,17 @@ type Props = {
   title?: string;
 };
 
-export function InquiryForm({ defaultSubject = "General Inquiry", compact, title }: Props) {
+export function InquiryForm({ defaultSubject, compact, title }: Props) {
+  const { t, language } = useLanguage();
+  
+  // Set default subject key mapping safely
+  const resolvedDefaultSubject = defaultSubject || t("formTitleGeneral");
+
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
-    subject: defaultSubject,
+    subject: resolvedDefaultSubject,
     message: "",
     newsletter: true,
   });
@@ -24,9 +30,15 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
 
   function validate() {
     const e: Record<string, string> = {};
-    if (!form.name.trim()) e.name = "Required";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Valid email required";
-    if (!/^\d{10}$/.test(form.phone.replace(/\D/g, ""))) e.phone = "10-digit phone";
+    if (!form.name.trim()) {
+      e.name = language === "en" ? "Name is required" : "పేరు తప్పనిసరి";
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      e.email = language === "en" ? "Valid email required" : "సరైన ఈమెయిల్ అవసరం";
+    }
+    if (!/^\d{10}$/.test(form.phone.replace(/\D/g, ""))) {
+      e.phone = language === "en" ? "10-digit phone required" : "10 అంకెల ఫోన్ నంబర్";
+    }
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -34,7 +46,12 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
   async function onSubmit(ev: React.FormEvent) {
     ev.preventDefault();
     if (!validate()) {
-      toast.error("Please check the form", { description: "A few fields need attention." });
+      toast.error(
+        language === "en" ? "Please check the form" : "దయచేసి ఫారమ్‌ను తనిఖీ చేయండి", 
+        { 
+          description: language === "en" ? "A few fields need attention." : "కొన్ని ఫీల్డ్స్ సరిదిద్దవలసి ఉంది." 
+        }
+      );
       return;
     }
     setSubmitting(true);
@@ -69,8 +86,10 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
     }
 
     setSubmitting(false);
-    toast.success("Thank you!", { description: `We'll get back to you within 24 hours at ${form.email}.` });
-    setForm({ name: "", email: "", phone: "", subject: defaultSubject, message: "", newsletter: true });
+    toast.success(t("formSuccessTitle"), { 
+      description: t("formSuccessDesc") 
+    });
+    setForm({ name: "", email: "", phone: "", subject: resolvedDefaultSubject, message: "", newsletter: true });
   }
 
   const inputCls =
@@ -78,52 +97,76 @@ export function InquiryForm({ defaultSubject = "General Inquiry", compact, title
 
   return (
     <form onSubmit={onSubmit} className={`luxe-card rounded-xl p-6 md:p-8 ${compact ? "" : ""}`}>
-      {title && <h3 className="text-2xl font-display mb-1">{title}</h3>}
-      <p className="text-sm text-[var(--muted-sage)] mb-6">We respond personally within one business day.</p>
+      <h3 className="text-2xl font-display mb-1">
+        {title || (defaultSubject ? t("formTitleProperty") : t("formTitleGeneral"))}
+      </h3>
+      <p className="text-sm text-[var(--muted-sage)] mb-6">
+        {language === "en" ? "We respond personally within one business day." : "మేము ఒక పని దినంలో వ్యక్తిగతంగా స్పందిస్తాము."}
+      </p>
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <input className={inputCls} placeholder="Full name" value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })} />
+          <input 
+            className={inputCls} 
+            placeholder={t("formName")} 
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })} 
+          />
           {errors.name && <p className="text-xs text-[var(--copper)] mt-1">{errors.name}</p>}
         </div>
         <div>
-          <input className={inputCls} placeholder="Email" type="email" value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })} />
+          <input 
+            className={inputCls} 
+            placeholder={t("formEmail")} 
+            type="email" 
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })} 
+          />
           {errors.email && <p className="text-xs text-[var(--copper)] mt-1">{errors.email}</p>}
         </div>
         <div>
-          <input className={inputCls} placeholder="Phone" value={form.phone}
-            onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+          <input 
+            className={inputCls} 
+            placeholder={t("formPhone")} 
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })} 
+          />
           {errors.phone && <p className="text-xs text-[var(--copper)] mt-1">{errors.phone}</p>}
         </div>
         <div>
-          <select className={inputCls} value={form.subject}
-            onChange={(e) => setForm({ ...form, subject: e.target.value })}>
-            <option>General Inquiry</option>
-            <option>Plot Inquiry</option>
-            <option>House Plan</option>
-            <option>Site Visit</option>
-            <option>Customization Request</option>
+          <select 
+            className={inputCls} 
+            value={form.subject}
+            onChange={(e) => setForm({ ...form, subject: e.target.value })}
+          >
+            <option value={t("formTitleGeneral")}>{t("formTitleGeneral")}</option>
+            <option value={t("formSubjectPlots")}>{t("formSubjectPlots")}</option>
+            <option value={t("formSubjectPlans")}>{t("formSubjectPlans")}</option>
+            <option value={t("formSubjectOngoing")}>{t("formSubjectOngoing")}</option>
+            <option value={t("formSubjectOther")}>{t("formSubjectOther")}</option>
           </select>
         </div>
       </div>
 
       <textarea
         className={`${inputCls} mt-4 min-h-32`}
-        placeholder="Tell us a little about what you're looking for"
+        placeholder={t("formMessagePlaceholder")}
         value={form.message}
         onChange={(e) => setForm({ ...form, message: e.target.value })}
       />
 
       <label className="flex items-center gap-2 mt-4 text-sm text-[var(--cream-2)]/80">
-        <input type="checkbox" className="accent-[var(--gold)]" checked={form.newsletter}
-          onChange={(e) => setForm({ ...form, newsletter: e.target.checked })} />
-        Send me occasional updates from {COMPANY.name}
+        <input 
+          type="checkbox" 
+          className="accent-[var(--gold)]" 
+          checked={form.newsletter}
+          onChange={(e) => setForm({ ...form, newsletter: e.target.checked })} 
+        />
+        {t("formNewsletter")}
       </label>
 
-      <Button type="submit" variant="gold" size="lg" disabled={submitting} className="mt-6 w-full sm:w-auto">
-        {submitting ? "Sending…" : "Send Inquiry"}
+      <Button type="submit" variant="gold" size="lg" disabled={submitting} className="mt-6 w-full sm:w-auto cursor-pointer">
+        {submitting ? t("formSubmitting") : t("formSubmit")}
       </Button>
     </form>
   );

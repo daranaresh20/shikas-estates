@@ -1,26 +1,27 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/data";
+import { useLanguage } from "@/hooks/useLanguage";
+import { useAuth } from "@/hooks/useAuth";
 
 const links = [
-  { to: "/", label: "Index" },
-  { to: "/about", label: "Atelier" },
-  { to: "/plots", label: "Plots" },
-  { to: "/plans", label: "Plans" },
-  { to: "/projects/ongoing", label: "Ongoing" },
-  { to: "/projects/completed", label: "Archive" },
-  { to: "/gallery", label: "Gallery" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", key: "navHome" as const },
+  { to: "/about", key: "navAtelier" as const },
+  { to: "/plots", key: "navPlots" as const },
+  { to: "/plans", key: "navPlans" as const },
+  { to: "/projects/ongoing", key: "navOngoing" as const },
+  { to: "/projects/completed", key: "navArchive" as const },
+  { to: "/gallery", key: "navGallery" as const },
+  { to: "/contact", key: "navContact" as const },
 ];
-
-import { useAuth } from "@/hooks/useAuth";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { role, user, logout } = useAuth();
+  const { role, logout } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -29,6 +30,10 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const toggleLanguage = () => {
+    setLanguage(language === "en" ? "te" : "en");
+  };
 
   return (
     <header
@@ -41,7 +46,7 @@ export function Navbar() {
       <nav className="max-w-[1480px] mx-auto container-edge h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
           <span aria-hidden className="relative inline-block w-6 h-6">
-            <span className="absolute inset-0 border border-[var(--gold)] rotate-45" />
+            <span className="absolute inset-0 border border-[var(--gold)] rotate-45 animate-pulse" />
             <span className="absolute inset-[5px] bg-[var(--gold)] rotate-45" />
           </span>
           <span className="font-display text-2xl tracking-wide text-[var(--cream)]">
@@ -60,7 +65,7 @@ export function Navbar() {
                     active ? "text-[var(--gold)]" : "text-[var(--cream)]/75 hover:text-[var(--gold)]"
                   }`}
                 >
-                  {l.label}
+                  {t(l.key)}
                   {active && (
                     <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[var(--gold)]" />
                   )}
@@ -71,38 +76,61 @@ export function Navbar() {
           {role === "SuperUser" && (
             <li>
               <Link to="/admin" className="text-indigo-600 font-bold hover:text-indigo-800">
-                Admin Panel
+                {t("navAdminPanel")}
               </Link>
             </li>
           )}
         </ul>
 
         <div className="hidden lg:flex items-center gap-4">
+          {/* Beautiful Language Toggle with custom HSL-tailored colors */}
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--gold)]/30 hover:border-[var(--gold)] bg-transparent text-xs font-mono tracking-wider text-[var(--cream)] hover:bg-[var(--gold)] hover:text-[var(--forest)] transition-all duration-300 active:scale-95 cursor-pointer shadow-sm group"
+            title="Switch Language / భాషను మార్చండి"
+          >
+            <Globe className="w-3.5 h-3.5 text-[var(--gold)] group-hover:text-inherit transition-colors" />
+            <span className={language === "en" ? "font-bold text-[var(--gold)] group-hover:text-inherit" : "opacity-70"}>EN</span>
+            <span className="text-[var(--gold)]/30">/</span>
+            <span className={language === "te" ? "font-bold text-[var(--gold)] group-hover:text-inherit" : "opacity-70"}>తెలుగు</span>
+          </button>
+
           <Button asChild variant="gold-outline" size="sm">
-            <Link to="/contact">Enquire</Link>
+            <Link to="/contact">{t("navEnquire")}</Link>
           </Button>
 
           {role === "Guest" ? (
             <Link to="/auth" className="text-xs text-[var(--muted-sage)] hover:text-slate-800 transition-colors font-mono uppercase tracking-widest pl-2 border-l border-slate-200">
-              Admin Access
+              {t("navAdminAccess")}
             </Link>
           ) : (
             <div className="flex items-center gap-3 pl-2 border-l border-slate-200">
               <span className="text-xs font-mono text-[var(--muted-sage)] bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200/80">Admin</span>
               <Button onClick={() => logout()} variant="outline" size="sm" className="h-8 py-0">
-                Logout
+                {t("navLogout")}
               </Button>
             </div>
           )}
         </div>
 
-        <button
-          aria-label="Toggle menu"
-          className="lg:hidden p-2 text-[var(--cream)] z-50 relative min-w-11 min-h-11 flex items-center justify-center"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="flex items-center gap-3 lg:hidden">
+          {/* Small Language Toggle for Mobile screen beside menu button */}
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center gap-1 px-2.5 py-1 rounded-full border border-[var(--gold)]/30 text-[10px] font-mono tracking-wider text-[var(--cream)] hover:bg-[var(--gold)] hover:text-[var(--forest)] transition-all duration-300 cursor-pointer active:scale-95"
+          >
+            <Globe className="w-3 h-3 text-[var(--gold)]" />
+            <span>{language === "en" ? "తెలుగు" : "EN"}</span>
+          </button>
+
+          <button
+            aria-label="Toggle menu"
+            className="p-2 text-[var(--cream)] z-50 relative min-w-11 min-h-11 flex items-center justify-center"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </nav>
 
       {/* Slide-over Mobile Navigation Menu */}
@@ -148,7 +176,7 @@ export function Navbar() {
                         active ? "text-[var(--gold)] font-medium pl-2" : "text-[var(--cream)]/75 hover:text-[var(--gold)]"
                       }`}
                     >
-                      {l.label}
+                      {t(l.key)}
                     </Link>
                   </li>
                 );
@@ -157,8 +185,29 @@ export function Navbar() {
           </div>
 
           <div className="flex flex-col gap-4 border-t border-[var(--gold)]/10 pt-6">
+            {/* Inline Language Selector in Mobile drawer */}
+            <div className="flex items-center justify-between px-2 py-1.5 rounded-lg bg-[var(--forest-2)]/40 border border-[var(--gold)]/15">
+              <span className="text-xs font-mono text-[var(--cream-2)] flex items-center gap-1.5">
+                <Globe className="w-3.5 h-3.5 text-[var(--gold)]" /> Language / భాష
+              </span>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setLanguage("en")}
+                  className={`px-2 py-0.5 text-xs font-mono rounded ${language === "en" ? "bg-[var(--gold)] text-[var(--forest)] font-bold" : "text-[var(--cream)]/60"}`}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => setLanguage("te")}
+                  className={`px-2 py-0.5 text-xs font-mono rounded ${language === "te" ? "bg-[var(--gold)] text-[var(--forest)] font-bold" : "text-[var(--cream)]/60"}`}
+                >
+                  తెలుగు
+                </button>
+              </div>
+            </div>
+
             <Button asChild variant="gold" className="w-full h-12">
-              <Link to="/contact" onClick={() => setOpen(false)}>Enquire Now</Link>
+              <Link to="/contact" onClick={() => setOpen(false)}>{t("navEnquireNow")}</Link>
             </Button>
             
             {role === "Guest" ? (
@@ -167,7 +216,7 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 className="text-center py-2 text-xs font-mono uppercase tracking-widest text-[var(--muted-sage)] hover:text-slate-800"
               >
-                Admin Access
+                {t("navAdminAccess")}
               </Link>
             ) : (
               <div className="flex flex-col gap-2 pt-2">
@@ -176,7 +225,7 @@ export function Navbar() {
                   onClick={() => setOpen(false)}
                   className="text-center py-2 text-xs font-mono uppercase tracking-widest text-indigo-600 font-bold"
                 >
-                  Admin Dashboard
+                  {t("navAdminDashboard")}
                 </Link>
                 <Button
                   onClick={() => {
@@ -187,13 +236,13 @@ export function Navbar() {
                   size="sm"
                   className="w-full h-10"
                 >
-                  Logout
+                  {t("navLogout")}
                 </Button>
               </div>
             )}
             
             <div className="text-center text-[10px] text-[var(--muted-sage)] mt-2 font-mono">
-              Estd. 2026 · Hyderabad, India
+              {t("navEstdShort")}
             </div>
           </div>
         </div>
