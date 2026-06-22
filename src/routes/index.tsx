@@ -118,6 +118,12 @@ function Home() {
                   <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-[1400ms] ease-out" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[var(--forest)]/80 via-[var(--forest)]/0 to-[var(--forest)]/0" />
                   <span className="absolute top-4 left-4 eyebrow text-[var(--cream)]/80">{String(i + 1).padStart(2, "0")} / 03</span>
+                  
+                  {/* Legality approval badge */}
+                  <span className="absolute top-4 right-4 text-[9px] font-mono font-bold uppercase tracking-wider bg-[var(--gold)] text-[var(--forest)] px-2 py-1 rounded">
+                    {p.hmdaApproved ? "HMDA" : p.dtcpApproved ? "DTCP" : "Approved"}
+                  </span>
+
                   <div className="absolute bottom-5 left-5 right-5">
                     <div className="flex items-end justify-between gap-3">
                       <div>
@@ -129,8 +135,8 @@ function Home() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between gap-3 mt-4">
-                  <span className="text-sm text-[var(--cream-2)]/80">
-                    {p.size.toLocaleString()} {t("sqft")} · {language === "en" ? p.amenities[0] : language === "te" ? "కార్నర్ ప్లాట్" : "कोने का प्लॉट"}
+                  <span className="text-xs sm:text-sm text-[var(--cream-2)]/80">
+                    {p.sqYds} {language === "en" ? "Sq. Yds" : language === "te" ? "చ.గజాలు" : "वर्ग गज"} ({p.size} {t("sqft")}) · {p.facing} Facing
                   </span>
                   <span className="text-[var(--gold)] text-sm group-hover:translate-x-1 transition-transform">→</span>
                 </div>

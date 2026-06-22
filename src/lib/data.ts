@@ -1,13 +1,13 @@
-// Mock data for the Home real estate platform.
+// Realistic data for Shikas Estates platform in Hyderabad (Pasumamla / Abdullapurmet).
 
 export const COMPANY = {
-  name: "Home",
-  tagline: "Premium Residential Plots & House Plans",
+  name: "Shikas Estates",
+  tagline: "HMDA & DTCP Approved Premium Residential Plots",
   phone: "+91 9177686822",
   phoneHref: "+919177686822",
   whatsapp: "919177686822",
   email: "contactus@shikas.online",
-  address: "Pasumamla, Telangana",
+  address: "Pasumamla, Abdullapurmet Mandal, Ranga Reddy District, Telangana 501505",
   hours: "Mon–Sat: 9 AM – 6 PM · Sunday: 10 AM – 4 PM",
 };
 
@@ -15,82 +15,122 @@ export type Plot = {
   id: string;
   name: string;
   location: string;
-  size: number;
+  size: number; // sqft
   price: number;
   status: "Available" | "Reserved" | "Sold";
   image: string;
   amenities: string[];
   description: string;
   additionalImages?: string[];
+  sqYds: number;
+  facing: "East" | "West" | "North" | "South" | "North-East" | "North-West" | "South-East" | "South-West";
+  hmdaApproved: boolean;
+  dtcpApproved: boolean;
+  reraNo?: string;
+  lpNo?: string;
 };
 
 export const PLOTS: Plot[] = [
   {
     id: "plot_001",
-    name: "Cedar Crest — Plot A",
-    location: "Banjara Hills",
+    name: "Green Meadows — Plot 24",
+    location: "Pasumamla",
     size: 2400,
-    price: 4800000,
+    sqYds: 267,
+    price: 6675000, // ~25,000 per Sq. Yd
     status: "Available",
+    facing: "East",
+    hmdaApproved: true,
+    dtcpApproved: false,
+    lpNo: "000142/LO/HMDA/2025",
+    reraNo: "P02400008542",
     image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Corner Plot", "East Facing", "Near International School"],
-    description: "Premier corner plot with unobstructed sunrise views and gated community access.",
+    amenities: ["Corner Plot", "East Facing (100% Vastu)", "Near Vijayawada Highway"],
+    description: "Premium corner plot with clear title in a fully gated layout at Pasumamla. Ready for immediate registration and house construction.",
     additionalImages: ["/images/HousePlan_G2P_V03.png"]
   },
   {
     id: "plot_002",
-    name: "Magnolia Heights — Plot 7",
-    location: "Gachibowli",
-    size: 3200,
-    price: 7200000,
+    name: "Royal Boulevard — Plot 12",
+    location: "Abdullapurmet",
+    size: 2700,
+    sqYds: 300,
+    price: 8400000, // ~28,000 per Sq. Yd
     status: "Available",
+    facing: "West",
+    hmdaApproved: true,
+    dtcpApproved: false,
+    lpNo: "000318/LO/HMDA/2025",
+    reraNo: "P02400009102",
     image: "https://images.unsplash.com/photo-1542621334-a254cf47733d?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Park Facing", "30ft Road", "Underground Utilities"],
-    description: "Elevated parcel with mature landscaping and panoramic ridge-line views.",
+    amenities: ["40ft Wide BT Road", "Park Facing", "Underground Utilities"],
+    description: "East-facing layout plots at Abdullapurmet with premium underground drainage, electricity, overhead water tank, and children's park.",
   },
   {
     id: "plot_003",
-    name: "Riverstone — Plot 12",
-    location: "Madhapur",
+    name: "Golden Sands — Plot 45",
+    location: "Hayathnagar",
     size: 1800,
-    price: 3600000,
+    sqYds: 200,
+    price: 6400000, // ~32,000 per Sq. Yd
     status: "Reserved",
+    facing: "North-East",
+    hmdaApproved: true,
+    dtcpApproved: false,
+    lpNo: "000512/LO/HMDA/2024",
     image: "https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Riverside", "Clubhouse Access", "Solar Ready"],
-    description: "Tranquil waterside plot within a walkable wellness-focused enclave.",
+    amenities: ["North-East Facing", "Vastu Compliant", "Fully Secured Compound"],
+    description: "Perfect North-East facing residential site, located in a fast-developing neighborhood of Hayathnagar, just minutes from the Outer Ring Road.",
   },
   {
     id: "plot_004",
-    name: "Aspen Reserve — Plot 21",
-    location: "Jubilee Hills",
-    size: 4000,
-    price: 9000000,
+    name: "Grand Vista — Plot 88",
+    location: "Bongloor (ORR exit 12)",
+    size: 3600,
+    sqYds: 400,
+    price: 14000000, // ~35,000 per Sq. Yd
     status: "Available",
+    facing: "East",
+    hmdaApproved: true,
+    dtcpApproved: false,
+    lpNo: "000219/LO/HMDA/2025",
+    reraNo: "P02400007812",
     image: "https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Hilltop", "Private Driveway", "Vastu Compliant"],
-    description: "Estate-grade hilltop parcel designed for a flagship private residence.",
+    amenities: ["30ft Road", "Avenue Plantation", "100% Vastu"],
+    description: "Premium large residential parcel inside a massive township at Bongloor, highly suitable for a luxury villa close to TCS Adibatla.",
   },
   {
     id: "plot_005",
-    name: "Willow Court — Plot 4",
-    location: "Secunderabad",
-    size: 2100,
-    price: 4200000,
+    name: "Signature Park — Plot 15",
+    location: "Pedda Amberpet",
+    size: 2160,
+    sqYds: 240,
+    price: 6000000, // ~25,000 per Sq. Yd
     status: "Sold",
+    facing: "North",
+    hmdaApproved: false,
+    dtcpApproved: true,
+    lpNo: "000045/LO/DTCP/2024",
     image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Gated", "Park Facing", "Designer Boundary"],
-    description: "Sold — featured for portfolio reference of completed Willow Court phase.",
+    amenities: ["DTCP Approved Layout", "Main Road Frontage", "Ready to Construct"],
+    description: "Sold out — presented for reference of our successfully completed gated community layout at Pedda Amberpet.",
   },
   {
     id: "plot_006",
-    name: "Olive Grove — Plot 9",
-    location: "Kukatpally",
-    size: 2600,
-    price: 5200000,
+    name: "Aero Enclave — Plot 9",
+    location: "Adibatla (Aerospace Zone)",
+    size: 2250,
+    sqYds: 250,
+    price: 8750000, // ~35,000 per Sq. Yd
     status: "Available",
+    facing: "South",
+    hmdaApproved: true,
+    dtcpApproved: false,
+    lpNo: "000452/LO/HMDA/2025",
+    reraNo: "P02400009945",
     image: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Orchard Backed", "Quiet Lane", "Premium Frontage"],
-    description: "Mature olive-flanked plot for a serene, low-density residence.",
+    amenities: ["Gated Venture", "Underground Drainage", "Near TCS Adibatla"],
+    description: "Premium high-value plot inside a gated layout near Adibatla Aerospace SEZ. Best choice for IT professionals and high-yield investors.",
   },
 ];
 
@@ -101,7 +141,7 @@ export type Plan = {
   bedrooms: number;
   bathrooms: number;
   parking: number;
-  area: number;
+  area: number; // sqft
   price: number;
   image: string;
   features: string[];
@@ -119,7 +159,7 @@ export const PLANS: Plan[] = [
     area: 720,
     price: 4200000,
     image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80",
-    features: ["Open Kitchen", "Skylit Bath", "Private Balcony"],
+    features: ["Open Kitchen", "Skylit Bath", "East Facing Vastu"],
   },
   {
     id: "plan_002",
@@ -131,7 +171,7 @@ export const PLANS: Plan[] = [
     area: 1080,
     price: 6800000,
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-    features: ["Modular Kitchen", "Walk-in Wardrobe", "North-Light Study"],
+    features: ["Modular Kitchen", "Walk-in Wardrobe", "100% Vastu Layout"],
   },
   {
     id: "plan_003",
@@ -143,7 +183,7 @@ export const PLANS: Plan[] = [
     area: 1620,
     price: 9800000,
     image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
-    features: ["Double-Height Living", "Pooja Room", "Servant Quarters"],
+    features: ["Double-Height Living", "Pooja Room", "Separate Servant Quarters"],
   },
   {
     id: "plan_004",
@@ -155,7 +195,7 @@ export const PLANS: Plan[] = [
     area: 3200,
     price: 24500000,
     image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
-    features: ["Private Pool", "Home Theatre", "Landscaped Courtyard"],
+    features: ["Private Swimming Pool", "Home Theatre Room", "Traditional Central Courtyard"],
   },
   {
     id: "plan_005",
@@ -167,7 +207,7 @@ export const PLANS: Plan[] = [
     area: 1180,
     price: 7400000,
     image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80",
-    features: ["Sun-Deck", "Terrazzo Floors", "Smart Lighting"],
+    features: ["Sun-Deck Balcony", "Pooja Room", "Smart Automated Lighting"],
   },
   {
     id: "plan_006",
@@ -179,7 +219,7 @@ export const PLANS: Plan[] = [
     area: 1840,
     price: 11200000,
     image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
-    features: ["Family Lounge", "Chef's Kitchen", "Reading Nook"],
+    features: ["Spacious Family Lounge", "Chef's Kitchen", "100% Vastu Compliant"],
   },
 ];
 
@@ -200,111 +240,99 @@ export type Project = {
 export const PROJECTS: Project[] = [
   {
     id: "p_001",
-    name: "Greenwood Residency",
-    location: "Jubilee Hills, Hyderabad",
+    name: "Green Meadows Township",
+    location: "Pasumamla, Hyderabad",
     status: "Ongoing",
     progress: 62,
     completion: "Expected Mar 2027",
     units: 84,
     image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Infinity Pool", "Sky Lounge", "EV Charging"],
-    description: "A 12-storey low-density residential tower with private sky gardens.",
+    amenities: ["40ft Gated Main Entrance", "Underground Electrical Cabling", "Rainwater Harvesting"],
+    description: "Premium gated plot development at Pasumamla with 100% underground amenities, avenue plantations and grand entry gate.",
     stages: [
-      { name: "Foundation", pct: 100, status: "Completed" },
-      { name: "Structural", pct: 70, status: "In Progress" },
-      { name: "Finishing", pct: 12, status: "Planned" },
+      { name: "Land Leveling & Clearing", pct: 100, status: "Completed" },
+      { name: "BT Road & Drainage Laying", pct: 75, status: "In Progress" },
+      { name: "Electricity & Plantation Setup", pct: 15, status: "Planned" },
     ],
   },
   {
     id: "p_002",
-    name: "Aurelia Hill Villas",
-    location: "Jubilee Hills",
+    name: "Aero Enclave Phase I",
+    location: "Adibatla, Hyderabad",
     status: "Ongoing",
     progress: 38,
     completion: "Expected Q4 2027",
     units: 24,
     image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Private Plunge Pools", "Clubhouse", "Forest Trails"],
-    description: "Twenty-four limited-edition hill villas surrounded by reserved forest.",
+    amenities: ["Children's Play Area", "Overhead Water Tank", "24/7 Security Patrol"],
+    description: "HMDA layout near TCS Adibatla offering custom residential sites for immediate house construction.",
     stages: [
-      { name: "Foundation", pct: 100, status: "Completed" },
-      { name: "Structural", pct: 40, status: "In Progress" },
-      { name: "Finishing", pct: 0, status: "Planned" },
+      { name: "HMDA Permissions & LP Sanction", pct: 100, status: "Completed" },
+      { name: "Roads & Compound Wall Layout", pct: 40, status: "In Progress" },
+      { name: "Individual Tap Connections", pct: 0, status: "Planned" },
     ],
   },
   {
     id: "p_003",
-    name: "Linden Court",
-    location: "Hitech City",
+    name: "Royal Vista Gated Layout",
+    location: "Abdullapurmet, Hyderabad",
     status: "Ongoing",
     progress: 85,
     completion: "Expected Aug 2026",
     units: 56,
     image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Co-working Lounge", "Yoga Deck", "Kids' Atelier"],
-    description: "Boutique apartments designed around a central botanical courtyard.",
+    amenities: ["Gated Compound Wall", "Jogging Track", "Overhead Water Tank"],
+    description: "Boutique HMDA plots venture centered around a green park, located near Abdullapurmet junction.",
     stages: [
-      { name: "Foundation", pct: 100, status: "Completed" },
-      { name: "Structural", pct: 100, status: "Completed" },
-      { name: "Finishing", pct: 55, status: "In Progress" },
+      { name: "HMDA Approvals", pct: 100, status: "Completed" },
+      { name: "BT Roads Construction", pct: 100, status: "Completed" },
+      { name: "Final Layout Certification", pct: 55, status: "In Progress" },
     ],
   },
   {
     id: "p_004",
-    name: "Magnolia Park",
-    location: "Kukatpally",
+    name: "Golden Sands Avenue",
+    location: "Hayathnagar, Hyderabad",
     status: "Completed",
     progress: 100,
     completion: "Handover 2024",
     units: 120,
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Lap Pool", "Indoor Sports", "Community Theatre"],
-    description: "A flagship community of 120 residences with award-winning landscaping.",
+    amenities: ["Overhead Water Reservoir", "Children's Park", "Sewerage Treatment Plant"],
+    description: "Fully completed and registered HMDA layouts at Hayathnagar, with 60+ houses currently constructed.",
   },
   {
     id: "p_005",
-    name: "Riverstone Enclave",
-    location: "Kondapur",
+    name: "Signature Park Layout",
+    location: "Pedda Amberpet, Hyderabad",
     status: "Completed",
     progress: 100,
     completion: "Handover 2022",
     units: 48,
     image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Riverside Walk", "Yoga Pavilion", "Organic Garden"],
-    description: "Forty-eight waterside homes built on a regenerative landscape charter.",
-  },
-  {
-    id: "p_006",
-    name: "Cedar Crest Phase I",
-    location: "Banjara Hills",
-    status: "Completed",
-    progress: 100,
-    completion: "Handover 2021",
-    units: 72,
-    image: "https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?auto=format&fit=crop&w=1200&q=80",
-    amenities: ["Gated Boulevard", "Clubhouse", "Tennis Court"],
-    description: "The original Cedar Crest masterplan, fully sold and 100% handed over.",
+    amenities: ["Beautiful Entrance Arch", "24/7 Security Staff", "Eco-friendly Parks"],
+    description: "DTCP approved layout at Pedda Amberpet, completely sold out and handed over to buyers.",
   },
 ];
 
 export const TESTIMONIALS = [
   {
     name: "Ananya Rao",
-    title: "Resident, Magnolia Park",
+    title: "Resident, Golden Sands",
     rating: 5,
-    quote: "The attention to detail is extraordinary — from the gold-leaf signage to the timber finishings, every choice feels considered.",
+    quote: "The layout quality is exceptional. From RERA clearance to final registration, Shikas Estates handled everything transparently.",
   },
   {
-    name: "Vikram Shetty",
-    title: "Investor, Greenwood Residency",
+    name: "K. Venkat Reddy",
+    title: "Plot Owner, Pasumamla",
     rating: 5,
-    quote: "Home is the rare developer that ships on time without compromising the architectural intent. Best decision we've made.",
+    quote: "Shikas Estates builds with absolute clear titles. Getting bank loans was simple because all HMDA layouts are pre-approved.",
   },
   {
     name: "Priya & Rohan",
-    title: "Owners, Aurelia Hill Villas",
+    title: "Owners, Greenwood Residency",
     rating: 5,
-    quote: "We were treated like custodians of a future home, not buyers. The team made the entire process feel effortless.",
+    quote: "Best real estate venture along the Vijayawada highway corridor. Trustable services and complete value for money.",
   },
 ];
 
