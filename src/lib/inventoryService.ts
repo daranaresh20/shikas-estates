@@ -1,4 +1,4 @@
-import { PLOTS, PLANS, Plot, Plan } from "@/lib/data";
+import { PLOTS, PLANS, HOUSES, Plot, Plan, House } from "@/lib/data";
 
 // Add support for additional images
 export interface ExtendedPlot extends Plot {
@@ -8,6 +8,42 @@ export interface ExtendedPlot extends Plot {
 export interface ExtendedPlan extends Plan {
   additionalImages?: string[];
 }
+
+export interface ExtendedHouse extends House {
+  additionalImages?: string[];
+}
+
+export const getHouses = (): ExtendedHouse[] => {
+  if (typeof window === "undefined") return HOUSES;
+  const saved = localStorage.getItem("shikas_custom_houses");
+  if (!saved) {
+    localStorage.setItem("shikas_custom_houses", JSON.stringify(HOUSES));
+    return HOUSES;
+  }
+  try {
+    return JSON.parse(saved);
+  } catch {
+    return HOUSES;
+  }
+};
+
+export const saveHouse = (house: ExtendedHouse): ExtendedHouse[] => {
+  const houses = getHouses();
+  const index = houses.findIndex((h) => h.id === house.id);
+  if (index > -1) {
+    houses[index] = house;
+  } else {
+    houses.push(house);
+  }
+  localStorage.setItem("shikas_custom_houses", JSON.stringify(houses));
+  return houses;
+};
+
+export const deleteHouse = (id: string): ExtendedHouse[] => {
+  const houses = getHouses().filter((h) => h.id !== id);
+  localStorage.setItem("shikas_custom_houses", JSON.stringify(houses));
+  return houses;
+};
 
 export const getPlots = (): ExtendedPlot[] => {
   if (typeof window === "undefined") return PLOTS;

@@ -13,9 +13,12 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PlotsRouteImport } from './routes/plots'
 import { Route as PlansRouteImport } from './routes/plans'
+import { Route as InteriorsRouteImport } from './routes/interiors'
+import { Route as HousesRouteImport } from './routes/houses'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ArchitectRouteImport } from './routes/architect'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -42,6 +45,16 @@ const PlansRoute = PlansRouteImport.update({
   path: '/plans',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InteriorsRoute = InteriorsRouteImport.update({
+  id: '/interiors',
+  path: '/interiors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HousesRoute = HousesRouteImport.update({
+  id: '/houses',
+  path: '/houses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
@@ -55,6 +68,11 @@ const ContactRoute = ContactRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArchitectRoute = ArchitectRouteImport.update({
+  id: '/architect',
+  path: '/architect',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -87,9 +105,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/architect': typeof ArchitectRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
+  '/houses': typeof HousesRoute
+  '/interiors': typeof InteriorsRoute
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
   '/projects': typeof ProjectsRouteWithChildren
@@ -101,9 +122,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/architect': typeof ArchitectRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
+  '/houses': typeof HousesRoute
+  '/interiors': typeof InteriorsRoute
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
   '/projects': typeof ProjectsRouteWithChildren
@@ -116,9 +140,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/architect': typeof ArchitectRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
+  '/houses': typeof HousesRoute
+  '/interiors': typeof InteriorsRoute
   '/plans': typeof PlansRoute
   '/plots': typeof PlotsRoute
   '/projects': typeof ProjectsRouteWithChildren
@@ -132,9 +159,12 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
+    | '/architect'
     | '/auth'
     | '/contact'
     | '/gallery'
+    | '/houses'
+    | '/interiors'
     | '/plans'
     | '/plots'
     | '/projects'
@@ -146,9 +176,12 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
+    | '/architect'
     | '/auth'
     | '/contact'
     | '/gallery'
+    | '/houses'
+    | '/interiors'
     | '/plans'
     | '/plots'
     | '/projects'
@@ -160,9 +193,12 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
+    | '/architect'
     | '/auth'
     | '/contact'
     | '/gallery'
+    | '/houses'
+    | '/interiors'
     | '/plans'
     | '/plots'
     | '/projects'
@@ -175,9 +211,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRoute
+  ArchitectRoute: typeof ArchitectRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
+  HousesRoute: typeof HousesRoute
+  InteriorsRoute: typeof InteriorsRoute
   PlansRoute: typeof PlansRoute
   PlotsRoute: typeof PlotsRoute
   ProjectsRoute: typeof ProjectsRouteWithChildren
@@ -214,6 +253,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlansRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/interiors': {
+      id: '/interiors'
+      path: '/interiors'
+      fullPath: '/interiors'
+      preLoaderRoute: typeof InteriorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/houses': {
+      id: '/houses'
+      path: '/houses'
+      fullPath: '/houses'
+      preLoaderRoute: typeof HousesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gallery': {
       id: '/gallery'
       path: '/gallery'
@@ -233,6 +286,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/architect': {
+      id: '/architect'
+      path: '/architect'
+      fullPath: '/architect'
+      preLoaderRoute: typeof ArchitectRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -291,9 +351,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AdminRoute: AdminRoute,
+  ArchitectRoute: ArchitectRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
+  HousesRoute: HousesRoute,
+  InteriorsRoute: InteriorsRoute,
   PlansRoute: PlansRoute,
   PlotsRoute: PlotsRoute,
   ProjectsRoute: ProjectsRouteWithChildren,

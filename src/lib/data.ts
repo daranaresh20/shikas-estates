@@ -223,6 +223,110 @@ export const PLANS: Plan[] = [
   },
 ];
 
+export type House = {
+  id: string;
+  name: string;
+  location: string;
+  bedrooms: number;
+  bathrooms: number;
+  parking: number;
+  area: number; // sqft
+  sqYds: number; // Plot size in Sq Yds
+  price: number;
+  facing: "East" | "West" | "North" | "South" | "North-East" | "North-West" | "South-East" | "South-West";
+  status: "Ready to Move" | "Under Construction" | "Sold";
+  image: string;
+  description: string;
+  amenities: string[];
+  additionalImages?: string[];
+  reraNo?: string;
+};
+
+export const HOUSES: House[] = [
+  {
+    id: "house_001",
+    name: "Shikas Celestial Villa",
+    location: "Hayathnagar",
+    bedrooms: 4,
+    bathrooms: 5,
+    parking: 2,
+    area: 3500,
+    sqYds: 250,
+    price: 18500000,
+    facing: "West",
+    status: "Ready to Move",
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+    description: "A breathtaking contemporary villa nestled in a premium gated community at Hayathnagar. Boasts 100% Vastu compliance, a modern double-height living room, custom Italian marble flooring, and top-tier smart automation.",
+    amenities: ["Double Height Ceiling", "Private Lawn", "Home Automation", "Vastu Compliant"],
+    reraNo: "P02400009102"
+  },
+  {
+    id: "house_002",
+    name: "The Oakwood Residence",
+    location: "Pasumamla",
+    bedrooms: 3,
+    bathrooms: 3,
+    parking: 2,
+    area: 2600,
+    sqYds: 220,
+    price: 14500000,
+    facing: "East",
+    status: "Under Construction",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    description: "Elegant East-facing 3BHK villa with an expansive terrace garden and modular kitchen. Currently under construction in the peaceful Green Meadows layout of Pasumamla.",
+    amenities: ["Modular Kitchen", "Terrace Garden", "East Facing Vastu", "40ft Road Access"]
+  },
+  {
+    id: "house_003",
+    name: "Aero Edge Signature Villa",
+    location: "Adibatla (Aerospace Zone)",
+    bedrooms: 4,
+    bathrooms: 4,
+    parking: 3,
+    area: 3800,
+    sqYds: 300,
+    price: 21000000,
+    facing: "North-East",
+    status: "Under Construction",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
+    description: "Ultra-luxury modern villa near TCS Adibatla, designed for executive living. Features a private home theatre, lift provision, and premium fittings throughout.",
+    amenities: ["Home Theatre", "Private Lift Provision", "North-East Corner", "Solar Water Heating"]
+  },
+  {
+    id: "house_004",
+    name: "Grand Vista Villa",
+    location: "Bongloor (ORR exit 12)",
+    bedrooms: 3,
+    bathrooms: 4,
+    parking: 2,
+    area: 3000,
+    sqYds: 267,
+    price: 17500000,
+    facing: "East",
+    status: "Ready to Move",
+    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
+    description: "Ready-to-occupy luxury villa just minutes from Bongloor ORR Exit 12. Ideal location for commuters to the Adibatla IT/Aerospace hub and Central Hyderabad.",
+    amenities: ["Clubhouse Access", "24/7 Security Patrol", "Underground Cabling", "Pooja Room"]
+  },
+  {
+    id: "house_005",
+    name: "The Orchard Villa",
+    location: "Abdullapurmet",
+    bedrooms: 3,
+    bathrooms: 3,
+    parking: 2,
+    area: 2400,
+    sqYds: 200,
+    price: 13500000,
+    facing: "North",
+    status: "Ready to Move",
+    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80",
+    description: "Beautifully designed independent villa in Abdullapurmet. Surrounded by private fruit trees, features modern wardrobes, high-end sanitaries, and excellent cross-ventilation.",
+    amenities: ["Orchard Surroundings", "Wardrobes Installed", "Gated Security", "Overhead Water Tank"]
+  }
+];
+
+
 export type Project = {
   id: string;
   name: string;

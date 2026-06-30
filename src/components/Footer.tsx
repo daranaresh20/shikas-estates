@@ -28,12 +28,11 @@ export function Footer() {
         <div>
           <h4 className="text-cream font-semibold mb-4 text-sm uppercase tracking-widest">{t("footerNavigation")}</h4>
           <ul className="space-y-2.5 text-sm text-[var(--cream-2)]/85">
-            <li><Link to="/about" className="hover:text-[var(--gold)] block py-0.5">{t("navAtelier")}</Link></li>
+            <li><Link to="/houses" className="hover:text-[var(--gold)] block py-0.5">{t("navHouses")}</Link></li>
             <li><Link to="/plots" className="hover:text-[var(--gold)] block py-0.5">{t("navPlots")}</Link></li>
-            <li><Link to="/plans" className="hover:text-[var(--gold)] block py-0.5">{t("navPlans")}</Link></li>
-            <li><Link to="/projects/ongoing" className="hover:text-[var(--gold)] block py-0.5">{t("navOngoing")}</Link></li>
-            <li><Link to="/projects/completed" className="hover:text-[var(--gold)] block py-0.5">{t("navArchive")}</Link></li>
-            <li><Link to="/gallery" className="hover:text-[var(--gold)] block py-0.5">{t("navGallery")}</Link></li>
+            <li><Link to="/architect" className="hover:text-[var(--gold)] block py-0.5">{t("navArchitect")}</Link></li>
+            <li><Link to="/interiors" className="hover:text-[var(--gold)] block py-0.5">{t("navInteriors")}</Link></li>
+            <li><Link to="/contact" className="hover:text-[var(--gold)] block py-0.5">{t("navContact")}</Link></li>
           </ul>
         </div>
 

@@ -11,9 +11,9 @@ import { useLanguage } from "@/hooks/useLanguage";
 export const Route = createFileRoute("/plots")({
   head: () => ({
     meta: [
-      { title: "Available Plots — Shikas Estates" },
+      { title: "Open Plots for Sale — Shikas Estates" },
       { name: "description", content: "Browse premium HMDA and DTCP approved residential plots across Hyderabad (Pasumamla, Abdullapurmet) with clear titles." },
-      { property: "og:title", content: "Available Plots — Shikas Estates" },
+      { property: "og:title", content: "Open Plots for Sale — Shikas Estates" },
       { property: "og:description", content: "Premium gated residential plots with clear titles and HMDA/DTCP approvals." },
     ],
   }),

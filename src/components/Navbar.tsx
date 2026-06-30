@@ -8,12 +8,10 @@ import { useAuth } from "@/hooks/useAuth";
 
 const links = [
   { to: "/", key: "navHome" as const },
-  { to: "/about", key: "navAtelier" as const },
+  { to: "/houses", key: "navHouses" as const },
   { to: "/plots", key: "navPlots" as const },
-  { to: "/plans", key: "navPlans" as const },
-  { to: "/projects/ongoing", key: "navOngoing" as const },
-  { to: "/projects/completed", key: "navArchive" as const },
-  { to: "/gallery", key: "navGallery" as const },
+  { to: "/architect", key: "navArchitect" as const },
+  { to: "/interiors", key: "navInteriors" as const },
   { to: "/contact", key: "navContact" as const },
 ];
 
