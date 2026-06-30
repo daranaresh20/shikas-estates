@@ -8,7 +8,24 @@ import { formatINR } from "@/lib/data";
 import { Search, X, BedDouble, Bath, Car, Ruler, Compass } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 
+import { useNavigate, useSearch } from "@tanstack/react-router";
+
+type HousesSearch = {
+  q?: string;
+  status?: string;
+  facing?: string;
+  beds?: string;
+};
+
 export const Route = createFileRoute("/houses")({
+  validateSearch: (search: Record<string, unknown>): HousesSearch => {
+    return {
+      q: (search.q as string) || undefined,
+      status: (search.status as string) || undefined,
+      facing: (search.facing as string) || undefined,
+      beds: (search.beds as string) || undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Premium Houses & Villas for Sale — Shikas Estates" },
@@ -22,14 +39,27 @@ export const Route = createFileRoute("/houses")({
 
 function HousesPage() {
   const { t, language } = useLanguage();
-  const [q, setQ] = useState("");
-  const [status, setStatus] = useState<"All" | "Ready to Move" | "Under Construction">("All");
-  const [facing, setFacing] = useState<"All" | "East" | "West" | "North" | "South">("All");
-  const [beds, setBeds] = useState<"All" | "3" | "4">("All");
+  const search = useSearch({ from: "/houses" });
+  const navigate = useNavigate({ from: "/houses" });
+
+  const q = search.q || "";
+  const status = search.status || "All";
+  const facing = search.facing || "All";
+  const beds = search.beds || "All";
+
   const [selected, setSelected] = useState<ExtendedHouse | null>(null);
   const [activeImgIdx, setActiveImgIdx] = useState(0);
 
   const houses = getHouses();
+
+  const setFilter = (key: keyof HousesSearch, val: string) => {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        [key]: val === "All" || !val ? undefined : val,
+      }),
+    });
+  };
 
   const filtered = useMemo(() => houses.filter((h) => {
     if (status !== "All" && h.status !== status) return false;
@@ -81,17 +111,17 @@ function HousesPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-sage)]" />
             <input 
               value={q} 
-              onChange={(e) => setQ(e.target.value)} 
+              onChange={(e) => setFilter("q", e.target.value)} 
               placeholder={language === "en" ? "Search by location, villa name..." : "స్థలం లేదా పేరు ద్వారా వెతకండి..."}
               className="w-full bg-[var(--forest-2)] border border-[var(--gold)]/25 rounded-md pl-9 pr-3 py-2.5 text-sm focus:outline-none focus:border-[var(--gold)]" 
             />
           </div>
           <div className="flex flex-wrap gap-4 items-center justify-between sm:justify-start">
-            <Select label={language === "en" ? "Status" : "స్థితి"} value={status} onChange={(v) => setStatus(v as typeof status)} opts={["All", "Ready to Move", "Under Construction"]} />
-            <Select label={language === "en" ? "Facing" : "దిశ"} value={facing} onChange={(v) => setFacing(v as typeof facing)} opts={["All", "East", "West", "North", "South"]} />
-            <Select label={language === "en" ? "Beds" : "గదులు"} value={beds} onChange={(v) => setBeds(v as typeof beds)} opts={["All", "3", "4"]} />
+            <Select label={language === "en" ? "Status" : "స్థితి"} value={status} onChange={(v) => setFilter("status", v)} opts={["All", "Ready to Move", "Under Construction"]} />
+            <Select label={language === "en" ? "Facing" : "దిశ"} value={facing} onChange={(v) => setFilter("facing", v)} opts={["All", "East", "West", "North", "South"]} />
+            <Select label={language === "en" ? "Beds" : "గదులు"} value={beds} onChange={(v) => setFilter("beds", v)} opts={["All", "3", "4"]} />
             {(q || status !== "All" || facing !== "All" || beds !== "All") && (
-              <Button size="sm" variant="ghost" onClick={() => { setQ(""); setStatus("All"); setFacing("All"); setBeds("All"); }} className="h-10 px-3 cursor-pointer">
+              <Button size="sm" variant="ghost" onClick={() => navigate({ search: {} })} className="h-10 px-3 cursor-pointer">
                 {language === "en" ? "Reset" : "రీసెట్"}
               </Button>
             )}

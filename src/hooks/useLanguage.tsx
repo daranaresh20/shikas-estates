@@ -337,6 +337,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLanguageState] = useState<Language>("en");
 
   useEffect(() => {
+    // Check URL parameters first for dynamic localization routing
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const langParam = params.get("lang") as Language;
+      if (langParam === "en" || langParam === "te" || langParam === "hi") {
+        setLanguageState(langParam);
+        localStorage.setItem("shikas_lang", langParam);
+        return;
+      }
+    }
+
     const savedLang = localStorage.getItem("shikas_lang") as Language;
     if (savedLang === "en" || savedLang === "te" || savedLang === "hi") {
       setLanguageState(savedLang);
@@ -346,6 +357,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("shikas_lang", lang);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", lang);
+      window.history.pushState({}, "", url.toString());
+    }
   };
 
   const t = (key: TranslationKey): string => {

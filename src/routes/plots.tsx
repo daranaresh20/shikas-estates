@@ -8,7 +8,24 @@ import { formatINR } from "@/lib/data";
 import { Search, X, ShieldCheck, Compass, FileText } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 
+import { useNavigate, useSearch } from "@tanstack/react-router";
+
+type PlotsSearch = {
+  q?: string;
+  status?: string;
+  facing?: string;
+  approval?: string;
+};
+
 export const Route = createFileRoute("/plots")({
+  validateSearch: (search: Record<string, unknown>): PlotsSearch => {
+    return {
+      q: (search.q as string) || undefined,
+      status: (search.status as string) || undefined,
+      facing: (search.facing as string) || undefined,
+      approval: (search.approval as string) || undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Open Plots for Sale — Shikas Estates" },
@@ -22,14 +39,27 @@ export const Route = createFileRoute("/plots")({
 
 function PlotsPage() {
   const { t, language } = useLanguage();
-  const [q, setQ] = useState("");
-  const [status, setStatus] = useState<"All" | "Available" | "Reserved" | "Sold">("All");
-  const [facing, setFacing] = useState<"All" | "East" | "West" | "North" | "South">("All");
-  const [approval, setApproval] = useState<"All" | "HMDA" | "DTCP">("All");
+  const search = useSearch({ from: "/plots" });
+  const navigate = useNavigate({ from: "/plots" });
+
+  const q = search.q || "";
+  const status = search.status || "All";
+  const facing = search.facing || "All";
+  const approval = search.approval || "All";
+
   const [selected, setSelected] = useState<ExtendedPlot | null>(null);
   const [activeImgIdx, setActiveImgIdx] = useState(0);
 
   const plots = getPlots();
+
+  const setFilter = (key: keyof PlotsSearch, val: string) => {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        [key]: val === "All" || !val ? undefined : val,
+      }),
+    });
+  };
 
   const filtered = useMemo(() => plots.filter((p) => {
     if (status !== "All" && p.status !== status) return false;
@@ -80,17 +110,17 @@ function PlotsPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-sage)]" />
             <input 
               value={q} 
-              onChange={(e) => setQ(e.target.value)} 
+              onChange={(e) => setFilter("q", e.target.value)} 
               placeholder={language === "en" ? "Search by location or name" : "స్థలం లేదా పేరు ద్వారా వెతకండి"}
               className="w-full bg-[var(--forest-2)] border border-[var(--gold)]/25 rounded-md pl-9 pr-3 py-2.5 text-sm focus:outline-none focus:border-[var(--gold)]" 
             />
           </div>
           <div className="flex flex-wrap gap-4 items-center justify-between sm:justify-start">
-            <Select label={language === "en" ? "Status" : "స్థితి"} value={status} onChange={(v) => setStatus(v as typeof status)} opts={["All", "Available", "Reserved", "Sold"]} />
-            <Select label={language === "en" ? "Facing" : "దిశ"} value={facing} onChange={(v) => setFacing(v as typeof facing)} opts={["All", "East", "West", "North", "South"]} />
-            <Select label={language === "en" ? "Approval" : "అనుమతి"} value={approval} onChange={(v) => setApproval(v as typeof approval)} opts={["All", "HMDA", "DTCP"]} />
+            <Select label={language === "en" ? "Status" : "స్థితి"} value={status} onChange={(v) => setFilter("status", v)} opts={["All", "Available", "Reserved", "Sold"]} />
+            <Select label={language === "en" ? "Facing" : "దిశ"} value={facing} onChange={(v) => setFilter("facing", v)} opts={["All", "East", "West", "North", "South"]} />
+            <Select label={language === "en" ? "Approval" : "అనుమతి"} value={approval} onChange={(v) => setFilter("approval", v)} opts={["All", "HMDA", "DTCP"]} />
             {(q || status !== "All" || facing !== "All" || approval !== "All") && (
-              <Button size="sm" variant="ghost" onClick={() => { setQ(""); setStatus("All"); setFacing("All"); setApproval("All"); }} className="h-10 px-3 cursor-pointer">
+              <Button size="sm" variant="ghost" onClick={() => navigate({ search: {} })} className="h-10 px-3 cursor-pointer">
                 {language === "en" ? "Reset" : "రీసెట్"}
               </Button>
             )}

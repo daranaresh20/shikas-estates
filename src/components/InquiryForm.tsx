@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/data";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/hooks/useLanguage";
+import { submitInquiry } from "@/lib/api/inquiries.functions";
+
 
 type Props = {
   defaultSubject?: string;
@@ -66,22 +68,23 @@ export function InquiryForm({ defaultSubject, compact, title }: Props) {
     
     let dbSuccess = false;
     try {
-      if (supabase) {
-        const { error } = await supabase.from("inquiries").insert([
-          {
-            name: form.name,
-            email: form.email,
-            phone: form.phone,
-            subject: form.subject,
-            message: form.message,
-            newsletter: form.newsletter,
-          },
-        ]);
-        if (error) throw error;
+      const response = await submitInquiry({
+        data: {
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          subject: form.subject,
+          message: form.message,
+          newsletter: form.newsletter,
+        }
+      });
+      if (response && response.success) {
         dbSuccess = true;
+      } else {
+        throw new Error(response?.error || "Server function returned failure");
       }
     } catch (err) {
-      console.error("Supabase insert error, falling back to local storage:", err);
+      console.error("Secure API lead capture error, falling back to local storage:", err);
     }
 
     if (!dbSuccess) {
